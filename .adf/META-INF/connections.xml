@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<References xmlns="http://xmlns.oracle.com/adf/jndi">
+   <Reference name="AddressValidationService" className="oracle.adf.model.connection.webservice.impl.WebServiceConnectionImpl" xmlns="">
+      <Factory className="oracle.adf.model.connection.webservice.api.WebServiceConnectionFactory"/>
+      <RefAddresses>
+         <XmlRefAddr addrType="WebServiceConnection">
+            <Contents>
+               <wsconnection description="file:/tmp/TemporaryWSDL6149171127833810887/AddressValidationService.wsdl" service="{http://addressvalidationservice/}AddressValidationService">
+                  <model name="{http://addressvalidationservice/}AddressValidationService" xmlns="http://oracle.com/ws/model">
+                     <types xmlns="http://oracle.com/oracle/webservices/mdds">
+                        <complexType elementQualified="false" namespace="http://addressvalidationservice/" localPart="isAddressValid" prefix="tns" xmlns="">
+                           <sequence minOccurs="1" maxOccurs="1">
+                              <part name="arg0" required="true" namespace="http://addressvalidationservice/" elementQualified="false">
+                                 <type namespace="http://www.w3.org/2001/XMLSchema" localPart="string"/>
+                              </part>
+                              <part name="arg1" required="true" namespace="http://addressvalidationservice/" elementQualified="false">
+                                 <type namespace="http://www.w3.org/2001/XMLSchema" localPart="string"/>
+                              </part>
+                              <part name="arg2" required="true" namespace="http://addressvalidationservice/" elementQualified="false">
+                                 <type namespace="http://www.w3.org/2001/XMLSchema" localPart="string"/>
+                              </part>
+                              <part name="arg3" required="true" namespace="http://addressvalidationservice/" elementQualified="false">
+                                 <type namespace="http://www.w3.org/2001/XMLSchema" localPart="string"/>
+                              </part>
+                              <part name="arg4" required="true" namespace="http://addressvalidationservice/" elementQualified="false">
+                                 <type namespace="http://www.w3.org/2001/XMLSchema" localPart="string"/>
+                              </part>
+                           </sequence>
+                        </complexType>
+                        <complexType elementQualified="false" namespace="http://addressvalidationservice/" localPart="isAddressValidResponse" prefix="tns" xmlns="">
+                           <sequence minOccurs="1" maxOccurs="1">
+                              <part name="return" required="true" namespace="http://addressvalidationservice/" elementQualified="false">
+                                 <type namespace="http://www.w3.org/2001/XMLSchema" localPart="boolean"/>
+                              </part>
+                           </sequence>
+                        </complexType>
+                        <types-in-elements/>
+                     </types>
+                     <service name="{http://addressvalidationservice/}AddressValidationService">
+                        <port name="AddressValidationServiceSoap12HttpPort" binding="{http://addressvalidationservice/}AddressValidationServiceSoapHttp" portType="{http://addressvalidationservice/}AddressValidationService">
+                           <soap addressUrl="REPLACE_WITH_ACTUAL_URL" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+                           <operation name="isAddressValid">
+                              <soap soapAction="" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+                              <input name="" message="{http://addressvalidationservice/}isAddressValidInput">
+                                 <extension-attributes xmlns="">
+                                    <extension-attribute name="{http://www.w3.org/2006/05/addressing/wsdl}Action" value=""/>
+                                 </extension-attributes>
+                                 <message style="2" use="1" soapVersion="2" encodingStyle="" docLitWrapped="true" namespace="http://addressvalidationservice/" localPart="isAddressValid" xmlns="http://oracle.com/oracle/webservices/mdds">
+                                    <part name="parameters" required="true" xmlns="">
+                                       <type namespace="http://addressvalidationservice/" localPart="isAddressValid" prefix="tns"/>
+                                    </part>
+                                 </message>
+                              </input>
+                              <output name="" message="{http://addressvalidationservice/}isAddressValidOutput">
+                                 <extension-attributes xmlns="">
+                                    <extension-attribute name="{http://www.w3.org/2006/05/addressing/wsdl}Action" value=""/>
+                                 </extension-attributes>
+                                 <message style="2" use="1" soapVersion="2" encodingStyle="" docLitWrapped="true" namespace="http://addressvalidationservice/" localPart="isAddressValidResponse" xmlns="http://oracle.com/oracle/webservices/mdds">
+                                    <part name="parameters" required="true" xmlns="">
+                                       <type namespace="http://addressvalidationservice/" localPart="isAddressValidResponse" prefix="tns"/>
+                                    </part>
+                                 </message>
+                              </output>
+                           </operation>
+                        </port>
+                     </service>
+                  </model>
+               </wsconnection>
+            </Contents>
+         </XmlRefAddr>
+      </RefAddresses>
+   </Reference>
+</References>
