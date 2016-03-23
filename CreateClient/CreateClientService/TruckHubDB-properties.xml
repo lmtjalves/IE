@@ -1,0 +1,44 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="root_descriptor_alias">CLIENT</entry>
+   <entry key="CLIENT.ID:db_column_type">NUMBER</entry>
+   <entry key="CLIENT.EMAIL:db_column_not_null">false</entry>
+   <entry key="CLIENT.ID:db_column_precision">10</entry>
+   <entry key="CLIENT.ZIP_CODE:db_column_type">VARCHAR2</entry>
+   <entry key="CLIENT.PASSWORD:db_column_type">VARCHAR2</entry>
+   <entry key="CLIENT:db_table_type">TABLE</entry>
+   <entry key="CLIENT:db_column_8">PHONE_NUMBER</entry>
+   <entry key="CLIENT:db_column_7">ZIP_CODE</entry>
+   <entry key="CLIENT:db_column_6">DOOR_NUMBER</entry>
+   <entry key="CLIENT:db_column_5">STREET</entry>
+   <entry key="CLIENT.EMAIL:db_column_type">VARCHAR2</entry>
+   <entry key="CLIENT:db_column_4">COUNTY</entry>
+   <entry key="CLIENT:db_column_3">DISTRICT</entry>
+   <entry key="CLIENT:db_column_2">PASSWORD</entry>
+   <entry key="CLIENT:db_column_1">EMAIL</entry>
+   <entry key="CLIENT:db_column_0">ID</entry>
+   <entry key="CLIENT.DOOR_NUMBER:db_column_not_null">false</entry>
+   <entry key="CLIENT.ID:db_column_scale">0</entry>
+   <entry key="CLIENT.ZIP_CODE:db_column_size">255</entry>
+   <entry key="CLIENT.STREET:db_column_not_null">false</entry>
+   <entry key="CLIENT.PASSWORD:db_column_size">255</entry>
+   <entry key="CLIENT.ID:db_column_not_null">true</entry>
+   <entry key="CLIENT.EMAIL:db_column_size">255</entry>
+   <entry key="CLIENT.DOOR_NUMBER:db_column_type">VARCHAR2</entry>
+   <entry key="CLIENT.DISTRICT:db_column_type">VARCHAR2</entry>
+   <entry key="CLIENT.STREET:db_column_type">VARCHAR2</entry>
+   <entry key="CLIENT.PASSWORD:db_column_not_null">false</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="CLIENT.DOOR_NUMBER:db_column_size">255</entry>
+   <entry key="CLIENT.COUNTY:db_column_type">VARCHAR2</entry>
+   <entry key="CLIENT.PHONE_NUMBER:db_column_type">VARCHAR2</entry>
+   <entry key="CLIENT.DISTRICT:db_column_not_null">false</entry>
+   <entry key="CLIENT.DISTRICT:db_column_size">255</entry>
+   <entry key="CLIENT.STREET:db_column_size">255</entry>
+   <entry key="CLIENT.COUNTY:db_column_size">255</entry>
+   <entry key="CLIENT.PHONE_NUMBER:db_column_size">20</entry>
+   <entry key="CLIENT.ZIP_CODE:db_column_not_null">false</entry>
+   <entry key="CLIENT.COUNTY:db_column_not_null">false</entry>
+   <entry key="CLIENT.PHONE_NUMBER:db_column_not_null">false</entry>
+</properties>
