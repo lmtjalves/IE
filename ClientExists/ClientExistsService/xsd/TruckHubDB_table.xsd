@@ -1,0 +1,27 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/TruckHubDB" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/TruckHubDB" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="ClientCollection" type="ClientCollection"/>
+   <xs:complexType name="ClientCollection">
+      <xs:sequence>
+         <xs:element name="Client" type="Client" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Client">
+      <xs:sequence>
+         <xs:element name="id" type="xs:long"/>
+         <xs:element name="email" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="255"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="TruckHubDBSelect_emailInputParameters" type="TruckHubDBSelect_email"/>
+   <xs:complexType name="TruckHubDBSelect_email">
+      <xs:sequence>
+         <xs:element name="email" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>
