@@ -1,0 +1,149 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Mar 24 09:17:58 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="SendRegistrationMessageService"
+               targetNamespace="http://xmlns.oracle.com/SendRegistrationMessage/SendRegistrationMessageService/SendRegistrationMessageService"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SendRegistrationMessage/SendRegistrationMessageService/SendRegistrationMessageService"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://sendemailservice/"
+         xmlns:ns2="http://www.truckhub.org"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://sendsmsservice/">
+
+    <import namespace="http://xmlns.oracle.com/SendRegistrationMessage/SendRegistrationMessageService/SendRegistrationMessageService" location="SendRegistrationMessageService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="sendregistrationmessageservice_client" partnerLinkType="client:SendRegistrationMessageService" myRole="SendRegistrationMessageServiceProvider"/>
+    <partnerLink name="SendEmailServic" partnerLinkType="ns1:SendEmailServic"
+                 partnerRole="SendEmailService"/>
+    <partnerLink name="SendSMSService" partnerLinkType="ns3:SendSMSService"
+                 partnerRole="SendSMSService"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:SendRegistrationMessageServiceRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:SendRegistrationMessageServiceResponseMessage"/>
+    <variable name="Invoke1_sendEmail_OutputVariable"
+              messageType="ns1:sendEmailResponse"/>
+    <variable name="Invoke1_sendEmail_InputVariable"
+              messageType="ns1:sendEmail"/>
+    <variable name="Invoke2_sendSMS_InputVariable" messageType="ns3:sendSMS"/>
+    <variable name="Invoke2_sendSMS_OutputVariable"
+              messageType="ns3:sendSMSResponse"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in SendRegistrationMessageService.wsdl) -->
+    <receive name="receiveInput" partnerLink="sendregistrationmessageservice_client" portType="client:SendRegistrationMessageService" operation="process" variable="inputVariable" createInstance="yes"/>
+    <if name="If1">
+      <documentation>
+        <![CDATA[Send via SMS]]>
+      </documentation>
+      <condition>$inputVariable.payload/ns2:MessageType = "SMS"</condition>
+      <sequence name="Sequence2">
+        <assign name="Assign3">
+          <copy>
+            <from>$inputVariable.payload/ns2:PhoneNumber</from>
+            <to>$Invoke2_sendSMS_InputVariable.parameters/to</to>
+          </copy>
+          <copy>
+            <from>concat(concat("Client Number is ", $inputVariable.payload/ns2:ClientNumber), concat(" Password is  ", $inputVariable.payload/ns2:Password))</from>
+            <to>$Invoke2_sendSMS_InputVariable.parameters/message</to>
+          </copy>
+        </assign>
+        <invoke name="Invoke2" partnerLink="SendSMSService"
+                portType="ns3:SendSMSService" operation="sendSMS"
+                inputVariable="Invoke2_sendSMS_InputVariable"
+                outputVariable="Invoke2_sendSMS_OutputVariable"
+                bpelx:invokeAsDetail="no"/>
+        <assign name="Assign4">
+          <copy>
+            <from>true()</from>
+            <to>$outputVariable.payload/ns2:Success</to>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[Send Via Email]]>
+        </documentation>
+        <sequence>
+          <assign name="Assign1">
+            <copy>
+              <from>$inputVariable.payload/ns2:Email</from>
+              <to>$Invoke1_sendEmail_InputVariable.parameters/to</to>
+            </copy>
+            <copy>
+              <from>'New user Account'</from>
+              <to>$Invoke1_sendEmail_InputVariable.parameters/subject</to>
+            </copy>
+            <copy>
+              <from>concat(concat("Client Number: ", $inputVariable.payload/ns2:ClientNumber), concat( "&amp;#13; ",  concat("Password: ", $inputVariable.payload/ns2:Password)))</from>
+              <to>$Invoke1_sendEmail_InputVariable.parameters/message</to>
+            </copy>
+          </assign>
+          <invoke name="Invoke1" partnerLink="SendEmailServic"
+                  portType="ns1:SendEmailService" operation="sendEmail"
+                  inputVariable="Invoke1_sendEmail_InputVariable"
+                  outputVariable="Invoke1_sendEmail_OutputVariable"
+                  bpelx:invokeAsDetail="no"/>
+          <assign name="Assign2">
+            <copy>
+              <from>true()</from>
+              <to>$outputVariable.payload/ns2:Success</to>
+            </copy>
+          </assign>
+        </sequence>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="sendregistrationmessageservice_client" portType="client:SendRegistrationMessageService" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>
