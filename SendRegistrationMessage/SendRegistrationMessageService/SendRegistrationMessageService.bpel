@@ -17,7 +17,7 @@
                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
          xmlns:ns1="http://sendemailservice/"
-         xmlns:ns2="http://www.truckhub.org"
+         xmlns:ns2="http://www.sendregistrationmessage.truckhub.org"
          xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
          xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
          xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"

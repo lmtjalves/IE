@@ -17,7 +17,7 @@
                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
          xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/ClientExists/ClientExistsService/TruckHubDB"
-         xmlns:ns2="http://www.truckhub.org"
+         xmlns:ns2="http://www.clientexists.truckhub.org"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/TruckHubDB"
          xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"

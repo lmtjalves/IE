@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://www.registerclient.truckhub.org"
+            targetNamespace="http://www.registerclient.truckhub.org"
+            elementFormDefault="qualified">
+    <xsd:simpleType name="MessageType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="Email" />
+        <xsd:enumeration value="SMS" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="StatusType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="OK" />
+        <xsd:enumeration value="Error" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="AddressType">
+    <xsd:sequence>
+      <xsd:element name="District" type="xsd:string"/>
+      <xsd:element name="County" type="xsd:string"/>
+      <xsd:element name="Street" type="xsd:string"/>
+      <xsd:element name="DoorNumber" type="xsd:string"/>
+      <xsd:element name="ZipCode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="Email" type="xsd:string"/>
+      <xsd:element name="Address" type="tns:AddressType"/>
+      <xsd:element name="PhoneNumber" type="xsd:string"/>
+      <xsd:element name="MessageType" type="tns:MessageType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="Status" type="tns:StatusType"/>
+      <xsd:element name="Cause" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+</xsd:schema>

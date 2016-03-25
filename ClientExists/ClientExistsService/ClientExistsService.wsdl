@@ -3,7 +3,7 @@
              targetNamespace="http://xmlns.oracle.com/ClientExists/ClientExistsService/ClientExistsService"
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
              xmlns:client="http://xmlns.oracle.com/ClientExists/ClientExistsService/ClientExistsService"
-             xmlns:ns1="http://www.truckhub.org"
+             xmlns:ns1="http://www.clientexists.truckhub.org"
              xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -14,7 +14,7 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
 	<wsdl:types>
 		<schema xmlns="http://www.w3.org/2001/XMLSchema">
-			<import namespace="http://www.truckhub.org" schemaLocation="xsd/ClientExists.xsd" />
+			<import namespace="http://www.clientexists.truckhub.org" schemaLocation="xsd/ClientExists.xsd" />
 		</schema>
 	</wsdl:types>
 

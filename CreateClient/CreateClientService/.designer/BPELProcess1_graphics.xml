@@ -5,9 +5,9 @@
    <iconize/>
    <partnerlink_locations>
       <partnerlink name="bpelprocess1_client" x="0" y="275" side="left"/>
-      <partnerlink name="TruckHubDB" x="754" y="278" side="right"/>
+      <partnerlink name="TruckHubDB" x="610" y="278" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,31,870,344" show_swimlanes="true">
+   <graph_layout viewport="0,0,726,341" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>

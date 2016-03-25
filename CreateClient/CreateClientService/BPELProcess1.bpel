@@ -18,7 +18,7 @@
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
          xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/CreateClient/CreateClientService/TruckHubDB"
          xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/top/TruckHubDB"
-         xmlns:ns2="http://www.truckhub.org"
+         xmlns:ns2="http://www.createclient.truckhub.org"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
          xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
@@ -119,7 +119,7 @@
             bpelx:invokeAsDetail="no"/>
     <assign name="Assign2">
       <copy>
-        <from>$Invoke1_insert_OutputVariable.ClientCollection/ns3:Client/ns3:id</from>
+        <from>$Invoke1_insert_OutputVariable.ClientCollection/ns3:Client[1]/ns3:id</from>
         <to>$outputVariable.payload/ns2:ClientNumber</to>
       </copy>
     </assign>

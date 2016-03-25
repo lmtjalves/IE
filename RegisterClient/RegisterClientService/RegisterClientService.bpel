@@ -1,0 +1,292 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Mar 25 10:15:09 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="RegisterClientService"
+               targetNamespace="http://xmlns.oracle.com/RegisterClient/RegisterClientService/RegisterClientService"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/RegisterClient/RegisterClientService/RegisterClientService"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/ClientExists/ClientExistsService/ClientExistsService"
+         xmlns:ns3="http://www.clientexists.truckhub.org"
+         xmlns:ns2="http://www.registerclient.truckhub.org"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://addressvalidationservice/"
+         xmlns:ns5="http://passwordgeneratorservice/"
+         xmlns:ns6="http://xmlns.oracle.com/CreateClient/CreateClientService/BPELProcess1"
+         xmlns:ns7="http://www.createclient.truckhub.org"
+         xmlns:ns8="http://xmlns.oracle.com/SendRegistrationMessage/SendRegistrationMessageService/SendRegistrationMessageService"
+         xmlns:ns9="http://www.sendregistrationmessage.truckhub.org">
+
+    <import namespace="http://xmlns.oracle.com/RegisterClient/RegisterClientService/RegisterClientService" location="RegisterClientService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="registerclientservice_client" partnerLinkType="client:RegisterClientService" myRole="RegisterClientServiceProvider"/>
+    <partnerLink name="ClientExistsService"
+                 partnerLinkType="ns1:ClientExistsService"
+                 partnerRole="ClientExistsServiceProvider"/>
+    <partnerLink name="ValidateAddressService"
+                 partnerLinkType="ns4:ValidateAddressService"
+                 partnerRole="AddressValidationService"/>
+    <partnerLink name="PasswordGeneratorService"
+                 partnerLinkType="ns5:PasswordGeneratorService"
+                 partnerRole="PasswordGenerator"/>
+    <partnerLink name="CreateClientService" partnerLinkType="ns6:BPELProcess1"
+                 partnerRole="BPELProcess1Provider"/>
+    <partnerLink name="SendRegistrationMessageService"
+                 partnerLinkType="ns8:SendRegistrationMessageService"
+                 partnerRole="SendRegistrationMessageServiceProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:RegisterClientServiceRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:RegisterClientServiceResponseMessage"/>
+    <variable name="ClientExists_inoke_process_InputVariable"
+              messageType="ns1:ClientExistsServiceRequestMessage"/>
+    <variable name="ClientExists_inoke_process_OutputVariable"
+              messageType="ns1:ClientExistsServiceResponseMessage"/>
+    <variable name="ValidateAddress_invoke_isAddressValid_InputVariable"
+              messageType="ns4:isAddressValid"/>
+    <variable name="ValidateAddress_invoke_isAddressValid_OutputVariable"
+              messageType="ns4:isAddressValidResponse"/>
+    <variable name="GeneratePassword_invoke_generatePassword_InputVariable"
+              messageType="ns5:generatePassword"/>
+    <variable name="GeneratePassword_invoke_generatePassword_OutputVariable"
+              messageType="ns5:generatePasswordResponse"/>
+    <variable name="CreateClient_invoke_process_InputVariable"
+              messageType="ns6:BPELProcess1RequestMessage"/>
+    <variable name="CreateClient_invoke_process_OutputVariable"
+              messageType="ns6:BPELProcess1ResponseMessage"/>
+    <variable name="SendRegistrationMessage_invoke_process_InputVariable"
+              messageType="ns8:SendRegistrationMessageServiceRequestMessage"/>
+    <variable name="SendRegistrationMessage_invoke_process_OutputVariable"
+              messageType="ns8:SendRegistrationMessageServiceResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in RegisterClientService.wsdl) -->
+    <receive name="receiveInput" partnerLink="registerclientservice_client" portType="client:RegisterClientService" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="Assign1">
+      <copy>
+        <from>$inputVariable.payload/ns2:Email</from>
+        <to>$ClientExists_inoke_process_InputVariable.payload/ns3:Email</to>
+      </copy>
+    </assign>
+    <invoke name="ClientExists_inoke"
+            partnerLink="ClientExistsService"
+            portType="ns1:ClientExistsService" operation="process"
+            inputVariable="ClientExists_inoke_process_InputVariable"
+            outputVariable="ClientExists_inoke_process_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If1">
+      <documentation>
+        <![CDATA[Client exists]]>
+      </documentation>
+      <condition>$ClientExists_inoke_process_OutputVariable.payload/ns3:Exists = 'true'</condition>
+      <assign name="Exit_Client_already_exists">
+        <copy>
+          <from>"Error"</from>
+          <to>$outputVariable.payload/ns2:Status</to>
+        </copy>
+        <copy>
+          <from>"Client already exists"</from>
+          <to>$outputVariable.payload/ns2:Cause</to>
+        </copy>
+      </assign>
+      <else>
+        <documentation>
+          <![CDATA[New client]]>
+        </documentation>
+        <sequence name="Sequence1">
+          <assign name="Assign2">
+            <copy>
+              <from>$inputVariable.payload/ns2:Address/ns2:District</from>
+              <to>$ValidateAddress_invoke_isAddressValid_InputVariable.parameters/distrito</to>
+            </copy>
+            <copy>
+              <from>$inputVariable.payload/ns2:Address/ns2:County</from>
+              <to>$ValidateAddress_invoke_isAddressValid_InputVariable.parameters/concelho</to>
+            </copy>
+            <copy>
+              <from>$inputVariable.payload/ns2:Address/ns2:Street</from>
+              <to>$ValidateAddress_invoke_isAddressValid_InputVariable.parameters/rua</to>
+            </copy>
+            <copy>
+              <from>$inputVariable.payload/ns2:Address/ns2:DoorNumber</from>
+              <to>$ValidateAddress_invoke_isAddressValid_InputVariable.parameters/numPorta</to>
+            </copy>
+            <copy>
+              <from>$inputVariable.payload/ns2:Address/ns2:ZipCode</from>
+              <to>$ValidateAddress_invoke_isAddressValid_InputVariable.parameters/codigoPostal</to>
+            </copy>
+          </assign>
+          <invoke name="ValidateAddress_invoke"
+                  partnerLink="ValidateAddressService"
+                  portType="ns4:AddressValidationService"
+                  operation="isAddressValid"
+                  inputVariable="ValidateAddress_invoke_isAddressValid_InputVariable"
+                  outputVariable="ValidateAddress_invoke_isAddressValid_OutputVariable"
+                  bpelx:invokeAsDetail="no"/>
+          <if name="If2">
+            <documentation>
+              <![CDATA[Invalid address]]>
+            </documentation>
+            <condition>$ValidateAddress_invoke_isAddressValid_OutputVariable.parameters/return = 'false'</condition>
+            <assign name="Exit_InvalidAddress_assign">
+              <copy>
+                <from>"Error"</from>
+                <to>$outputVariable.payload/ns2:Status</to>
+              </copy>
+              <copy>
+                <from>"Invalid Address"</from>
+                <to>$outputVariable.payload/ns2:Cause</to>
+              </copy>
+            </assign>
+            <else>
+              <documentation>
+                <![CDATA[Valid address]]>
+              </documentation>
+              <sequence name="Sequence2">
+                <assign name="PasswordSize_assign">
+                  <copy>
+                    <from>6</from>
+                    <to>$GeneratePassword_invoke_generatePassword_InputVariable.parameters/size</to>
+                  </copy>
+                </assign>
+                <invoke name="GeneratePassword_invoke"
+                        partnerLink="PasswordGeneratorService"
+                        portType="ns5:PasswordGenerator"
+                        operation="generatePassword"
+                        inputVariable="GeneratePassword_invoke_generatePassword_InputVariable"
+                        outputVariable="GeneratePassword_invoke_generatePassword_OutputVariable"
+                        bpelx:invokeAsDetail="no"/>
+                <assign name="CreateClient_assign">
+                  <copy>
+                    <from>$inputVariable.payload/ns2:Email</from>
+                    <to>$CreateClient_invoke_process_InputVariable.payload/ns7:Email</to>
+                  </copy>
+                  <copy>
+                    <from>$inputVariable.payload/ns2:Address/ns2:District</from>
+                    <to>$CreateClient_invoke_process_InputVariable.payload/ns7:Address/ns7:District</to>
+                  </copy>
+                  <copy>
+                    <from>$inputVariable.payload/ns2:Address/ns2:County</from>
+                    <to>$CreateClient_invoke_process_InputVariable.payload/ns7:Address/ns7:County</to>
+                  </copy>
+                  <copy>
+                    <from>$inputVariable.payload/ns2:Address/ns2:Street</from>
+                    <to>$CreateClient_invoke_process_InputVariable.payload/ns7:Address/ns7:Street</to>
+                  </copy>
+                  <copy>
+                    <from>$inputVariable.payload/ns2:Address/ns2:DoorNumber</from>
+                    <to>$CreateClient_invoke_process_InputVariable.payload/ns7:Address/ns7:DoorNumber</to>
+                  </copy>
+                  <copy>
+                    <from>$inputVariable.payload/ns2:Address/ns2:ZipCode</from>
+                    <to>$CreateClient_invoke_process_InputVariable.payload/ns7:Address/ns7:ZipCode</to>
+                  </copy>
+                  <copy>
+                    <from>$inputVariable.payload/ns2:PhoneNumber</from>
+                    <to>$CreateClient_invoke_process_InputVariable.payload/ns7:PhoneNumber</to>
+                  </copy>
+                  <copy>
+                    <from>$GeneratePassword_invoke_generatePassword_OutputVariable.parameters/return</from>
+                    <to>$CreateClient_invoke_process_InputVariable.payload/ns7:Password</to>
+                  </copy>
+                </assign>
+                <invoke name="CreateClient_invoke"
+                        partnerLink="CreateClientService"
+                        portType="ns6:BPELProcess1" operation="process"
+                        inputVariable="CreateClient_invoke_process_InputVariable"
+                        outputVariable="CreateClient_invoke_process_OutputVariable"
+                        bpelx:invokeAsDetail="no"/>
+                <assign name="Assign3">
+                  <copy>
+                    <from>$inputVariable.payload/ns2:Email</from>
+                    <to>$SendRegistrationMessage_invoke_process_InputVariable.payload/ns9:Email</to>
+                  </copy>
+                  <copy>
+                    <from>$inputVariable.payload/ns2:PhoneNumber</from>
+                    <to>$SendRegistrationMessage_invoke_process_InputVariable.payload/ns9:PhoneNumber</to>
+                  </copy>
+                  <copy>
+                    <from>$inputVariable.payload/ns2:MessageType</from>
+                    <to>$SendRegistrationMessage_invoke_process_InputVariable.payload/ns9:MessageType</to>
+                  </copy>
+                  <copy>
+                    <from>$CreateClient_invoke_process_OutputVariable.payload/ns7:ClientNumber</from>
+                    <to>$SendRegistrationMessage_invoke_process_InputVariable.payload/ns9:ClientNumber</to>
+                  </copy>
+                  <copy>
+                    <from>$GeneratePassword_invoke_generatePassword_OutputVariable.parameters/return</from>
+                    <to>$SendRegistrationMessage_invoke_process_InputVariable.payload/ns9:Password</to>
+                  </copy>
+                </assign>
+                <invoke name="SendRegistrationMessage_invoke"
+                        partnerLink="SendRegistrationMessageService"
+                        portType="ns8:SendRegistrationMessageService"
+                        operation="process"
+                        inputVariable="SendRegistrationMessage_invoke_process_InputVariable"
+                        outputVariable="SendRegistrationMessage_invoke_process_OutputVariable"
+                        bpelx:invokeAsDetail="no"/>
+                <assign name="ExistSuccess_assign">
+                  <copy>
+                    <from>"OK"</from>
+                    <to>$outputVariable.payload/ns2:Status</to>
+                  </copy>
+                </assign>
+              </sequence>
+            </else>
+          </if>
+        </sequence>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="registerclientservice_client" portType="client:RegisterClientService" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>
