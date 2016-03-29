@@ -1,73 +1,84 @@
 package calculatecoordinatesdistanceservice;
 
+import calculatecoordinatesdistanceservice.exceptions.CalculateCoordinatesDistanceServiceCallFailException;
+
 import java.io.*;
 import java.net.*;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import javax.xml.ws.BindingType;
 import javax.xml.ws.soap.SOAPBinding;
 
-import oracle.xml.parser.v2.*;
-import org.xml.sax.InputSource;
-
-@WebService(serviceName = "ExternalCalculateCoordinatesDistanceService", portName = "ExternalCalculateCoordinatesDistanceServiceSoap12HttpPort")
+@WebService(name = "CalculateCoordinatesDistanceService", serviceName = "CalculateCoordinatesDistanceService", portName = "CalculateCoordinatesDistanceServiceSoap12HttpPort")
 @BindingType(SOAPBinding.SOAP12HTTP_BINDING)
 public class ExternalCalculateCoordinatesDistanceService {
+    
+    private final static String ENDPOINT = "https://maps.googleapis.com/maps/api/distancematrix/xml";
+    private final static String CHARSET  = "UTF-8";
+    private final static String KEY = "AIzaSyC8HaO-oxekXp0MsJtdjfQne133-6vi0kg";
+            
     public ExternalCalculateCoordinatesDistanceService() {
         super();
     }
     
-    public String getCoordinatesDistance(String origin, String destination) {
+    @WebMethod
+    public double getCoordinatesDistance(@WebParam(name ="origin_latitude") String origin_latitude,
+                                         @WebParam(name ="origin_longitude") String origin_longitude,
+                                         @WebParam(name ="destination_latitude") String destination_latitude,
+                                         @WebParam(name ="destination_longitude") String destination_longitude
+                                         ) throws CalculateCoordinatesDistanceServiceCallFailException {
             
-        String apiID = "AIzaSyC8HaO-oxekXp0MsJtdjfQne133-6vi0kg";
-        String endpoint = "https://maps.googleapis.com/maps/api/distancematrix/xml?";
-        StringBuilder responseString = null;
-        String returnString="";
-        String xpathResult=null;
-        String charset = "UTF-8";
+        try {
+            ServiceParameters params = new ServiceParameters(origin_latitude,
+                                                             origin_longitude,
+                                                             destination_latitude,
+                                                             destination_longitude);
+            String responseString = callCalculateCoordinatesDistanceService(params);
+            ServiceResponse response = new ServiceResponse(responseString);
+            return response.getResult();
+            
+        } catch (Exception e){
+            throw new CalculateCoordinatesDistanceServiceCallFailException(e);
+        }
+    }
+    
+    private String callCalculateCoordinatesDistanceService(ServiceParameters params)
+    throws CalculateCoordinatesDistanceServiceCallFailException {
         
-        String url = endpoint + "origins=" + origin + "&destinations=" + destination + "&key=" + apiID;
-        System.out.println(url);
-        
+        String url = ExternalCalculateCoordinatesDistanceService.ENDPOINT
+                     + "?" + params.toString()
+                     + ExternalCalculateCoordinatesDistanceService.KEY;
+            
         try {
             URLConnection connection = new URL(url).openConnection();
-            xpathResult = "qualidade";
-            connection.setRequestProperty("Accept-Charset", charset);
-             xpathResult = "qualidade2";
+            connection.setRequestProperty("Accept-Charset",
+                                          ExternalCalculateCoordinatesDistanceService.CHARSET);
             InputStream response = connection.getInputStream();
-             xpathResult = "qualidade3";
+                
             HttpURLConnection httpConnection = (HttpURLConnection) connection;
-             xpathResult = "qualidade4";
-            int status = httpConnection.getResponseCode();
-            System.out.println("Status: " + status);
+
+            // Validate the http response code
+            if(httpConnection.getResponseCode() != HttpURLConnection.HTTP_OK) 
+                throw new CalculateCoordinatesDistanceServiceCallFailException
+                    ("HTTP response code is not OK");
+                
             BufferedReader rd = new BufferedReader(new InputStreamReader(response));
-            responseString = new StringBuilder();
-            String inputLine;
-            while ((inputLine = rd.readLine()) != null)
-                responseString.append(inputLine);
+                
+            StringBuilder responseBuilder = new StringBuilder();
+            for(String inputLine = rd.readLine(); inputLine != null; inputLine = rd.readLine()) {
+                responseBuilder.append(inputLine);
+            }
+                
             rd.close();
-            System.out.println("Response:" + responseString);
-         } catch (Exception e) {
-            System.err.println(e.getMessage());
+                
+            // Return the data from the http response
+             return responseBuilder.toString();
+        } catch(IOException e) {
+            throw new CalculateCoordinatesDistanceServiceCallFailException(e);
         }
-        try {
-            DOMParser domParser = new DOMParser();
-            domParser.parse(new InputSource(new StringReader(responseString.toString())));
-            XMLDocument document = domParser.getDocument();
-            //XMLNode node = (XMLNode)document.selectSingleNode("/DistanceMatrixResponse/row/element/distance/value");
-            //xpathResult = node.getText();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        // Converting temperature to Celsius
-        //Integer distance = new Integer(xpathResult);
-        
-        //distance = (distance + 500) / 1000;
-        
-        //returnString = distance.toString();
-        System.out.println(xpathResult);
-        return "teste" + xpathResult;
     }
     
 }
