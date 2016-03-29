@@ -37,14 +37,12 @@ public class ExternalCTTService {
 
             return cttResponse.isOK();
         } catch(Exception e) {
-            // No matter what is the exception, the validation failed
             throw new CTTServiceCallFailException(e);
-            //return false;
         }
     }
     
     private String callCTTService(ServiceParameters params) throws CTTServiceCallFailException {
-        String     url = ExternalCTTService.ENDPOINT + "?" + params.toString();
+        String url = ExternalCTTService.ENDPOINT + "?" + params.toString();
         
         try {
             URLConnection connection = new URL(url).openConnection();

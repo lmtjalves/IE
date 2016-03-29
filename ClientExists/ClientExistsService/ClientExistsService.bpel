@@ -101,6 +101,9 @@
         </copy>
       </assign>
       <else>
+        <documentation>
+          <![CDATA[Client Exists]]>
+        </documentation>
         <assign name="Assign3">
           <copy>
             <from>true()</from>

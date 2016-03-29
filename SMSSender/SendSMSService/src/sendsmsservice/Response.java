@@ -46,7 +46,7 @@ public class Response {
         try {
             XMLNode statusNode = (XMLNode) this.document.selectSingleNode(STATUS_ELEMENT_XPATH);
         
-            return "getText: " + statusNode.getText().equals(SUCCESS);
+            return statusNode.getText().equals(SUCCESS);
         } catch(XSLException e) {
             throw new FailParsingResponseException(e);
         }
