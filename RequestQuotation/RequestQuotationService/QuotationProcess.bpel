@@ -77,19 +77,19 @@
         <receive name="receiveInput" partnerLink="quotationprocess_client" portType="client:QuotationProcess" operation="process" variable="inputVariable" createInstance="yes"/>
         <assign name="AssignWSInput">
             <copy>
-                <from>$inputVariable.payload/ns3:originLatitude</from>
+                <from>$inputVariable.payload/ns3:origin/ns3:latitude</from>
                 <to>$InvokeCalculateDistance_getCoordinatesDistance_InputVariable.parameters/origin_latitude</to>
             </copy>
             <copy>
-                <from>$inputVariable.payload/ns3:originLongitude</from>
+                <from>$inputVariable.payload/ns3:origin/ns3:longitude</from>
                 <to>$InvokeCalculateDistance_getCoordinatesDistance_InputVariable.parameters/origin_longitude</to>
             </copy>
             <copy>
-                <from>$inputVariable.payload/ns3:destinationLatitude</from>
+                <from>$inputVariable.payload/ns3:destination/ns3:latitude</from>
                 <to>$InvokeCalculateDistance_getCoordinatesDistance_InputVariable.parameters/destination_latitude</to>
             </copy>
             <copy>
-                <from>$inputVariable.payload/ns3:destinationLongitude</from>
+                <from>$inputVariable.payload/ns3:destination/ns3:longitude</from>
                 <to>$InvokeCalculateDistance_getCoordinatesDistance_InputVariable.parameters/destination_longitude</to>
             </copy>
         </assign>

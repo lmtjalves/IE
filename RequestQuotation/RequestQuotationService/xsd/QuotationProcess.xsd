@@ -6,10 +6,8 @@
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
  <xsd:complexType name="requestType">
   <xsd:sequence>
-   <xsd:element name="originLatitude" type="xsd:string"/>
-   <xsd:element name="originLongitude" type="xsd:string"/>
-   <xsd:element name="destinationLatitude" type="xsd:string"/>
-   <xsd:element name="destinationLongitude" type="xsd:string"/>
+   <xsd:element name="origin" type="tns:coordinatesType"/>
+   <xsd:element name="destination" type="tns:coordinatesType"/>
    <xsd:element name="parcelWeight" type="xsd:double"/>
   </xsd:sequence>
  </xsd:complexType>
@@ -17,6 +15,12 @@
   <xsd:sequence>
    <xsd:element name="offer" type="xsd:double"/>
    <xsd:element name="transporter" type="xsd:string"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="coordinatesType">
+  <xsd:sequence>
+   <xsd:element name="latitude" type="xsd:double"/>
+   <xsd:element name="longitude" type="xsd:double"/>
   </xsd:sequence>
  </xsd:complexType>
  <xsd:element name="request" type="tns:requestType"/>

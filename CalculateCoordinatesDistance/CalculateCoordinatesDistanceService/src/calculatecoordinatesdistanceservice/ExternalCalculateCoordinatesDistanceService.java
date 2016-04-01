@@ -25,10 +25,10 @@ public class ExternalCalculateCoordinatesDistanceService {
     }
     
     @WebMethod
-    public double getCoordinatesDistance(@WebParam(name ="origin_latitude") String origin_latitude,
-                                         @WebParam(name ="origin_longitude") String origin_longitude,
-                                         @WebParam(name ="destination_latitude") String destination_latitude,
-                                         @WebParam(name ="destination_longitude") String destination_longitude
+    public double getCoordinatesDistance(@WebParam(name ="origin_latitude") double origin_latitude,
+                                         @WebParam(name ="origin_longitude") double origin_longitude,
+                                         @WebParam(name ="destination_latitude") double destination_latitude,
+                                         @WebParam(name ="destination_longitude") double destination_longitude
                                          ) throws CalculateCoordinatesDistanceServiceCallFailException {
             
         try {

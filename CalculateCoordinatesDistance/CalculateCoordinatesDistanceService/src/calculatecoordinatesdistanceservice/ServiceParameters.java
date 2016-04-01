@@ -6,13 +6,13 @@ public class ServiceParameters {
     private final String DESTINATION_PARAM = "destinations";
     private final String KEY_PARAM = "key";
     
-    private String origin_latitude;
-    private String origin_longitude;
-    private String destination_latitude;
-    private String destination_longitude;
+    private double origin_latitude;
+    private double origin_longitude;
+    private double destination_latitude;
+    private double destination_longitude;
     
-    public ServiceParameters(String origin_latitude, String origin_longitude,
-                             String destination_latitude, String destination_longitude) {
+    public ServiceParameters(double origin_latitude, double origin_longitude,
+                             double destination_latitude, double destination_longitude) {
         super();
         
         this.origin_latitude = origin_latitude;
