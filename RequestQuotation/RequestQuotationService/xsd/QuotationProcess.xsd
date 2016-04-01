@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<xsd:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://quotation.truckhub.org"
+        xmlns:tns="http://quotation.truckhub.org"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <xsd:complexType name="requestType">
+  <xsd:sequence>
+   <xsd:element name="originLatitude" type="xsd:string"/>
+   <xsd:element name="originLongitude" type="xsd:string"/>
+   <xsd:element name="destinationLatitude" type="xsd:string"/>
+   <xsd:element name="destinationLongitude" type="xsd:string"/>
+   <xsd:element name="parcelWeight" type="xsd:double"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="responseType">
+  <xsd:sequence>
+   <xsd:element name="offer" type="xsd:double"/>
+   <xsd:element name="transporter" type="xsd:string"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:element name="request" type="tns:requestType"/>
+ <xsd:element name="response" type="tns:responseType"/>
+</xsd:schema>

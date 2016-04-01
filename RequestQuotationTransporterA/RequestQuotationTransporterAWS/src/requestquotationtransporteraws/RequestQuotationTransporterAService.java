@@ -16,16 +16,16 @@ public class RequestQuotationTransporterAService {
     }
     
     @WebMethod
-    public double generateOffer(@WebParam(name ="distanceInKm") double distanceInKm){
+    public double generateOffer(@WebParam(name ="distanceInKm") double distanceInKm, @WebParam(name ="parcelWeight") double parcelWeight){
         
         // generate a random number between 5 and 25
-        int pricePerKm = 5 + (int)(Math.random() * ((25 - 5) + 1));
+        int randomNumber = 5 + (int)(Math.random() * ((25 - 5) + 1));
+        
+        double profitPercentage = 1 + (randomNumber / 100.0);
         
         wait30Seconds();
         
-        // multiply the random number by the distance
-        //return String.valueOf(Double.parseDouble(distance) * pricePerKm);
-        return distanceInKm * pricePerKm;
+        return distanceInKm * parcelWeight * profitPercentage;
     }
 
     @WebMethod(exclude = true)
