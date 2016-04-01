@@ -7,7 +7,7 @@
       <partnerlink name="clientexistsservice_client" x="1" y="364" side="left"/>
       <partnerlink name="TruckHubDB" x="610" y="278" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,726,341" show_swimlanes="true">
+   <graph_layout viewport="0,150,726,563" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>
