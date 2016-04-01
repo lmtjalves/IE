@@ -8,4 +8,4 @@ Destination/Latitude: 40.2033145
 Destination/Longitude: -8.410257300000012
 Parcel Weight: 2.5
 
-Return: Randomly generated offer
+Return: Randomly generated offer and the transporter who made the offer
