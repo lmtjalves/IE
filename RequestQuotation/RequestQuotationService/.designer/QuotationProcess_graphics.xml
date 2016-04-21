@@ -8,7 +8,11 @@
       <partnerlink name="ObtainBestOffer" x="0" y="461" side="left"/>
       <partnerlink name="CalculateCoordinatesDistance" x="827" y="278" side="right"/>
    </partnerlink_locations>
+<<<<<<< HEAD
    <graph_layout viewport="0,0,956,341" show_swimlanes="true">
+=======
+   <graph_layout viewport="0,0,794,273" show_swimlanes="true">
+>>>>>>> a09733b60a876a0979f12f5092b1976a867544a9
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>
