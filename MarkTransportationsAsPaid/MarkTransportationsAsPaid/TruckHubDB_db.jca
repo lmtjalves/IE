@@ -3,7 +3,7 @@
   <connection-factory location="eis/DB/TruckHubDB" UIConnectionName="TruckHubDB" adapterRef=""/>
   <endpoint-interaction portType="TruckHubDB_ptt" operation="TruckHubDB">
     <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
-      <property name="SqlString" value="UPDATE transportation SET paid='P' WHERE id &lt;= #LAST_ID AND transporterId = #TRANSPORTER_ID AND id >= #FIRST_ID"/>
+      <property name="SqlString" value="UPDATE transportation SET paid='P' WHERE id &lt;= #LAST_ID AND transporterId = #TRANSPORTER_ID AND id >= #FIRST_ID AND paid='W'"/>
       <property name="GetActiveUnitOfWork" value="false"/>
     </interaction-spec>
     <input/>

@@ -6,9 +6,9 @@
    <partnerlink_locations>
       <partnerlink name="sendregistrationmessageservice_client" x="0" y="355" side="left"/>
       <partnerlink name="SendSMSService" x="0" y="412" side="left"/>
-      <partnerlink name="SendEmailServic" x="601" y="412" side="right"/>
+      <partnerlink name="SendEmailServic" x="1081" y="412" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,390,726,341" show_swimlanes="true">
+   <graph_layout viewport="0,285,1206,521" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence" type="sequence"/>

@@ -111,7 +111,7 @@
 
     <!-- Receive input from requestor. (Note: This maps to operation defined in RegisterClientService.wsdl) -->
     <receive name="receiveInput" partnerLink="registerclientservice_client" portType="client:RegisterClientService" operation="process" variable="inputVariable" createInstance="yes"/>
-    <assign name="Assign1">
+    <assign name="AssignClientEmail">
       <copy>
         <from>$inputVariable.payload/ns2:Email</from>
         <to>$ClientExists_inoke_process_InputVariable.payload/ns3:Email</to>
@@ -143,7 +143,7 @@
           <![CDATA[New client]]>
         </documentation>
         <sequence name="Sequence1">
-          <assign name="Assign2">
+          <assign name="AssignClientAddress">
             <copy>
               <from>$inputVariable.payload/ns2:Address/ns2:District</from>
               <to>$ValidateAddress_invoke_isAddressValid_InputVariable.parameters/distrito</to>
@@ -245,7 +245,7 @@
                         inputVariable="CreateClient_invoke_process_InputVariable"
                         outputVariable="CreateClient_invoke_process_OutputVariable"
                         bpelx:invokeAsDetail="no"/>
-                <assign name="Assign3">
+                <assign name="AssignClientId">
                   <copy>
                     <from>$inputVariable.payload/ns2:Email</from>
                     <to>$SendRegistrationMessage_invoke_process_InputVariable.payload/ns9:Email</to>

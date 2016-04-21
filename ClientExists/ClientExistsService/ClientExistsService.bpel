@@ -78,13 +78,13 @@
 
     <!-- Receive input from requestor. (Note: This maps to operation defined in ClientExistsService.wsdl) -->
     <receive name="receiveInput" partnerLink="clientexistsservice_client" portType="client:ClientExistsService" operation="process" variable="inputVariable" createInstance="yes"/>
-    <assign name="Assign1">
+    <assign name="AssignClientEmail">
       <copy>
         <from>$inputVariable.payload/ns2:Email</from>
         <to>$Invoke1_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns3:email</to>
       </copy>
     </assign>
-    <invoke name="Invoke1" partnerLink="TruckHubDB"
+    <invoke name="InvokeCountClients" partnerLink="TruckHubDB"
             portType="ns1:TruckHubDB_ptt" operation="TruckHubDB"
             inputVariable="Invoke1_TruckHubDB_InputVariable"
             outputVariable="Invoke1_TruckHubDB_OutputVariable"
@@ -94,7 +94,7 @@
         <![CDATA[Not in database]]>
       </documentation>
       <condition>$Invoke1_TruckHubDB_OutputVariable.TruckHubDBOutput/ns3:numClients = 0</condition>
-      <assign name="Assign2">
+      <assign name="AssignOutputNotInDB">
         <copy>
           <from>false()</from>
           <to>$outputVariable.payload/ns2:Exists</to>
@@ -104,7 +104,7 @@
         <documentation>
           <![CDATA[Client Exists]]>
         </documentation>
-        <assign name="Assign3">
+        <assign name="AssignOutputIExists">
           <copy>
             <from>true()</from>
             <to>$outputVariable.payload/ns2:Exists</to>

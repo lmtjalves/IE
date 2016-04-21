@@ -96,7 +96,7 @@
       <documentation>
         <![CDATA[HasPaymentsPending]]>
       </documentation>
-      <condition>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.OutputParameters/ns5:TOTAL = true() </condition>
+      <condition>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.OutputParameters/ns5:TOTAL/@xsi:nil = false()</condition>
       <assign name="AssignPayment">
         <copy>
           <from>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.OutputParameters/ns5:TOTAL</from>

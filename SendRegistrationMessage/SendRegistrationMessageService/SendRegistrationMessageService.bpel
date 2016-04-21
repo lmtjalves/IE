@@ -88,7 +88,7 @@
       </documentation>
       <condition>$inputVariable.payload/ns2:MessageType = "SMS"</condition>
       <sequence name="Sequence2">
-        <assign name="Assign3">
+        <assign name="AssignSendSMSParams">
           <copy>
             <from>$inputVariable.payload/ns2:PhoneNumber</from>
             <to>$Invoke2_sendSMS_InputVariable.parameters/to</to>
@@ -98,12 +98,12 @@
             <to>$Invoke2_sendSMS_InputVariable.parameters/message</to>
           </copy>
         </assign>
-        <invoke name="Invoke2" partnerLink="SendSMSService"
+        <invoke name="InvokeSendSMS" partnerLink="SendSMSService"
                 portType="ns3:SendSMSService" operation="sendSMS"
                 inputVariable="Invoke2_sendSMS_InputVariable"
                 outputVariable="Invoke2_sendSMS_OutputVariable"
                 bpelx:invokeAsDetail="no"/>
-        <assign name="Assign4">
+        <assign name="AssignOutputFromSendSMS">
           <copy>
             <from>true()</from>
             <to>$outputVariable.payload/ns2:Success</to>
@@ -115,7 +115,7 @@
           <![CDATA[Send Via Email]]>
         </documentation>
         <sequence>
-          <assign name="Assign1">
+          <assign name="AssignSendEmailParams">
             <copy>
               <from>$inputVariable.payload/ns2:Email</from>
               <to>$Invoke1_sendEmail_InputVariable.parameters/to</to>
@@ -129,12 +129,12 @@
               <to>$Invoke1_sendEmail_InputVariable.parameters/message</to>
             </copy>
           </assign>
-          <invoke name="Invoke1" partnerLink="SendEmailServic"
+          <invoke name="InvokeSendEmail" partnerLink="SendEmailServic"
                   portType="ns1:SendEmailService" operation="sendEmail"
                   inputVariable="Invoke1_sendEmail_InputVariable"
                   outputVariable="Invoke1_sendEmail_OutputVariable"
                   bpelx:invokeAsDetail="no"/>
-          <assign name="Assign2">
+          <assign name="AssignOutputFromSendEmail">
             <copy>
               <from>true()</from>
               <to>$outputVariable.payload/ns2:Success</to>

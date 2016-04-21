@@ -78,7 +78,7 @@
 
     <!-- Receive input from requestor. (Note: This maps to operation defined in BPELProcess1.wsdl) -->
     <receive name="receiveInput" partnerLink="bpelprocess1_client" portType="client:BPELProcess1" operation="process" variable="inputVariable" createInstance="yes"/>
-    <assign name="Assign1">
+    <assign name="AssignClientAttributes">
       <copy>
         <from>$inputVariable.payload/ns2:Email</from>
         <to>$Invoke1_insert_InputVariable.ClientCollection/ns3:Client/ns3:email</to>
@@ -112,12 +112,12 @@
         <to>$Invoke1_insert_InputVariable.ClientCollection/ns3:Client/ns3:phoneNumber</to>
       </copy>
     </assign>
-    <invoke name="Invoke1" partnerLink="TruckHubDB"
+    <invoke name="InvokeInsertClient" partnerLink="TruckHubDB"
             portType="ns1:TruckHubDB_ptt" operation="insert"
             inputVariable="Invoke1_insert_InputVariable"
             outputVariable="Invoke1_insert_OutputVariable"
             bpelx:invokeAsDetail="no"/>
-    <assign name="Assign2">
+    <assign name="AssignOutputClientId">
       <copy>
         <from>$Invoke1_insert_OutputVariable.ClientCollection/ns3:Client[1]/ns3:id</from>
         <to>$outputVariable.payload/ns2:ClientNumber</to>

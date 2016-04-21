@@ -20,7 +20,7 @@
       <xsd:element name="Amount" type="xsd:double"/>
       <xsd:element name="LastTransportationId" type="xsd:long"/>
       <xsd:element name="FirstTransportationId" type="xsd:long"/>
-      <xsd:element name="Cause" type="xsd:string"/>
+      <xsd:element name="Cause" type="xsd:string" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:element name="Request" type="tns:RequestType">
