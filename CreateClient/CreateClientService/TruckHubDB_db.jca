@@ -1,6 +1,6 @@
 <adapter-config name="TruckHubDB" adapter="Database Adapter" wsdlLocation="TruckHubDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
   
-  <connection-factory location="eis/db/truckhubdb" UIConnectionName="ConnectionDB" adapterRef=""/>
+  <connection-factory location="eis/db/truckhubdb" UIConnectionName="TruckHubDB" adapterRef=""/>
   <endpoint-interaction portType="TruckHubDB_ptt" operation="insert">
     <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
       <property name="DescriptorName" value="TruckHubDB.Client"/>

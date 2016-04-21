@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/TruckHubDB" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/TruckHubDB" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="TransportationCollection" type="TransportationCollection"/>
+   <xs:complexType name="TransportationCollection">
+      <xs:sequence>
+         <xs:element name="Transportation" type="Transportation" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Transportation">
+      <xs:sequence>
+         <xs:element name="id" type="xs:long" nillable="true"/>
+         <xs:element name="transporterid" type="xs:long" minOccurs="0"/>
+         <xs:element name="clientid" type="xs:long" minOccurs="0"/>
+         <xs:element name="quotation" type="xs:long" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>
