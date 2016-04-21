@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/TruckHubDB" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/TruckHubDB" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="TruckHubDBInput" type="TruckHubDBInput"/>
+   <xs:complexType name="TruckHubDBInput">
+      <xs:sequence>
+         <xs:element name="LAST_ID" type="xs:decimal" nillable="false"/>
+         <xs:element name="FIRST_ID" type="xs:decimal" nillable="false"/>
+         <xs:element name="TRANSPORTER_ID" type="xs:decimal" nillable="false"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>
