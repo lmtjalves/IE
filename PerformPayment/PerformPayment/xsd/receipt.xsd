@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://www.receipt.truckhub.org"
+            targetNamespace="http://www.receipt.truckhub.org"
+            elementFormDefault="qualified">
+  <xsd:complexType name="ReceiptType">
+    <xsd:sequence>
+      <xsd:element name="Transporter" type="xsd:string"/>
+      <xsd:element name="Amount" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="Receipt" type="tns:ReceiptType">
+    <xsd:annotation>
+      <xsd:documentation>
+        A sample element
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+</xsd:schema>

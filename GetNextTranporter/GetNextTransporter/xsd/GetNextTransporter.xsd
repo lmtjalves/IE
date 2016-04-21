@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://www.getnexttransporter.truckhub.org"
+            targetNamespace="http://www.getnexttransporter.truckhub.org"
+            elementFormDefault="qualified">
+            <xsd:simpleType name="StatusType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="OK" />
+        <xsd:enumeration value="Error" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="CurrentTransporterId" type="xsd:long"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="Status" type="tns:StatusType"/>
+      <xsd:element name="NextTransporterId" type="xsd:long" minOccurs="0"/>
+      <xsd:element name="ValidTransporter" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Cause" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="Request" type="tns:RequestType">
+    <xsd:annotation>
+      <xsd:documentation>
+        A sample element
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+</xsd:schema>

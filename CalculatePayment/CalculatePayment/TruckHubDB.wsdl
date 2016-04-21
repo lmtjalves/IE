@@ -1,0 +1,25 @@
+<?binding.jca TruckHubDB_db.jca?>
+<wsdl:definitions name="TruckHubDB" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/CalculatePayment/CalculatePayment/TruckHubDB" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/TruckHubDB" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/CalculatePayment/CalculatePayment/TruckHubDB" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="TruckHubDB_plt">
+        <plt:role name="TruckHubDB_role">
+            <plt:portType name="tns:TruckHubDB_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/TruckHubDB" schemaLocation="xsd/TruckHubDB.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="TruckHubDBInput_msg">
+        <wsdl:part name="TruckHubDBInput_msg" element="db:TruckHubDBInput"/>
+    </wsdl:message>
+    <wsdl:message name="TruckHubDBOutput_msg">
+        <wsdl:part name="TruckHubDBOutput" element="db:TruckHubDBOutput"/>
+    </wsdl:message>
+    <wsdl:portType name="TruckHubDB_ptt">
+        <wsdl:operation name="TruckHubDB">
+            <wsdl:input message="tns:TruckHubDBInput_msg"/>
+            <wsdl:output message="tns:TruckHubDBOutput_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
