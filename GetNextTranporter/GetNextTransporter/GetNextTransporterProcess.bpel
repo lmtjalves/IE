@@ -93,7 +93,7 @@
       <documentation>
         <![CDATA[NoNextTransporter]]>
       </documentation>
-      <condition>$GetTheNextTransporterId_TruckHubDB_OutputVariable.TruckHubDBOutput/ns2:MIN_ID_/@xsi:nil</condition>
+      <condition>$GetTheNextTransporterId_TruckHubDB_OutputVariable.TruckHubDBOutput/ns2:MIN_ID_/@xsi:nil = true()</condition>
       <assign name="AssignOutputNoTransporter">
         <copy>
           <from>"OK"</from>
@@ -106,7 +106,7 @@
       </assign>
       <else>
         <documentation>
-          <![CDATA[NExtTransporterExists]]>
+          <![CDATA[NextTransporterExists]]>
         </documentation>
         <assign name="AssignOutputWithNextTransporter">
           <copy>

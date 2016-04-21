@@ -5,6 +5,7 @@
       <xs:sequence>
          <xs:element name="LAST_ID" type="xs:decimal" nillable="false"/>
          <xs:element name="TRANSPORTER_ID" type="xs:decimal" nillable="false"/>
+         <xs:element name="FIRST_ID" type="xs:decimal" nillable="false"/>
       </xs:sequence>
    </xs:complexType>
 </xs:schema>

@@ -18,7 +18,7 @@
   <xsd:complexType name="ResponseType">
     <xsd:sequence>
       <xsd:element name="Status" type="tns:StatusType"/>
-      <xsd:element name="Cause" type="xsd:string"/>
+      <xsd:element name="Cause" type="xsd:string" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:element name="Request" type="tns:RequestType">

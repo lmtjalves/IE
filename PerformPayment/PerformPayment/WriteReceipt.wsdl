@@ -2,8 +2,8 @@
      name="WriteReceipt"
      targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/PerformPayment/PerformPayment/WriteReceipt"
      xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
-     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/file/PerformPayment/PerformPayment/WriteReceipt"
      xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/file/PerformPayment/PerformPayment/WriteReceipt"
      xmlns:imp1="http://www.receipt.truckhub.org"
      xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
     >

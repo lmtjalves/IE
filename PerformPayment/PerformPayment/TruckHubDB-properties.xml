@@ -8,8 +8,8 @@
    <entry key="TRANSPORTER.ID:db_column_not_null">true</entry>
    <entry key="TRANSPORTER:db_column_0">ID</entry>
    <entry key="TRANSPORTER.ID:db_column_precision">10</entry>
-   <entry key="TRANSPORTER.ID:db_column_type">NUMBER</entry>
    <entry key="TRANSPORTER:db_table_type">TABLE</entry>
-   <entry key="root_descriptor_alias">TRANSPORTER</entry>
+   <entry key="TRANSPORTER.ID:db_column_type">NUMBER</entry>
    <entry key="TRANSPORTER.NAME:db_column_type">VARCHAR2</entry>
+   <entry key="root_descriptor_alias">TRANSPORTER</entry>
 </properties>

@@ -81,6 +81,10 @@
         <to>$MarkTransportationsAsPaid_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns3:TRANSPORTER_ID</to>
       </copy>
       <copy>
+        <from>$inputVariable.payload/ns2:FromTransportationId</from>
+        <to>$MarkTransportationsAsPaid_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns3:FIRST_ID</to>
+      </copy>
+      <copy>
         <from>$inputVariable.payload/ns2:UpToTransportationId</from>
         <to>$MarkTransportationsAsPaid_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns3:LAST_ID</to>
       </copy>
