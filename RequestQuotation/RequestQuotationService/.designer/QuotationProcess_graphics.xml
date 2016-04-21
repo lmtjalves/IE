@@ -6,9 +6,9 @@
    <partnerlink_locations>
       <partnerlink name="quotationprocess_client" x="0" y="367" side="left"/>
       <partnerlink name="ObtainBestOffer" x="0" y="461" side="left"/>
-      <partnerlink name="CalculateCoordinatesDistance" x="665" y="278" side="right"/>
+      <partnerlink name="CalculateCoordinatesDistance" x="827" y="278" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,523,794,273" show_swimlanes="true">
+   <graph_layout viewport="0,0,956,341" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>
