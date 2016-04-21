@@ -3,14 +3,7 @@
    <xs:element name="TruckHubDBInput" type="TruckHubDBInput"/>
    <xs:complexType name="TruckHubDBInput">
       <xs:sequence>
-         <xs:element name="TRANSPORTER_ID" type="xs:decimal" nillable="true"/>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:element name="TruckHubDBOutput" type="TruckHubDBOutput"/>
-   <xs:complexType name="TruckHubDBOutput">
-      <xs:sequence>
-         <xs:element name="Total" type="xs:decimal" nillable="true"/>
-         <xs:element name="LastTranportation" type="xs:decimal" nillable="true"/>
+         <xs:element name="TRANSPORTER_ID" type="xs:decimal" nillable="false"/>
       </xs:sequence>
    </xs:complexType>
 </xs:schema>

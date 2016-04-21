@@ -29,7 +29,9 @@
          xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/CalculatePayment/CalculatePayment/BlaBla"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/sp/TruckHubDB">
 
     <import namespace="http://xmlns.oracle.com/CalculatePayment/CalculatePayment/CalculatePayment" location="CalculatePayment.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -62,9 +64,9 @@
     <!-- Reference to the message that will be returned to the requester-->
     <variable name="outputVariable" messageType="client:CalculatePaymentResponseMessage"/>
     <variable name="GetTotalPaymentForTransporter_TruckHubDB_InputVariable"
-              messageType="ns1:TruckHubDBInput_msg"/>
+              messageType="ns1:args_in_msg"/>
     <variable name="GetTotalPaymentForTransporter_TruckHubDB_OutputVariable"
-              messageType="ns1:TruckHubDBOutput_msg"/>
+              messageType="ns1:args_out_msg"/>
   </variables>
 
   <!-- 
@@ -81,7 +83,7 @@
     <assign name="AssignQueryParams">
       <copy>
         <from>$inputVariable.payload/ns3:TranporterId</from>
-        <to>$GetTotalPaymentForTransporter_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns2:TRANSPORTER_ID</to>
+        <to>$GetTotalPaymentForTransporter_TruckHubDB_InputVariable.InputParameters/ns5:TRANSPORTER_ID</to>
       </copy>
     </assign>
     <invoke name="GetTotalPaymentForTransporter"
@@ -94,14 +96,18 @@
       <documentation>
         <![CDATA[HasPaymentsPending]]>
       </documentation>
-      <condition>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.TruckHubDBOutput/ns2:Total/@xsi:nil = true() or $GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.TruckHubDBOutput/ns2:LastTranportation/@xsi:nil = true()</condition>
+      <condition>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.OutputParameters/ns5:TOTAL = true() </condition>
       <assign name="AssignPayment">
         <copy>
-          <from>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.TruckHubDBOutput/ns2:Total</from>
+          <from>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.OutputParameters/ns5:TOTAL</from>
           <to>$outputVariable.payload/ns3:Amount</to>
         </copy>
         <copy>
-          <from>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.TruckHubDBOutput/ns2:LastTranportation</from>
+          <from>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.OutputParameters/ns5:FIRST_ID</from>
+          <to>$outputVariable.payload/ns3:FirstTransportationId</to>
+        </copy>
+        <copy>
+          <from>$GetTotalPaymentForTransporter_TruckHubDB_OutputVariable.OutputParameters/ns5:LAST_ID</from>
           <to>$outputVariable.payload/ns3:LastTransportationId</to>
         </copy>
         <copy>
@@ -117,6 +123,10 @@
           <copy>
             <from>"OK"</from>
             <to>$outputVariable.payload/ns3:Status</to>
+          </copy>
+          <copy>
+            <from>0</from>
+            <to>$outputVariable.payload/ns3:FirstTransportationId</to>
           </copy>
           <copy>
             <from>0</from>

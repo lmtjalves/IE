@@ -2,11 +2,11 @@
   
   <connection-factory location="eis/DB/TruckHubDB" UIConnectionName="TruckHubDB" adapterRef=""/>
   <endpoint-interaction portType="TruckHubDB_ptt" operation="TruckHubDB">
-    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
-      <property name="SqlString" value="SELECT SUM(quotation) AS Total, MAX(id) AS LastTranportation FROM transportation WHERE paid=0 AND transporterId=#TRANSPORTER_ID"/>
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="SOA_USER"/>
+      <property name="ProcedureName" value="MISSINGPAYMENTSFOR"/>
       <property name="GetActiveUnitOfWork" value="false"/>
     </interaction-spec>
-    <input/>
     <output/>
   </endpoint-interaction>
 
