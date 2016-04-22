@@ -5,10 +5,10 @@
    <iconize/>
    <partnerlink_locations>
       <partnerlink name="performpaymentprocess_client" x="0" y="367" side="left"/>
-      <partnerlink name="TruckHubDB" x="1090" y="278" side="right"/>
-      <partnerlink name="WriteReceipt" x="1090" y="461" side="right"/>
+      <partnerlink name="TruckHubDB" x="610" y="278" side="right"/>
+      <partnerlink name="WriteReceipt" x="610" y="461" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,1206,521" show_swimlanes="true">
+   <graph_layout viewport="0,307,726,341" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>

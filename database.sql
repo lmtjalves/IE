@@ -54,11 +54,10 @@ INSERT INTO transporter (id, name) VALUES (seq_transporterId.nextval, 'Transport
 CREATE OR REPLACE PROCEDURE missingPaymentsFor(transporter_id IN NUMERIC, total OUT NUMERIC, first_id OUT NUMERIC, last_id OUT NUMERIC)
 IS
 BEGIN
-	SELECT SUM(quotation), MAX(id), MIN(id) 
+	SELECT SUM(quotation), MIN(id), MAX(id) 
 	INTO total, first_id, last_id
 	FROM transportation
 	WHERE paid='N' AND transporterId=transporter_id;
 	UPDATE transportation SET paid='W' WHERE paid='N' AND transporterId=transporter_id;
-	COMMIT;
 END missingPaymentsFor;
 /	

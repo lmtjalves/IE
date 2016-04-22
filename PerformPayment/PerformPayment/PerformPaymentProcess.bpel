@@ -102,7 +102,7 @@
         <to>$InvokeWriteReceipt_Write_InputVariable.body/ns5:Amount</to>
       </copy>
       <copy>
-        <from>$InvokeGetTransporterName_selectByPrimaryKey_OutputVariable.TransporterCollection/ns3:Transporter/ns3:name</from>
+        <from>$InvokeGetTransporterName_selectByPrimaryKey_OutputVariable.TransporterCollection/ns3:Transporter[1]/ns3:name</from>
         <to>$InvokeWriteReceipt_Write_InputVariable.body/ns5:Transporter</to>
       </copy>
     </assign>

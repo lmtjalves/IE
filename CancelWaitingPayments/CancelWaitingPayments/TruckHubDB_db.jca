@@ -1,9 +1,9 @@
 <adapter-config name="TruckHubDB" adapter="Database Adapter" wsdlLocation="TruckHubDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
   
-  <connection-factory location="eis/DB/TruckHubDB" UIConnectionName="TruckHubDB" adapterRef=""/>
+  <connection-factory location="eis/db/truckhubdb" UIConnectionName="TruckHubDB" adapterRef=""/>
   <endpoint-interaction portType="TruckHubDB_ptt" operation="TruckHubDB">
     <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
-      <property name="SqlString" value="UPDATE transportation SET paid=&quot;N&quot; WHERE id &lt;= #LAST_ID AND id >= #FIRST_ID AND transporterID = #TRANSPORTER_ID"/>
+      <property name="SqlString" value="UPDATE transportation SET paid='N' WHERE id &lt;= #LAST_ID AND id >= #FIRST_ID AND transporterID = #TRANSPORTER_ID"/>
       <property name="GetActiveUnitOfWork" value="false"/>
     </interaction-spec>
     <input/>
