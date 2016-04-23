@@ -82,11 +82,11 @@
         <to>$InvokeSendEmail_sendEmail_InputVariable.parameters/to</to>
       </copy>
       <copy>
-        <from>"TruckHub Invoice\n" + "ClientId: " + $inputVariable.payload/ns2:ClientId + "\n" +"Transporter: " + $inputVariable.payload/ns2:TransporterName + " (with id: " + $inputVariable.payload/ns2:TransporterId + ")\n" +"Transportation No: " + $inputVariable.payload/ns2:TransportationId + "\n" +"ParcelWeight: " + $inputVariable.payload/ns2:ParcelWeight + "\n" + "Distance: " + $inputVariable.payload/ns2:TransportationDistanceInKm + " Km\n" + "Total: " + $inputVariable.payload/ns2:Quotation + "€"</from>
+        <from>concat("Invoice for transportation ", $inputVariable.payload/ns2:TransportationId, "&amp;#13;", "Client: ", $inputVariable.payload/ns2:ClientId, "&amp;#13;", "Transporter: ", $inputVariable.payload/ns2:TransporterName, "&amp;#13;", "Transporter Id: ", $inputVariable.payload/ns2:TransporterId, "&amp;#13;", "Distance: ", $inputVariable.payload/ns2:TransportationDistanceInKm, "&amp;#13;", "Weight: ", $inputVariable.payload/ns2:ParcelWeight, "&amp;#13;", "Total: ", $inputVariable.payload/ns2:Quotation)</from>
         <to>$InvokeSendEmail_sendEmail_InputVariable.parameters/message</to>
       </copy>
       <copy>
-        <from>"Invoice for transportation [" + $inputVariable.payload/ns2:TransportationId + "]"</from>
+        <from>concat("TruckHub Invoice for transportation [ ",  $inputVariable.payload/ns2:TransportationId, " ]")</from>
         <to>$InvokeSendEmail_sendEmail_InputVariable.parameters/subject</to>
       </copy>
     </assign>

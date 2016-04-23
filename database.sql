@@ -38,7 +38,6 @@ CREATE TABLE transportation (
 	clientId NUMBER(10) NOT NULL,
 	quotation NUMBER(10) NOT NULL,
 	paid VARCHAR(1) DEFAULT 'N' NOT NULL,
-	createdAt 
 	PRIMARY KEY(id),
 	CONSTRAINT fk_transporter 
 		FOREIGN KEY (transporterId)
