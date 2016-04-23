@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="11.1.1.64.93"
+          id="TransporterPaymentInfoType"
+          Package="PaymentsToTransporttationCompaniesUI_ReviewPayment"
+          BeanClass="PaymentsToTransporttationCompaniesUI_ReviewPayment.TransporterPaymentInfoType"
+          isJavaBased="false">
+  <Attribute Name="transporterId" Type="java.lang.Long">
+    <Properties>
+      <CustomProperties>
+        <Property Name="minInclusive" Value="-9223372036854775808"/>
+        <Property Name="originalName" Value="transporterId"/>
+        <Property Name="LeafElement_hint" Value="LeafElement_no_attribute"/>
+        <Property Name="nextSiblingNamespace"
+                  Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo"/>
+        <Property Name="nextSibling" Value="amountToPay"/>
+        <Property Name="fractionDigits" Value="0"/>
+        <Property Name="nillable" Value="true"/>
+        <Property Name="LABEL" Value="Transporter Id"/>
+        <Property Name="maxOccurs" Value="1"/>
+        <Property Name="maxInclusive" Value="9223372036854775807"/>
+        <Property Name="type" Value="java.lang.Long"/>
+        <Property Name="targetNamespace"
+                  Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo"/>
+        <Property Name="minOccurs" Value="1"/>
+      </CustomProperties>
+    </Properties>
+  </Attribute>
+  <Attribute Name="amountToPay" Type="java.lang.Double">
+    <Properties>
+      <CustomProperties>
+        <Property Name="nextSiblingNamespace"
+                  Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo"/>
+        <Property Name="nextSibling" Value="firstTransportationId"/>
+        <Property Name="minOccurs" Value="1"/>
+        <Property Name="maxOccurs" Value="1"/>
+        <Property Name="LABEL" Value="Amount To Pay"/>
+        <Property Name="LeafElement_hint" Value="LeafElement_no_attribute"/>
+        <Property Name="nillable" Value="true"/>
+        <Property Name="originalName" Value="amountToPay"/>
+        <Property Name="targetNamespace"
+                  Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo"/>
+        <Property Name="type" Value="java.lang.Double"/>
+      </CustomProperties>
+    </Properties>
+  </Attribute>
+  <Attribute Name="firstTransportationId" Type="java.lang.Long">
+    <Properties>
+      <CustomProperties>
+        <Property Name="minInclusive" Value="-9223372036854775808"/>
+        <Property Name="originalName" Value="firstTransportationId"/>
+        <Property Name="LeafElement_hint" Value="LeafElement_no_attribute"/>
+        <Property Name="nextSiblingNamespace"
+                  Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo"/>
+        <Property Name="nextSibling" Value="lastTransportationId"/>
+        <Property Name="fractionDigits" Value="0"/>
+        <Property Name="nillable" Value="true"/>
+        <Property Name="LABEL" Value="First Transportation Id"/>
+        <Property Name="maxOccurs" Value="1"/>
+        <Property Name="maxInclusive" Value="9223372036854775807"/>
+        <Property Name="type" Value="java.lang.Long"/>
+        <Property Name="targetNamespace"
+                  Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo"/>
+        <Property Name="minOccurs" Value="1"/>
+      </CustomProperties>
+    </Properties>
+  </Attribute>
+  <Attribute Name="lastTransportationId" Type="java.lang.Long">
+    <Properties>
+      <CustomProperties>
+        <Property Name="minOccurs" Value="1"/>
+        <Property Name="fractionDigits" Value="0"/>
+        <Property Name="maxOccurs" Value="1"/>
+        <Property Name="maxInclusive" Value="9223372036854775807"/>
+        <Property Name="LABEL" Value="Last Transportation Id"/>
+        <Property Name="LeafElement_hint" Value="LeafElement_no_attribute"/>
+        <Property Name="nillable" Value="true"/>
+        <Property Name="originalName" Value="lastTransportationId"/>
+        <Property Name="minInclusive" Value="-9223372036854775808"/>
+        <Property Name="targetNamespace"
+                  Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo"/>
+        <Property Name="type" Value="java.lang.Long"/>
+      </CustomProperties>
+    </Properties>
+  </Attribute>
+</JavaBean>

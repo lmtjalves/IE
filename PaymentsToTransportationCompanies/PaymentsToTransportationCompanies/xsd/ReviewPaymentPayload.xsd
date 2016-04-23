@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema targetNamespace="http://xmlns.oracle.com/bpel/workflow/task" xmlns:tns="http://xmlns.oracle.com/bpel/workflow/task" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/Review" xmlns:ns0="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo">
+   <import namespace="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo" schemaLocation="TransporterPaymentInfo.xsd"/>
+   <import namespace="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/Review" schemaLocation="../businessCatalog/ProcessTypes/Review.xsd"/>
+   <complexType name="ReviewPaymentPayloadType">
+      <sequence>
+         <element ref="ns0:TransporterPaymentInfo"/>
+         <element ref="ns1:Review"/>
+      </sequence>
+   </complexType>
+</schema>

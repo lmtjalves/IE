@@ -1,0 +1,64 @@
+Apr 23, 2016 10:33:26 AM oracle.mds
+NOTIFICATION: PManager instance is created without multitenancy support as JVM flag "oracle.multitenant.enabled" is not set to enable multitenancy support.
+Apr 23, 2016 10:33:26 AM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
+SEVERE: java.io.FileNotFoundException: ./config/jps-config.xml (No such file or directory)
+Apr 23, 2016 10:33:26 AM oracle.mds
+NOTIFICATION: Auditing is disabled for component MDS.
+Apr 23, 2016 10:33:27 AM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+INFO: XMLSchema incremental build enabled.
+Apr 23, 2016 10:33:35 AM oracle.bpel.services.common.ServicesLogger __logException
+SEVERE: <.> The XML-Schema file for the fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory could not be found in the composite.
+The XML-Schema file xsd/Review.xsd could not be found in the composite. The XML fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory of target namespace  assumes the existence of the schema file in the composite.
+Check the composite for the schema xsd/Review.xsd and make sure it has target namespace . The schema is expected in the project xsd or businessCatalog folder. If the error persists, contact Oracle Support Services.
+
+The XML-Schema file for the fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory could not be found in the composite.
+The XML-Schema file xsd/Review.xsd could not be found in the composite. The XML fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory of target namespace  assumes the existence of the schema file in the composite.
+Check the composite for the schema xsd/Review.xsd and make sure it has target namespace . The schema is expected in the project xsd or businessCatalog folder. If the error persists, contact Oracle Support Services.
+
+	at oracle.bpel.services.rules.fabric.xml.RuleDictionarySchemaUsage.addToResultSet(RuleDictionarySchemaUsage.java:330)
+	at oracle.bpel.services.rules.fabric.xml.RuleDictionarySchemaUsage.addToResultSet(RuleDictionarySchemaUsage.java:246)
+	at oracle.bpel.services.rules.fabric.xml.RuleDictionarySchemaUsage.calculateSchemaUsages(RuleDictionarySchemaUsage.java:166)
+	at oracle.bpel.services.rules.fabric.xml.XmlSchemaCache.onInit(XmlSchemaCache.java:256)
+	at oracle.bpel.services.rules.fabric.xml.XmlSchemaCache.onInit(XmlSchemaCache.java:193)
+	at oracle.bpel.services.rules.fabric.ComponentModelValidator.addSchemaInformation(ComponentModelValidator.java:291)
+	at oracle.bpel.services.rules.fabric.ComponentModelValidator.validate(ComponentModelValidator.java:245)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at oracle.soa.scac.rules.DecisionComponentValidator.validate(DecisionComponentValidator.java:118)
+	at oracle.soa.scac.ValidateComposite.validateComponentTypeServicesReferences(ValidateComposite.java:1051)
+	at oracle.soa.scac.ValidateComposite.doValidation0(ValidateComposite.java:502)
+	at oracle.soa.scac.ValidateComposite.doValidation(ValidateComposite.java:481)
+	at oracle.soa.scac.ValidateComposite.run0(ValidateComposite.java:206)
+	at oracle.soa.scac.ValidateComposite.run(ValidateComposite.java:187)
+	at oracle.soa.scac.ValidateComposite.main(ValidateComposite.java:179)
+Apr 23, 2016 10:33:35 AM oracle.bpel.services.common.ServicesLogger __logException
+SEVERE: <.> The XML-Schema file for the fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory could not be found in the composite.
+The XML-Schema file xsd/Review.xsd could not be found in the composite. The XML fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory of target namespace  assumes the existence of the schema file in the composite.
+Check the composite for the schema xsd/Review.xsd and make sure it has target namespace . The schema is expected in the project xsd or businessCatalog folder. If the error persists, contact Oracle Support Services.
+
+com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory
+The XML-Schema file for the fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory could not be found in the composite.
+The XML-Schema file xsd/Review.xsd could not be found in the composite. The XML fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory of target namespace  assumes the existence of the schema file in the composite.
+Check the composite for the schema xsd/Review.xsd and make sure it has target namespace . The schema is expected in the project xsd or businessCatalog folder. If the error persists, contact Oracle Support Services.
+
+com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory
+	at oracle.bpel.services.rules.fabric.xml.RuleDictionarySchemaUsage.addToResultSet(RuleDictionarySchemaUsage.java:330)
+	at oracle.bpel.services.rules.fabric.xml.RuleDictionarySchemaUsage.addToResultSet(RuleDictionarySchemaUsage.java:246)
+	at oracle.bpel.services.rules.fabric.xml.RuleDictionarySchemaUsage.calculateSchemaUsages(RuleDictionarySchemaUsage.java:166)
+	at oracle.bpel.services.rules.fabric.xml.XmlSchemaCache.onInit(XmlSchemaCache.java:256)
+	at oracle.bpel.services.rules.fabric.xml.XmlSchemaCache.onInit(XmlSchemaCache.java:193)
+	at oracle.bpel.services.rules.fabric.ComponentModelValidator.addSchemaInformation(ComponentModelValidator.java:291)
+	at oracle.bpel.services.rules.fabric.ComponentModelValidator.validate(ComponentModelValidator.java:245)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at oracle.soa.scac.rules.DecisionComponentValidator.validate(DecisionComponentValidator.java:118)
+	at oracle.soa.scac.ValidateComposite.validateComponentTypeServicesReferences(ValidateComposite.java:1051)
+	at oracle.soa.scac.ValidateComposite.doValidation0(ValidateComposite.java:502)
+	at oracle.soa.scac.ValidateComposite.doValidation(ValidateComposite.java:481)
+	at oracle.soa.scac.ValidateComposite.run0(ValidateComposite.java:206)
+	at oracle.soa.scac.ValidateComposite.run(ValidateComposite.java:187)
+	at oracle.soa.scac.ValidateComposite.main(ValidateComposite.java:179)

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="11.1.1.64.93"
+          id="ReviewPaymentPayloadType"
+          Package="PaymentsToTransporttationCompaniesUI_ReviewPayment"
+          BeanClass="PaymentsToTransporttationCompaniesUI_ReviewPayment.ReviewPaymentPayloadType"
+          isJavaBased="false">
+  <AccessorAttribute id="TransporterPaymentInfo" IsCollection="true"
+                     BeanClass="PaymentsToTransporttationCompaniesUI_ReviewPayment.TransporterPaymentInfoType"
+                     CollectionBeanClass="PaymentsToTransporttationCompaniesUI_ReviewPayment.TransporterPaymentInfoType_TransporterPaymentInfo_Operations">
+    <Properties>
+      <Property Name="nextSiblingNamespace"
+                Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/Review"/>
+      <Property Name="nextSibling" Value="Review"/>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Transporter Payment Info"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="TransporterPaymentInfo"/>
+      <Property Name="targetNamespace"
+                Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/TransporterPaymentInfo"/>
+    </Properties>
+  </AccessorAttribute>
+  <AccessorAttribute id="Review" IsCollection="true"
+                     BeanClass="PaymentsToTransporttationCompaniesUI_ReviewPayment.ReviewType"
+                     CollectionBeanClass="PaymentsToTransporttationCompaniesUI_ReviewPayment.ReviewType_Review_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Review"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="Review"/>
+      <Property Name="targetNamespace"
+                Value="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/Review"/>
+    </Properties>
+  </AccessorAttribute>
+</JavaBean>
