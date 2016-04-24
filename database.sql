@@ -1,7 +1,7 @@
-# Sequence for client id
+-- Sequence for client id
 CREATE sequence seq_clientId start with 1 increment by 1;
 
-# Stores clients information
+-- Stores clients information
 CREATE TABLE client (
 	id NUMBER(10),
 	email VARCHAR(255) NOT NULL,
@@ -16,10 +16,10 @@ CREATE TABLE client (
 	CONSTRAINT email_unique UNIQUE (email)
 );
 
-# Sequence for transporters id
+-- Sequence for transporters id
 CREATE sequence seq_transporterId start with 1 increment by 1;
 
-# Stores transporters information
+-- Stores transporters information
 CREATE TABLE transporter (
 	id NUMBER(10),
 	name VARCHAR(255) NOT NULL,
@@ -27,11 +27,11 @@ CREATE TABLE transporter (
 	CONSTRAINT name_unique UNIQUE (name)
 );
 
-# Sequence for the transportation id
+-- Sequence for the transportation id
 CREATE sequence seq_transportationId start with 1 increment by 1;
 
-# Stores all transportations
-# Paid may be N - Not paid, P - Paid, W - waiting (some process is managing the payment
+-- Stores all transportations
+-- Paid may be N - Not paid, P - Paid, W - waiting (some process is managing the payment
 CREATE TABLE transportation (
 	id NUMBER(10),
 	transporterId NUMBER(10) NOT NULL,
