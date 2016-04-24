@@ -48,7 +48,7 @@ CREATE TABLE transportation (
 );
 
 INSERT INTO transporter (id, name) VALUES (seq_transporterId.nextval, 'TransporterA');
-INSERT INTO transporter (id, name) VALUES (seq_transporterId.nextval, 'TransporterX');
+INSERT INTO transporter (id, name) VALUES (seq_transporterId.nextval, 'TransporterZ');
 
 CREATE OR REPLACE PROCEDURE missingPaymentsFor(transporter_id IN NUMERIC, total OUT NUMERIC, first_id OUT NUMERIC, last_id OUT NUMERIC)
 IS
