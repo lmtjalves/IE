@@ -1,0 +1,42 @@
+# This file contains data to be used for testing the features
+# of the PaymentsToTransportationCompaniesProcess
+
+# The process executes every 5 minutes
+# Create some transportations using the StoreTransportationService
+# Let's create a case where the transporterA payments need to be reviewed and will be approved
+ClientId: 22
+TransporterId: 1
+Quotation: 500
+
+ClientId: 22
+TransporterId: 2
+Quotation: 1000
+
+ClientId: 22
+TransporterId: 1
+Quotation: 1100
+
+# The process will execute and there will be a new task in the worklist for the jcooper user
+# In the task, approve the review
+# You can now check that in the /home/oracle there are two new files with the receipt for each transporter
+
+#----------------------------------
+
+# Let's create a case where there's only one payment to one transporter and none for another
+ClientId: 22
+TransporterId: 2
+Quotation: 1000
+
+# The process will execute and there will be a new file in the /home/oracle there will be only new receipt for the transporterZ
+
+#----------------------------------
+
+# Let's create a case where the payment will be rejected
+ClientId: 22
+TransporterId: 2
+Quotation: 1800
+
+# The process will execute and there will be a new task in the worklist for the jcooper user
+# In the task, reject the review
+# There will be no receipt file, more, in the next process execution, the same payment will be processed and once again
+# will be reviewed (just accept this time)
