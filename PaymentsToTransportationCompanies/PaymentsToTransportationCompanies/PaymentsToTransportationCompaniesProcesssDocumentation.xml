@@ -117,6 +117,14 @@
                     <description locale="en"></description>
                 </descriptions>
             </topicDocumentation>
+            <topicDocumentation name="GTW16028331828773">
+                <labels>
+                    <label locale="en">No payment to perform?</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
             <topicDocumentation name="sf4"/>
             <topicDocumentation name="sf7"/>
             <topicDocumentation name="sf8"/>
@@ -145,6 +153,12 @@
             <topicDocumentation name="sf54"/>
             <topicDocumentation name="sf55"/>
             <topicDocumentation name="sf56"/>
+            <topicDocumentation name="sf23"/>
+            <topicDocumentation name="sf25">
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
         </topicDocumentations>
     </component>
 </processDocumentation>
