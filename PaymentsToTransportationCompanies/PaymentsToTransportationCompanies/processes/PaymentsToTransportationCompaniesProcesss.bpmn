@@ -15,7 +15,7 @@
                     <ns5:StringFeature value="http://xmlns.oracle.com/bpmn/bpmnProcess/PaymentsToTransportationCompaniesProcesss" name="NAMESPACE"/>
                     <ns5:StringFeature value="PROJECT_DEFAULT" name="generatesEvents"/>
                     <ns5:StringFeature value="HORIZONTAL_LAYOUT" name="process-layout"/>
-                    <ns5:StringFeature value="1.0" name="scale"/>
+                    <ns5:StringFeature value="1.077" name="scale"/>
                     <ns5:StringFeature value="REGULAR" name="sealType"/>
                 </ns5:FeatureSet>
                 <ns5:Conversations>
