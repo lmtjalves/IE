@@ -5,7 +5,7 @@
     <interaction-spec className="oracle.tip.adapter.file.outbound.FileInteractionSpec">
       <property name="PhysicalDirectory" value="/home/oracle"/>
       <property name="Append" value="false"/>
-      <property name="FileNamingConvention" value="Receipt_%SEQ%.txt"/>
+      <property name="FileNamingConvention" value="Receipt_%SEQ%.xml"/>
       <property name="NumberMessages" value="1"/>
     </interaction-spec>
   </endpoint-interaction>

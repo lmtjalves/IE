@@ -1,12 +1,12 @@
-Apr 29, 2016 5:43:43 PM oracle.mds
+Apr 29, 2016 1:53:25 PM oracle.mds
 NOTIFICATION: PManager instance is created without multitenancy support as JVM flag "oracle.multitenant.enabled" is not set to enable multitenancy support.
-Apr 29, 2016 5:43:43 PM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
+Apr 29, 2016 1:53:26 PM oracle.security.jps.internal.config.xml.XmlConfigurationFactory initDefaultConfiguration
 SEVERE: java.io.FileNotFoundException: ./config/jps-config.xml (No such file or directory)
-Apr 29, 2016 5:43:43 PM oracle.mds
+Apr 29, 2016 1:53:26 PM oracle.mds
 NOTIFICATION: Auditing is disabled for component MDS.
-Apr 29, 2016 5:43:44 PM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+Apr 29, 2016 1:53:27 PM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
 INFO: XMLSchema incremental build enabled.
-Apr 29, 2016 5:43:55 PM oracle.bpel.services.common.ServicesLogger __logException
+Apr 29, 2016 1:53:36 PM oracle.bpel.services.common.ServicesLogger __logException
 SEVERE: <.> The XML-Schema file for the fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory could not be found in the composite.
 The XML-Schema file xsd/Review.xsd could not be found in the composite. The XML fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory of target namespace  assumes the existence of the schema file in the composite.
 Check the composite for the schema xsd/Review.xsd and make sure it has target namespace . The schema is expected in the project xsd or businessCatalog folder. If the error persists, contact Oracle Support Services.
@@ -33,7 +33,7 @@ Check the composite for the schema xsd/Review.xsd and make sure it has target na
 	at oracle.soa.scac.ValidateComposite.run0(ValidateComposite.java:206)
 	at oracle.soa.scac.ValidateComposite.run(ValidateComposite.java:187)
 	at oracle.soa.scac.ValidateComposite.main(ValidateComposite.java:179)
-Apr 29, 2016 5:43:55 PM oracle.bpel.services.common.ServicesLogger __logException
+Apr 29, 2016 1:53:36 PM oracle.bpel.services.common.ServicesLogger __logException
 SEVERE: <.> The XML-Schema file for the fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory could not be found in the composite.
 The XML-Schema file xsd/Review.xsd could not be found in the composite. The XML fact com.oracle.xmlns.bpm.bpmobject.processtypes.review.ObjectFactory of target namespace  assumes the existence of the schema file in the composite.
 Check the composite for the schema xsd/Review.xsd and make sure it has target namespace . The schema is expected in the project xsd or businessCatalog folder. If the error persists, contact Oracle Support Services.
