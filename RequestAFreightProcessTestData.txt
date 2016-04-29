@@ -1,11 +1,59 @@
 # This file contains data to be used for testing the features
-# of the RequestQuotation service
+# of the Request a Freight process
 
-# Request a quotation of a shipping from Figueira da Foz to Coimbra of a 2.5 kg package 
-Origin/Latitude: 40.1521398
-Origin/Longitude: -8.857582999999977
-Destination/Latitude: 40.2033145
-Destination/Longitude: -8.410257300000012
-Parcel Weight: 2.5
+# Request a freight from Figueira da Foz to Coimbra of a 2.5 kg package (client is not registered)
+email: diogocardoso@outlook.pt
+phoneNumber: 351962323370
+messageType: Email
+district: Leiria
+county: Leiria
+street: Rua do Vale Sepal
+doorNumber: 60
+zipCode: 2415-395
+originLatitude: 40.1521398
+originLongitude: -8.857582999999977
+destinationLatitude: 40.2033145
+destinationLongitude: -8.410257300000012
+parcelWeight: 2.5
 
-Return: Randomly generated offer and the transporter who made the offer
+Client accepts the quotation.
+
+Return: Sends a client registeration email and an invoice email.
+
+# Request a freight from Figueira da Foz to Coimbra of a 2.5 kg package (client is registered)
+email: diogocardoso@outlook.pt
+phoneNumber: 351962323370
+messageType: Email
+district: Leiria
+county: Leiria
+street: Rua do Vale Sepal
+doorNumber: 60
+zipCode: 2415-395
+originLatitude: 40.1521398
+originLongitude: -8.857582999999977
+destinationLatitude: 40.2033145
+destinationLongitude: -8.410257300000012
+parcelWeight: 2.5
+
+Client accepts the quotation.
+
+Return: Sends an invoice email.
+
+# Request a freight from Figueira da Foz to Coimbra of a 2.5 kg package (client is registered)
+email: diogocardoso@outlook.pt
+phoneNumber: 351962323370
+messageType: Email
+district: Leiria
+county: Leiria
+street: Rua do Vale Sepal
+doorNumber: 60
+zipCode: 2415-395
+originLatitude: 40.1521398
+originLongitude: -8.857582999999977
+destinationLatitude: 40.2033145
+destinationLongitude: -8.410257300000012
+parcelWeight: 2.5
+
+Client rejects the quotation.
+
+Return: no emails are sent.
