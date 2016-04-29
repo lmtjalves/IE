@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?bpmo version="11.1.1.7.0.0.8" build="0.8" fullName="FreightTypes.EnumObject" modifiers="268435456"?>
+<!--########################################################################################-->
+<!--####                                                                                ####-->
+<!--####          THIS IS AN AUTO GENERATED FILE. PLEASE DO NOT MANUALLY MODIFY         ####-->
+<!--#### CHANGES TO THIS FILE MAY PRODUCE UNEXPECTED BEHAVIOR AND WOULD BE OVERWRITTEN  ####-->
+<!--####                                                                                ####-->
+<!--########################################################################################-->
+<definitions targetNamespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/EnumObject.Interface" name="EnumObject" xmlns:tns="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/EnumObject.Interface"  xmlns:xsd="http://www.w3.org/2001/XMLSchema"  xmlns="http://schemas.xmlsoap.org/wsdl/"  xmlns:oj="http://www.registerclient.truckhub.org"  xmlns:bpmo="http://xmlns.oracle.com/bpm/bpmobject/" >
+    <types>
+        <xsd:schema>
+            <xsd:import namespace="http://www.registerclient.truckhub.org" schemaLocation="../../xsd/RegisterClient.xsd"/>
+        </xsd:schema>
+    </types>
+    <portType name="EnumObjectPortType"/>
+    <binding name="EnumObjectPortTypeBinding" type="tns:EnumObjectPortType">
+        <bpmo:binding element="oj:messageType"/>
+    </binding>
+</definitions>

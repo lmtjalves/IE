@@ -14,7 +14,9 @@
  <xsd:complexType name="responseType">
   <xsd:sequence>
    <xsd:element name="offer" type="xsd:double"/>
-   <xsd:element name="transporter" type="xsd:string"/>
+   <xsd:element name="distance" type="xsd:double"/>
+   <xsd:element name="transporterName" type="xsd:string"/>
+   <xsd:element name="transporterId" type="xsd:long"/>
   </xsd:sequence>
  </xsd:complexType>
  <xsd:complexType name="coordinatesType">

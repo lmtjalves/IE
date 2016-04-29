@@ -24,6 +24,8 @@
   <import namespace="http://requestquotationtransporterzws/"
           location="RequestQuotationTransporterZServiceWrapper.wsdl"
           importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ObtainBestOffer/ObtainBestOfferService/TruckHubDB"
+          location="TruckHubDB.wsdl" importType="wsdl"/>
   <service name="bestofferprocess_client_ep"
            ui:wsdlLocation="BestOfferProcess.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOfferService/BestOfferProcess#wsdl.interface(BestOfferProcess)"/>
@@ -56,6 +58,17 @@
                 type="xs:string" many="false">WSDLDriven</property>
     </binding.ws>
   </reference>
+  <reference name="TruckHubDB" ui:wsdlLocation="TruckHubDB.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/ObtainBestOffer/ObtainBestOfferService/TruckHubDB#wsdl.interface(TruckHubDB_ptt)"/>
+    <binding.jca config="TruckHubDB_db.jca"/>
+    <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+    <property name="jca.retry.interval" type="xs:int" many="false"
+              override="may">1</property>
+    <property name="jca.retry.backoff" type="xs:int" many="false"
+              override="may">2</property>
+    <property name="jca.retry.maxInterval" type="xs:string" many="false"
+              override="may">120</property>
+  </reference>
   <wire>
     <source.uri>bestofferprocess_client_ep</source.uri>
     <target.uri>BestOfferProcess/bestofferprocess_client</target.uri>
@@ -67,5 +80,9 @@
   <wire>
     <source.uri>BestOfferProcess/ObtainOfferTransporterZ</source.uri>
     <target.uri>ObtainOfferTransporterZ</target.uri>
+  </wire>
+  <wire>
+    <source.uri>BestOfferProcess/TruckHubDB</source.uri>
+    <target.uri>TruckHubDB</target.uri>
   </wire>
 </composite>

@@ -28,7 +28,10 @@
          xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/ObtainBestOffer/ObtainBestOfferService/TruckHubDB"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/TruckHubDB">
 
     <import namespace="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOfferService/BestOfferProcess" location="BestOfferProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -50,6 +53,8 @@
     <partnerLink name="ObtainOfferTransporterZ"
                  partnerLinkType="ns1:ObtainOfferTransporterZ"
                  partnerRole="RequestQuotationTransporterZService"/>
+    <partnerLink name="TruckHubDB" partnerLinkType="ns4:TruckHubDB_plt"
+                 partnerRole="TruckHubDB_role"/>
   </partnerLinks>
 
   <!-- 
@@ -72,6 +77,10 @@
               messageType="ns1:generateOffer"/>
     <variable name="InvokeTransporterZ_generateOffer_OutputVariable"
               messageType="ns1:generateOfferResponse"/>
+    <variable name="CallDB_TruckHubDB_InputVariable"
+              messageType="ns4:TruckHubDBInput_msg"/>
+    <variable name="CallDB_TruckHubDB_OutputVariable"
+              messageType="ns4:TruckHubDBOutputCollection_msg"/>
   </variables>
 
   <!-- 
@@ -124,29 +133,52 @@
     </flow>
     <if name="isTransportABestOffer">
       <condition>$InvokeTransporterA_generateOffer_OutputVariable.parameters/return &gt;= $InvokeTransporterZ_generateOffer_OutputVariable.parameters/return</condition>
-      <assign name="AssignOutputA">
-        <copy>
-          <from>"A"</from>
-          <to>$outputVariable.payload/ns3:transporter</to>
-        </copy>
-        <copy>
-          <from>$InvokeTransporterA_generateOffer_OutputVariable.parameters/return</from>
-          <to>$outputVariable.payload/ns3:offer</to>
-        </copy>
-      </assign>
-      <else>
-        <assign name="AssignOutputZ">
+      <sequence name="Sequence2">
+        <assign name="AssignDBCallA">
           <copy>
-            <from>"Z"</from>
-            <to>$outputVariable.payload/ns3:transporter</to>
+            <from>"TransporterA"</from>
+            <to>$CallDB_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns5:name</to>
           </copy>
           <copy>
-            <from>$InvokeTransporterZ_generateOffer_OutputVariable.parameters/return</from>
+            <from>$InvokeTransporterA_generateOffer_OutputVariable.parameters/return</from>
             <to>$outputVariable.payload/ns3:offer</to>
           </copy>
+          <copy>
+            <from>"TransporterA"</from>
+            <to>$outputVariable.payload/ns3:transporterName</to>
+          </copy>
         </assign>
+      </sequence>
+      <else>
+        <sequence name="Sequence3">
+          <assign name="AssignDBCallZ">
+            <copy>
+              <from>"TransporterZ"</from>
+              <to>$CallDB_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns5:name</to>
+            </copy>
+            <copy>
+              <from>$InvokeTransporterZ_generateOffer_OutputVariable.parameters/return</from>
+              <to>$outputVariable.payload/ns3:offer</to>
+            </copy>
+            <copy>
+              <from>"TransporterZ"</from>
+              <to>$outputVariable.payload/ns3:transporterName</to>
+            </copy>
+          </assign>
+        </sequence>
       </else>
     </if>
+    <invoke name="CallDB" partnerLink="TruckHubDB"
+            portType="ns4:TruckHubDB_ptt" operation="TruckHubDB"
+            inputVariable="CallDB_TruckHubDB_InputVariable"
+            outputVariable="CallDB_TruckHubDB_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <assign name="AssignOutput">
+      <copy>
+        <from>$CallDB_TruckHubDB_OutputVariable.TruckHubDBOutputCollection/ns5:TruckHubDBOutput/ns5:id</from>
+        <to>$outputVariable.payload/ns3:transporterId</to>
+      </copy>
+    </assign>
     <!-- Generate reply to synchronous request -->
     <reply name="replyOutput" partnerLink="bestofferprocess_client" portType="client:BestOfferProcess" operation="process" variable="outputVariable"/>
   </sequence>

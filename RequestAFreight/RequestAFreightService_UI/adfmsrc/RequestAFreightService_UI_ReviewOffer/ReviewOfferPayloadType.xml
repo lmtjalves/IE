@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="11.1.1.64.93"
+          id="ReviewOfferPayloadType"
+          Package="RequestAFreightService_UI_ReviewOffer"
+          BeanClass="RequestAFreightService_UI_ReviewOffer.ReviewOfferPayloadType"
+          isJavaBased="false">
+  <AccessorAttribute id="QuotationObject" IsCollection="true"
+                     BeanClass="RequestAFreightService_UI_ReviewOffer.QuotationObjectType"
+                     CollectionBeanClass="RequestAFreightService_UI_ReviewOffer.QuotationObjectType_QuotationObject_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Quotation Object"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="QuotationObject"/>
+      <Property Name="targetNamespace"
+                Value="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/QuotationObject"/>
+    </Properties>
+  </AccessorAttribute>
+</JavaBean>

@@ -16,4 +16,7 @@
              ui:wsdlLocation="RequestQuotationTransporterZServiceWrapper.wsdl">
     <interface.wsdl interface="http://requestquotationtransporterzws/#wsdl.interface(RequestQuotationTransporterZService)"/>
   </reference>
+  <reference name="TruckHubDB" ui:wsdlLocation="TruckHubDB.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/ObtainBestOffer/ObtainBestOfferService/TruckHubDB#wsdl.interface(TruckHubDB_ptt)"/>
+  </reference>
 </componentType>

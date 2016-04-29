@@ -13,13 +13,13 @@
     <wsdl:message name="TruckHubDBInput_msg">
         <wsdl:part name="TruckHubDBInput_msg" element="db:TruckHubDBInput"/>
     </wsdl:message>
-    <wsdl:message name="TruckHubDBOutput_msg">
-        <wsdl:part name="TruckHubDBOutput" element="db:TruckHubDBOutput"/>
+    <wsdl:message name="TruckHubDBOutputCollection_msg">
+        <wsdl:part name="TruckHubDBOutputCollection" element="db:TruckHubDBOutputCollection"/>
     </wsdl:message>
     <wsdl:portType name="TruckHubDB_ptt">
         <wsdl:operation name="TruckHubDB">
             <wsdl:input message="tns:TruckHubDBInput_msg"/>
-            <wsdl:output message="tns:TruckHubDBOutput_msg"/>
+            <wsdl:output message="tns:TruckHubDBOutputCollection_msg"/>
         </wsdl:operation>
     </wsdl:portType>
 </wsdl:definitions>

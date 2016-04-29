@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?oracleBPM version="11.1.1.7.0.0.8" fileRevision="20120217"?>
+<processDocumentation xmlns="http://xmlns.oracle.com/bpm/taskMetadataService/processDocumentation">
+    <component name="RequestAFreightProcess">
+        <topicDocumentations>
+            <topicDocumentation name="RequestAFreightProcess">
+                <descriptions>
+                    <description locale="en">RequestAFreightProcess</description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT16024628325621">
+                <labels>
+                    <label locale="en">Register Client</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT1602463784794">
+                <labels>
+                    <label locale="en">Request Best Offer</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT16024646512658">
+                <labels>
+                    <label locale="en">Receive Best Offer</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT16024760688383">
+                <labels>
+                    <label locale="en">Store freight info in DB</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT16024765135780">
+                <labels>
+                    <label locale="en">Send invoice</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT16024872385720">
+                <labels>
+                    <label locale="en">Ask for approval</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="EVT1602462386219">
+                <labels>
+                    <label locale="en">Freight Request received</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="EVT16024623862223">
+                <labels>
+                    <label locale="en">Freight request handled</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="GTW16024702549652">
+                <labels>
+                    <label locale="en">Quotation approved?</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf40"/>
+            <topicDocumentation name="sf42"/>
+            <topicDocumentation name="sf43"/>
+            <topicDocumentation name="sf44"/>
+            <topicDocumentation name="sf48">
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf51"/>
+            <topicDocumentation name="sf52"/>
+            <topicDocumentation name="sf53"/>
+            <topicDocumentation name="sf55">
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+        </topicDocumentations>
+    </component>
+</processDocumentation>

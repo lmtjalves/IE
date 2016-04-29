@@ -120,8 +120,16 @@
                 <to>$outputVariable.payload/ns3:offer</to>
             </copy>
             <copy>
-                <from>$InvokeBestOffer_process_OutputVariable.payload/ns4:transporter</from>
-                <to>$outputVariable.payload/ns3:transporter</to>
+                <from>$InvokeCalculateDistance_getCoordinatesDistance_OutputVariable.parameters/return</from>
+                <to>$outputVariable.payload/ns3:distance</to>
+            </copy>
+            <copy>
+                <from>$InvokeBestOffer_process_OutputVariable.payload/ns4:transporterName</from>
+                <to>$outputVariable.payload/ns3:transporterName</to>
+            </copy>
+            <copy>
+                <from>$InvokeBestOffer_process_OutputVariable.payload/ns4:transporterId</from>
+                <to>$outputVariable.payload/ns3:transporterId</to>
             </copy>
         </assign>
         <!-- 

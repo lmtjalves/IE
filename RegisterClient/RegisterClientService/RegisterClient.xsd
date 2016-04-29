@@ -36,6 +36,7 @@
     <xsd:sequence>
       <xsd:element name="Status" type="tns:StatusType"/>
       <xsd:element name="Cause" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="ClientId" minOccurs="0" type="xsd:long"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:element name="Request" type="tns:RequestType"/>
