@@ -27,6 +27,9 @@
   <import namespace="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/QuotationProcess"
           location="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationService/QuotationProcess.wsdl"
           importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService"
+          location="http://soabpm-vm.site:7001/soa-infra/services/default/GetClientIDService/GetClientIdService.wsdl"
+          importType="wsdl"/>
   <service name="RequestAFreightProcess.service"
            ui:wsdlLocation="RequestAFreightProcess.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/bpmn/bpmnProcess/RequestAFreightProcess#wsdl.interface(RequestAFreightProcessPortType)"
@@ -87,6 +90,16 @@
       <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/QuotationProcess#wsdl.endpoint(quotationprocess_client_ep/QuotationProcessCallback_pt)"/>
     </callback>
   </reference>
+  <reference name="GetClientIdService"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/GetClientIDService/GetClientIdService.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService#wsdl.interface(GetClientIdService)"/>
+    <binding.ws port="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService#wsdl.endpoint(getclientidservice_client_ep/GetClientIdService_pt)"
+                location="http://soabpm-vm:7001//soa-infra/services/default/GetClientIDService/getclientidservice_client_ep?WSDL"
+                soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
   <wire>
     <source.uri>RequestAFreightProcess/HumanTasks.ReviewOffer.reference</source.uri>
     <target.uri>ReviewOffer/TaskService</target.uri>
@@ -106,6 +119,10 @@
   <wire>
     <source.uri>RequestAFreightProcess/Services.Externals.RequestQuotation.reference</source.uri>
     <target.uri>RequestQuotation</target.uri>
+  </wire>
+  <wire>
+    <source.uri>RequestAFreightProcess/Services.Externals.GetClientIdService.reference</source.uri>
+    <target.uri>GetClientIdService</target.uri>
   </wire>
   <wire>
     <source.uri>RequestAFreightProcess.service</source.uri>

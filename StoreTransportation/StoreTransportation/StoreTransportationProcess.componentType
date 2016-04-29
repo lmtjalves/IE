@@ -8,7 +8,8 @@
            ui:wsdlLocation="StoreTransportationProcess.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/StoreTransportation/StoreTransportation/StoreTransportationProcess#wsdl.interface(StoreTransportationProcess)"/>
   </service>
-  <reference name="TruckHubDB" ui:wsdlLocation="TruckHubDB.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/StoreTransportation/StoreTransportation/TruckHubDB#wsdl.interface(TruckHubDB_ptt)"/>
+  <reference name="InsertTransportationInDB"
+             ui:wsdlLocation="InsertTransportationInDB.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/StoreTransportation/StoreTransportation/InsertTransportationInDB#wsdl.interface(InsertTransportationInDB_ptt)"/>
   </reference>
 </componentType>

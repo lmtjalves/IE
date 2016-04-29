@@ -1,13 +1,2 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Faults>
-   <Fault>
-      <severity>warning</severity>
-      <loc/>
-      <line>107</line>
-      <col/>
-      <file>StoreTransportationProcess.bpel</file>
-      <name>StoreTransportationProcess.bpel</name>
-      <fix>Add a predicate to select an element from the sequence.</fix>
-      <msg>The XPath segment "child::ns2:Transportation" selects a sequence of elements - a predicate MAY be needed to correctly select an element.</msg>
-   </Fault>
-</Faults>
+<Faults/>

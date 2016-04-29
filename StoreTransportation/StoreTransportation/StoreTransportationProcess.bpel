@@ -29,7 +29,9 @@
          xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/StoreTransportation/StoreTransportation/InsertTransportationInDB"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/top/InsertTransportationInDB">
 
     <import namespace="http://xmlns.oracle.com/StoreTransportation/StoreTransportation/StoreTransportationProcess" location="StoreTransportationProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -45,8 +47,9 @@
       with the client role are automatically set using WS-Addressing.
     -->
     <partnerLink name="storetransportationprocess_client" partnerLinkType="client:StoreTransportationProcess" myRole="StoreTransportationProcessProvider"/>
-    <partnerLink name="TruckHubDB" partnerLinkType="ns1:TruckHubDB_plt"
-                 partnerRole="TruckHubDB_role"/>
+    <partnerLink name="InsertTransportationInDB"
+                 partnerLinkType="ns4:InsertTransportationInDB_plt"
+                 partnerRole="InsertTransportationInDB_role"/>
   </partnerLinks>
 
   <!-- 
@@ -62,9 +65,9 @@
     <!-- Reference to the message that will be returned to the requester-->
     <variable name="outputVariable" messageType="client:StoreTransportationProcessResponseMessage"/>
     <variable name="InvokeInsertTransportation_insert_InputVariable"
-              messageType="ns1:TransportationCollection_msg"/>
+              messageType="ns4:TransportationCollection_msg"/>
     <variable name="InvokeInsertTransportation_insert_OutputVariable"
-              messageType="ns1:TransportationCollection_msg"/>
+              messageType="ns4:TransportationCollection_msg"/>
   </variables>
 
   <!-- 
@@ -80,20 +83,21 @@
     <receive name="receiveInput" partnerLink="storetransportationprocess_client" portType="client:StoreTransportationProcess" operation="process" variable="inputVariable" createInstance="yes"/>
     <assign name="SetInsertValues">
       <copy>
-        <from>$inputVariable.payload/ns3:TransporterId</from>
-        <to>$InvokeInsertTransportation_insert_InputVariable.TransportationCollection/ns2:Transportation/ns2:transporterid</to>
+        <from>$inputVariable.payload/ns3:Quotation</from>
+        <to>$InvokeInsertTransportation_insert_InputVariable.TransportationCollection/ns5:Transportation/ns5:quotation</to>
       </copy>
       <copy>
         <from>$inputVariable.payload/ns3:ClientId</from>
-        <to>$InvokeInsertTransportation_insert_InputVariable.TransportationCollection/ns2:Transportation/ns2:clientid</to>
+        <to>$InvokeInsertTransportation_insert_InputVariable.TransportationCollection/ns5:Transportation/ns5:clientid</to>
       </copy>
       <copy>
-        <from>$inputVariable.payload/ns3:Quotation</from>
-        <to>$InvokeInsertTransportation_insert_InputVariable.TransportationCollection/ns2:Transportation/ns2:quotation</to>
+        <from>$inputVariable.payload/ns3:TransporterId</from>
+        <to>$InvokeInsertTransportation_insert_InputVariable.TransportationCollection/ns5:Transportation/ns5:transporterid</to>
       </copy>
     </assign>
     <invoke name="InvokeInsertTransportation"
-            partnerLink="TruckHubDB" portType="ns1:TruckHubDB_ptt"
+            partnerLink="InsertTransportationInDB"
+            portType="ns4:InsertTransportationInDB_ptt"
             operation="insert"
             inputVariable="InvokeInsertTransportation_insert_InputVariable"
             outputVariable="InvokeInsertTransportation_insert_OutputVariable"
@@ -104,7 +108,7 @@
         <to>$outputVariable.payload/ns3:Status</to>
       </copy>
       <copy>
-        <from>$InvokeInsertTransportation_insert_OutputVariable.TransportationCollection/ns2:Transportation/ns2:transporterid</from>
+        <from>$InvokeInsertTransportation_insert_OutputVariable.TransportationCollection/ns5:Transportation[1]/ns5:id</from>
         <to>$outputVariable.payload/ns3:TransportationId</to>
       </copy>
     </assign>

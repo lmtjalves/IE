@@ -33,4 +33,8 @@
     <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/QuotationProcess#wsdl.interface(QuotationProcess)"
                     callbackInterface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/QuotationProcess#wsdl.interface(QuotationProcessCallback)"/>
   </reference>
+  <reference name="Services.Externals.GetClientIdService.reference"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/GetClientIDService/GetClientIdService.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService#wsdl.interface(GetClientIdService)"/>
+  </reference>
 </componentType>

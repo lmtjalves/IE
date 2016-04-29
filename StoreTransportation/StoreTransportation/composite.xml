@@ -12,8 +12,8 @@
            xmlns:ui="http://xmlns.oracle.com/soa/designer/">
   <import namespace="http://xmlns.oracle.com/StoreTransportation/StoreTransportation/StoreTransportationProcess"
           location="StoreTransportationProcess.wsdl" importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/StoreTransportation/StoreTransportation/TruckHubDB"
-          location="TruckHubDB.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/StoreTransportation/StoreTransportation/InsertTransportationInDB"
+          location="InsertTransportationInDB.wsdl" importType="wsdl"/>
   <service name="storetransportationprocess_client_ep"
            ui:wsdlLocation="StoreTransportationProcess.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/StoreTransportation/StoreTransportation/StoreTransportationProcess#wsdl.interface(StoreTransportationProcess)"/>
@@ -26,9 +26,10 @@
     <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string"
               many="false">async.persist</property>
   </component>
-  <reference name="TruckHubDB" ui:wsdlLocation="TruckHubDB.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/StoreTransportation/StoreTransportation/TruckHubDB#wsdl.interface(TruckHubDB_ptt)"/>
-    <binding.jca config="TruckHubDB_db.jca"/>
+  <reference name="InsertTransportationInDB"
+             ui:wsdlLocation="InsertTransportationInDB.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/StoreTransportation/StoreTransportation/InsertTransportationInDB#wsdl.interface(InsertTransportationInDB_ptt)"/>
+    <binding.jca config="InsertTransportationInDB_db.jca"/>
     <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
     <property name="jca.retry.interval" type="xs:int" many="false"
               override="may">1</property>
@@ -42,7 +43,7 @@
     <target.uri>StoreTransportationProcess/storetransportationprocess_client</target.uri>
   </wire>
   <wire>
-    <source.uri>StoreTransportationProcess/TruckHubDB</source.uri>
-    <target.uri>TruckHubDB</target.uri>
+    <source.uri>StoreTransportationProcess/InsertTransportationInDB</source.uri>
+    <target.uri>InsertTransportationInDB</target.uri>
   </wire>
 </composite>

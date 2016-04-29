@@ -14,7 +14,7 @@
    </xs:complexType>
    <xs:complexType name="TruckHubDBOutput">
       <xs:sequence>
-         <xs:element name="id" type="xs:decimal" nillable="true"/>
+         <xs:element name="id" type="xs:decimal" nillable="false"/>
       </xs:sequence>
    </xs:complexType>
 </xs:schema>

@@ -1,0 +1,28 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="TRANSPORTATION.PAID:db_column_type">VARCHAR2</entry>
+   <entry key="TRANSPORTATION.TRANSPORTERID:db_column_type">NUMBER</entry>
+   <entry key="TRANSPORTATION.QUOTATION:db_column_not_null">true</entry>
+   <entry key="TRANSPORTATION:db_table_type">TABLE</entry>
+   <entry key="TRANSPORTATION.CLIENTID:db_column_not_null">true</entry>
+   <entry key="TRANSPORTATION.TRANSPORTERID:db_column_scale">0</entry>
+   <entry key="TRANSPORTATION.PAID:db_column_not_null">true</entry>
+   <entry key="TRANSPORTATION.ID:db_column_not_null">true</entry>
+   <entry key="TRANSPORTATION.PAID:db_column_size">1</entry>
+   <entry key="TRANSPORTATION.ID:db_column_type">NUMBER</entry>
+   <entry key="TRANSPORTATION:db_column_4">PAID</entry>
+   <entry key="TRANSPORTATION:db_column_3">QUOTATION</entry>
+   <entry key="TRANSPORTATION.CLIENTID:db_column_scale">0</entry>
+   <entry key="TRANSPORTATION.TRANSPORTERID:db_column_not_null">true</entry>
+   <entry key="TRANSPORTATION:db_column_2">CLIENTID</entry>
+   <entry key="TRANSPORTATION:db_column_1">TRANSPORTERID</entry>
+   <entry key="TRANSPORTATION:db_column_0">ID</entry>
+   <entry key="TRANSPORTATION.CLIENTID:db_column_type">NUMBER</entry>
+   <entry key="TRANSPORTATION.CLIENTID:db_column_precision">10</entry>
+   <entry key="root_descriptor_alias">TRANSPORTATION</entry>
+   <entry key="TRANSPORTATION.ID:db_column_precision">10</entry>
+   <entry key="TRANSPORTATION.ID:db_column_scale">0</entry>
+   <entry key="TRANSPORTATION.TRANSPORTERID:db_column_precision">10</entry>
+   <entry key="TRANSPORTATION.QUOTATION:db_column_type">BINARY_DOUBLE</entry>
+</properties>

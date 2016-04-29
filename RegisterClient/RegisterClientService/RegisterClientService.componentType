@@ -28,7 +28,4 @@
              ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/SendRegistrationMessageService/SendRegistrationMessageService.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/SendRegistrationMessage/SendRegistrationMessageService/SendRegistrationMessageService#wsdl.interface(SendRegistrationMessageService)"/>
   </reference>
-  <reference name="TruckHubDB" ui:wsdlLocation="TruckHubDB.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/RegisterClient/RegisterClientService/TruckHubDB#wsdl.interface(TruckHubDB_ptt)"/>
-  </reference>
 </componentType>

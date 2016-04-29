@@ -36,7 +36,7 @@ CREATE TABLE transportation (
 	id NUMBER(10),
 	transporterId NUMBER(10) NOT NULL,
 	clientId NUMBER(10) NOT NULL,
-	quotation NUMBER(10) NOT NULL,
+	quotation BINARY_DOUBLE NOT NULL,
 	paid VARCHAR(1) DEFAULT 'N' NOT NULL,
 	PRIMARY KEY(id),
 	CONSTRAINT fk_transporter 

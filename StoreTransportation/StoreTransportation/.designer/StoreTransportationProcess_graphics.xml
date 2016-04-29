@@ -5,9 +5,9 @@
    <iconize/>
    <partnerlink_locations>
       <partnerlink name="storetransportationprocess_client" x="0" y="275" side="left"/>
-      <partnerlink name="TruckHubDB" x="840" y="278" side="right"/>
+      <partnerlink name="InsertTransportationInDB" x="0" y="97" side="left"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,272,956,341" show_swimlanes="true">
+   <graph_layout viewport="0,0,1308,527" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>

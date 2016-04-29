@@ -1,0 +1,25 @@
+<?binding.jca GetUserIdByEmailFromDb_db.jca?>
+<wsdl:definitions name="GetUserIdByEmailFromDb" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetClientID/GetClientIDService/GetUserIdByEmailFromDb" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/GetUserIdByEmailFromDb" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/GetClientID/GetClientIDService/GetUserIdByEmailFromDb" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="GetUserIdByEmailFromDb_plt">
+        <plt:role name="GetUserIdByEmailFromDb_role">
+            <plt:portType name="tns:GetUserIdByEmailFromDb_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetUserIdByEmailFromDb" schemaLocation="xsd/GetUserIdByEmailFromDb.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="GetUserIdByEmailFromDbInput_msg">
+        <wsdl:part name="GetUserIdByEmailFromDbInput_msg" element="db:GetUserIdByEmailFromDbInput"/>
+    </wsdl:message>
+    <wsdl:message name="GetUserIdByEmailFromDbOutputCollection_msg">
+        <wsdl:part name="GetUserIdByEmailFromDbOutputCollection" element="db:GetUserIdByEmailFromDbOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="GetUserIdByEmailFromDb_ptt">
+        <wsdl:operation name="GetUserIdByEmailFromDb">
+            <wsdl:input message="tns:GetUserIdByEmailFromDbInput_msg"/>
+            <wsdl:output message="tns:GetUserIdByEmailFromDbOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

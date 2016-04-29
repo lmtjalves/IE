@@ -31,8 +31,6 @@
   <import namespace="http://xmlns.oracle.com/SendRegistrationMessage/SendRegistrationMessageService/SendRegistrationMessageService"
           location="http://soabpm-vm.site:7001/soa-infra/services/default/SendRegistrationMessageService/SendRegistrationMessageService.wsdl"
           importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/RegisterClient/RegisterClientService/TruckHubDB"
-          location="TruckHubDB.wsdl" importType="wsdl"/>
   <service name="registerclientservice_client_ep"
            ui:wsdlLocation="RegisterClientService.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/RegisterClient/RegisterClientService/RegisterClientService#wsdl.interface(RegisterClientService)"/>
@@ -95,17 +93,6 @@
                 type="xs:string" many="false">WSDLDriven</property>
     </binding.ws>
   </reference>
-  <reference name="TruckHubDB" ui:wsdlLocation="TruckHubDB.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/RegisterClient/RegisterClientService/TruckHubDB#wsdl.interface(TruckHubDB_ptt)"/>
-    <binding.jca config="TruckHubDB_db.jca"/>
-    <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
-    <property name="jca.retry.interval" type="xs:int" many="false"
-              override="may">1</property>
-    <property name="jca.retry.backoff" type="xs:int" many="false"
-              override="may">2</property>
-    <property name="jca.retry.maxInterval" type="xs:string" many="false"
-              override="may">120</property>
-  </reference>
   <wire>
     <source.uri>registerclientservice_client_ep</source.uri>
     <target.uri>RegisterClientService/registerclientservice_client</target.uri>
@@ -129,9 +116,5 @@
   <wire>
     <source.uri>RegisterClientService/SendRegistrationMessageService</source.uri>
     <target.uri>SendRegistrationMessageService</target.uri>
-  </wire>
-  <wire>
-    <source.uri>RegisterClientService/TruckHubDB</source.uri>
-    <target.uri>TruckHubDB</target.uri>
   </wire>
 </composite>

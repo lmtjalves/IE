@@ -37,7 +37,9 @@
          xmlns:ns9="http://www.sendregistrationmessage.truckhub.org"
          xmlns:ns10="http://xmlns.oracle.com/pcbpel/adapter/db/RegisterClient/RegisterClientService/TruckHubDB"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:ns11="http://xmlns.oracle.com/pcbpel/adapter/db/TruckHubDB">
+         xmlns:ns11="http://xmlns.oracle.com/pcbpel/adapter/db/TruckHubDB"
+         xmlns:ns12="http://xmlns.oracle.com/pcbpel/adapter/db/RegisterClient/RegisterClientService/GetClientIdFromDb"
+         xmlns:ns13="http://xmlns.oracle.com/pcbpel/adapter/db/GetClientIdFromDb">
 
     <import namespace="http://xmlns.oracle.com/RegisterClient/RegisterClientService/RegisterClientService" location="RegisterClientService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -67,8 +69,6 @@
     <partnerLink name="SendRegistrationMessageService"
                  partnerLinkType="ns8:SendRegistrationMessageService"
                  partnerRole="SendRegistrationMessageServiceProvider"/>
-    <partnerLink name="TruckHubDB" partnerLinkType="ns10:TruckHubDB_plt"
-                 partnerRole="TruckHubDB_role"/>
   </partnerLinks>
 
   <!-- 
@@ -103,10 +103,6 @@
               messageType="ns8:SendRegistrationMessageServiceRequestMessage"/>
     <variable name="SendRegistrationMessage_invoke_process_OutputVariable"
               messageType="ns8:SendRegistrationMessageServiceResponseMessage"/>
-    <variable name="InvokeDB_TruckHubDB_InputVariable"
-              messageType="ns10:TruckHubDBInput_msg"/>
-    <variable name="InvokeDB_TruckHubDB_OutputVariable"
-              messageType="ns10:TruckHubDBOutputCollection_msg"/>
   </variables>
 
   <!-- 
@@ -125,10 +121,6 @@
         <from>$inputVariable.payload/ns2:Email</from>
         <to>$ClientExists_inoke_process_InputVariable.payload/ns3:Email</to>
       </copy>
-      <copy>
-        <from>$inputVariable.payload/ns2:Email</from>
-        <to>$InvokeDB_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns11:email</to>
-      </copy>
     </assign>
     <invoke name="ClientExists_inoke"
             partnerLink="ClientExistsService"
@@ -142,19 +134,10 @@
       </documentation>
       <condition>$ClientExists_inoke_process_OutputVariable.payload/ns3:Exists = 'true'</condition>
       <sequence name="Sequence3">
-        <invoke name="InvokeDB" bpelx:invokeAsDetail="no"
-                partnerLink="TruckHubDB" portType="ns10:TruckHubDB_ptt"
-                operation="TruckHubDB"
-                inputVariable="InvokeDB_TruckHubDB_InputVariable"
-                outputVariable="InvokeDB_TruckHubDB_OutputVariable"/>
         <assign name="Exit_Client_already_exists">
           <copy>
             <from>"Error"</from>
             <to>$outputVariable.payload/ns2:Status</to>
-          </copy>
-          <copy>
-            <from>$InvokeDB_TruckHubDB_OutputVariable.TruckHubDBOutputCollection/ns11:TruckHubDBOutput/ns11:id</from>
-            <to>$outputVariable.payload/ns2:ClientId</to>
           </copy>
           <copy>
             <from>"Client already exists"</from>

@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetClientIdFromDb" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/GetClientIdFromDb" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="GetClientIdFromDbInput" type="GetClientIdFromDbInput"/>
+   <xs:complexType name="GetClientIdFromDbInput">
+      <xs:sequence>
+         <xs:element name="EMAIL" type="xs:string" nillable="false"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="GetClientIdFromDbOutputCollection" type="GetClientIdFromDbOutputCollection"/>
+   <xs:complexType name="GetClientIdFromDbOutputCollection">
+      <xs:sequence>
+         <xs:element name="GetClientIdFromDbOutput" type="GetClientIdFromDbOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="GetClientIdFromDbOutput">
+      <xs:sequence>
+         <xs:element name="id" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

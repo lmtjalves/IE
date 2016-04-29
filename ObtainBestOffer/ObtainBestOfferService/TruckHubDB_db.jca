@@ -1,6 +1,6 @@
 <adapter-config name="TruckHubDB" adapter="Database Adapter" wsdlLocation="TruckHubDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
   
-  <connection-factory location="eis/db/truckhubdb" UIConnectionName="ConnectionDB" adapterRef=""/>
+  <connection-factory location="eis/db/truckhubdb" UIConnectionName="TruckHubDb" adapterRef=""/>
   <endpoint-interaction portType="TruckHubDB_ptt" operation="TruckHubDB">
     <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
       <property name="SqlString" value="select id from transporter where name = #name"/>

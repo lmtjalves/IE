@@ -56,6 +56,14 @@
                     <description locale="en"></description>
                 </descriptions>
             </topicDocumentation>
+            <topicDocumentation name="ACT16033147136845">
+                <labels>
+                    <label locale="en">TryGetTheClientId</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
             <topicDocumentation name="EVT1602462386219">
                 <labels>
                     <label locale="en">Freight Request received</label>
@@ -80,6 +88,14 @@
                     <description locale="en"></description>
                 </descriptions>
             </topicDocumentation>
+            <topicDocumentation name="GTW16033158403854">
+                <labels>
+                    <label locale="en">Client Exists?</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
             <topicDocumentation name="sf40"/>
             <topicDocumentation name="sf42"/>
             <topicDocumentation name="sf43"/>
@@ -93,6 +109,13 @@
             <topicDocumentation name="sf52"/>
             <topicDocumentation name="sf53"/>
             <topicDocumentation name="sf55">
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf37"/>
+            <topicDocumentation name="sf56"/>
+            <topicDocumentation name="sf58">
                 <descriptions>
                     <description locale="en"></description>
                 </descriptions>

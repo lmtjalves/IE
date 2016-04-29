@@ -5,11 +5,11 @@
    <iconize/>
    <partnerlink_locations>
       <partnerlink name="bestofferprocess_client" x="2" y="536" side="left"/>
-      <partnerlink name="ObtainOfferTransporterA" x="669" y="299" side="right"/>
-      <partnerlink name="ObtainOfferTransporterZ" x="669" y="356" side="right"/>
-      <partnerlink name="TruckHubDB" x="669" y="799" side="right"/>
+      <partnerlink name="ObtainOfferTransporterA" x="1209" y="299" side="right"/>
+      <partnerlink name="ObtainOfferTransporterZ" x="1209" y="356" side="right"/>
+      <partnerlink name="TruckHubDB" x="1209" y="799" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,847,800,273" show_swimlanes="true">
+   <graph_layout viewport="0,574,1340,560" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/flow" type="flow"/>
