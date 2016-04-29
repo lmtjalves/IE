@@ -6,15 +6,10 @@
          <xs:element name="email" type="xs:string" nillable="true"/>
       </xs:sequence>
    </xs:complexType>
-   <xs:element name="TruckHubDBOutputCollection" type="TruckHubDBOutputCollection"/>
-   <xs:complexType name="TruckHubDBOutputCollection">
-      <xs:sequence>
-         <xs:element name="TruckHubDBOutput" type="TruckHubDBOutput" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
-   </xs:complexType>
+   <xs:element name="TruckHubDBOutput" type="TruckHubDBOutput"/>
    <xs:complexType name="TruckHubDBOutput">
       <xs:sequence>
-         <xs:element name="id" type="xs:decimal" nillable="true"/>
+         <xs:element name="numClients" type="xs:decimal" nillable="true"/>
       </xs:sequence>
    </xs:complexType>
 </xs:schema>

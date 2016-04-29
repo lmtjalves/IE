@@ -61,9 +61,9 @@
 
     <!-- Reference to the message that will be returned to the requester-->
     <variable name="outputVariable" messageType="client:ClientExistsServiceResponseMessage"/>
-    <variable name="Invoke1_TruckHubDB_InputVariable"
+    <variable name="InvokeCountClients_TruckHubDB_InputVariable"
               messageType="ns1:TruckHubDBInput_msg"/>
-    <variable name="Invoke1_TruckHubDB_OutputVariable"
+    <variable name="InvokeCountClients_TruckHubDB_OutputVariable"
               messageType="ns1:TruckHubDBOutput_msg"/>
   </variables>
 
@@ -81,19 +81,19 @@
     <assign name="AssignClientEmail">
       <copy>
         <from>$inputVariable.payload/ns2:Email</from>
-        <to>$Invoke1_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns3:email</to>
+        <to>$InvokeCountClients_TruckHubDB_InputVariable.TruckHubDBInput_msg/ns3:email</to>
       </copy>
     </assign>
     <invoke name="InvokeCountClients" partnerLink="TruckHubDB"
             portType="ns1:TruckHubDB_ptt" operation="TruckHubDB"
-            inputVariable="Invoke1_TruckHubDB_InputVariable"
-            outputVariable="Invoke1_TruckHubDB_OutputVariable"
+            inputVariable="InvokeCountClients_TruckHubDB_InputVariable"
+            outputVariable="InvokeCountClients_TruckHubDB_OutputVariable"
             bpelx:invokeAsDetail="no"/>
     <if name="If1">
       <documentation>
         <![CDATA[Not in database]]>
       </documentation>
-      <condition>$Invoke1_TruckHubDB_OutputVariable.TruckHubDBOutput/ns3:numClients = 0</condition>
+      <condition>$InvokeCountClients_TruckHubDB_OutputVariable.TruckHubDBOutput/ns3:numClients = 0</condition>
       <assign name="AssignOutputNotInDB">
         <copy>
           <from>false()</from>
