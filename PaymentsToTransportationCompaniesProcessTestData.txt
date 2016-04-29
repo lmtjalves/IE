@@ -10,7 +10,7 @@ Quotation: 500
 
 ClientId: 22
 TransporterId: 2
-Quotation: 1000
+Quotation: 110
 
 ClientId: 22
 TransporterId: 1
@@ -25,7 +25,7 @@ Quotation: 1100
 # Let's create a case where there's only one payment to one transporter and none for another
 ClientId: 22
 TransporterId: 2
-Quotation: 1000
+Quotation: 100
 
 # The process will execute and there will be a new file in the /home/oracle there will be only new receipt for the transporterZ
 
