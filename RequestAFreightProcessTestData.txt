@@ -1,7 +1,7 @@
 # This file contains data to be used for testing the features
 # of the Request a Freight process
 
-# Request a freight from Figueira da Foz to Coimbra of a 2.5 kg package (client is not registered)
+The following data will be used in each of the following calls to the service.
 email: diogocardoso@outlook.pt
 phoneNumber: 351962323370
 messageType: Email
@@ -16,44 +16,15 @@ destinationLatitude: 40.2033145
 destinationLongitude: -8.410257300000012
 parcelWeight: 2.5
 
-Client accepts the quotation.
 
+# Request a freight from Figueira da Foz to Coimbra of a 2.5 kg package (client is not registered)
+Client accepts the quotation.
 Return: Sends a client registeration email and an invoice email.
 
 # Request a freight from Figueira da Foz to Coimbra of a 2.5 kg package (client is registered)
-email: diogocardoso@outlook.pt
-phoneNumber: 351962323370
-messageType: Email
-district: Leiria
-county: Leiria
-street: Rua do Vale Sepal
-doorNumber: 60
-zipCode: 2415-395
-originLatitude: 40.1521398
-originLongitude: -8.857582999999977
-destinationLatitude: 40.2033145
-destinationLongitude: -8.410257300000012
-parcelWeight: 2.5
-
 Client accepts the quotation.
-
 Return: Sends an invoice email.
 
 # Request a freight from Figueira da Foz to Coimbra of a 2.5 kg package (client is registered)
-email: diogocardoso@outlook.pt
-phoneNumber: 351962323370
-messageType: Email
-district: Leiria
-county: Leiria
-street: Rua do Vale Sepal
-doorNumber: 60
-zipCode: 2415-395
-originLatitude: 40.1521398
-originLongitude: -8.857582999999977
-destinationLatitude: 40.2033145
-destinationLongitude: -8.410257300000012
-parcelWeight: 2.5
-
 Client rejects the quotation.
-
 Return: no emails are sent.
