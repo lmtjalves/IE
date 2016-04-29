@@ -10,10 +10,10 @@
            xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
            xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
            xmlns:ui="http://xmlns.oracle.com/soa/designer/">
-  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ClientExists/ClientExistsService/TruckHubDB"
-          location="TruckHubDB.wsdl" importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/ClientExists/ClientExistsService/ClientExistsService"
           location="ClientExistsService.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ClientExists/ClientExistsService/TruckHubDB"
+          location="TruckHubDB.wsdl" importType="wsdl"/>
   <service name="clientexistsservice_client_ep"
            ui:wsdlLocation="ClientExistsService.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/ClientExists/ClientExistsService/ClientExistsService#wsdl.interface(ClientExistsService)"/>
