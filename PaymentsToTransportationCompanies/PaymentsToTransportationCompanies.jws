@@ -15,6 +15,7 @@
    <list n="listOfChildren">
       <hash><url n="URL" path="PaymentsToTransportationCompanies/PaymentsToTransportationCompanies.jpr"/></hash>
       <hash><url n="URL" path="PaymentsToTransporttationCompaniesUI/PaymentsToTransporttationCompaniesUI.jpr"/></hash>
+      <hash><url n="URL" path="TwitterRequestAFreight/TwitterRequestAFreight.jpr"/></hash>
    </list>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">

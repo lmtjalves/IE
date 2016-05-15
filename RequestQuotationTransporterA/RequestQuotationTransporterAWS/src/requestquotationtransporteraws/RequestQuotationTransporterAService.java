@@ -7,7 +7,10 @@ import javax.jws.WebService;
 import javax.xml.ws.BindingType;
 import javax.xml.ws.soap.SOAPBinding;
 
-@WebService(name = "RequestQuotationTransporterAService", serviceName = "RequestQuotationTransporterAService", portName = "RequestQuotationTransporterAServiceSoap12HttpPort")
+@WebService(name = "RequestQuotationTransporterAService", 
+            serviceName = "RequestQuotationTransporterAService", 
+            portName = "RequestQuotationTransporterAServiceSoap12HttpPort",
+            targetNamespace = "http://transporterrequest/")
 @BindingType(SOAPBinding.SOAP12HTTP_BINDING)
 public class RequestQuotationTransporterAService {
     

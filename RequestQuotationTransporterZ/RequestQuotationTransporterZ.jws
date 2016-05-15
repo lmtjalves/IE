@@ -17,5 +17,7 @@
    </hash>
    <list n="listOfChildren">
       <hash><url n="URL" path="RequestQuotationTransporterZWS/RequestQuotationTransporterZWS.jpr"/></hash>
+      <hash><url n="URL" path="../TwitterRequestFreight/TwitterRequestFreight.jpr"/></hash>
+      <hash><url n="URL" path="../TwitterRouteMessages/TwitterRouteMessages.jpr"/></hash>
    </list>
 </jws:workspace>
