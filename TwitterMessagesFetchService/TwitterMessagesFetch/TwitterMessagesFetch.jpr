@@ -396,10 +396,6 @@
    <hash n="oracle.jdevimpl.config.JProjectLibraries">
       <list n="exportedReferences">
          <hash>
-            <value n="id" v="JAX-WS Web Services"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
             <value n="id" v="Twitter4j-async-4.0.4.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
@@ -424,7 +420,7 @@
          <list n="libraryDefinitions">
             <hash>
                <list n="classPath">
-                  <url path="../../jdev_user_home/IE/lib/twitter4j-async-4.0.4.jar" jar-entry=""/>
+                  <url path="../../lib/twitter4j-async-4.0.4.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Twitter4j-async-4.0.4.jar"/>
@@ -433,7 +429,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../jdev_user_home/IE/lib/twitter4j-core-4.0.4.jar" jar-entry=""/>
+                  <url path="../../lib/twitter4j-core-4.0.4.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Twitter4j-core-4.0.4.jar"/>
@@ -442,7 +438,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../jdev_user_home/IE/lib/twitter4j-examples-4.0.4.jar" jar-entry=""/>
+                  <url path="../../lib/twitter4j-examples-4.0.4.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Twitter4j-examples-4.0.4.jar"/>
@@ -451,7 +447,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../jdev_user_home/IE/lib/twitter4j-media-support-4.0.4.jar" jar-entry=""/>
+                  <url path="../../lib/twitter4j-media-support-4.0.4.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Twitter4j-media-support-4.0.4.jar"/>
@@ -460,7 +456,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../jdev_user_home/IE/lib/twitter4j-stream-4.0.4.jar" jar-entry=""/>
+                  <url path="../../lib/twitter4j-stream-4.0.4.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Twitter4j-stream-4.0.4.jar"/>

@@ -10,8 +10,6 @@
            xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
            xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
            xmlns:ui="http://xmlns.oracle.com/soa/designer/">
-  <import namespace="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess"
-          location="TwitterRequestFreightProcess.wsdl" importType="wsdl"/>
   <import namespace="http://twittersendmessage/"
           location="http://soabpm-vm.site:7001/TwitterSendMessageService-TwitterSendMessage-context-root/TwitterSendMessageSoap12HttpPort?wsdl"
           importType="wsdl"/>
@@ -23,15 +21,19 @@
   <import namespace="http://sendemailservice/"
           location="http://soabpm-vm.site:7001/EmailSender-SendEmailService-context-root/SendEmailServiceSoap12HttpPort?wsdl"
           importType="wsdl"/>
-  <service name="TwitterRequestFreightProcess.service"
-           ui:wsdlLocation="TwitterRequestFreightProcess.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess#wsdl.interface(TwitterRequestFreightProcessPortType)"/>
-    <binding.ws port="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess#wsdl.endpoint(TwitterRequestFreightProcess.service/TwitterRequestFreightProcessPort)"/>
-  </service>
+  <import namespace="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
+          location="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationService/RequestQuotation.wsdl"
+          importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/SendInvoice/SendInvoice/SendInvoiceProcess"
+          location="http://soabpm-vm.site:7001/soa-infra/services/default/SendInvoiceService/SendInvoiceProcess.wsdl"
+          importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/StoreTransportation/StoreTransportation/StoreTransportationProcess"
+          location="http://soabpm-vm.site:7001/soa-infra/services/default/StoreTransportationService/StoreTransportationProcess.wsdl"
+          importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService"
+          location="http://soabpm-vm.site:7001/soa-infra/services/default/GetClientIDService/GetClientIdService.wsdl"
+          importType="wsdl"/>
   <property name="productVersion" type="xs:string" many="false">11.1.1.7.0</property>
-  <component name="TwitterRequestFreightProcess">
-    <implementation.bpmn src="processes/TwitterRequestFreightProcess.bpmn"/>
-  </component>
   <reference name="SendMessage"
              ui:wsdlLocation="http://soabpm-vm.site:7001/TwitterSendMessageService-TwitterSendMessage-context-root/TwitterSendMessageSoap12HttpPort?wsdl">
     <interface.wsdl interface="http://twittersendmessage/#wsdl.interface(TwitterSendMessage)"/>
@@ -62,20 +64,48 @@
                 type="xs:string" many="false">WSDLDriven</property>
     </binding.ws>
   </reference>
-  <wire>
-    <source.uri>TwitterRequestFreightProcess/Services.Externals.SendMessage.reference</source.uri>
-    <target.uri>SendMessage</target.uri>
-  </wire>
-  <wire>
-    <source.uri>TwitterRequestFreightProcess/Services.Externals.ParseRequest.reference</source.uri>
-    <target.uri>ParseRequest</target.uri>
-  </wire>
-  <wire>
-    <source.uri>TwitterRequestFreightProcess/Services.Externals.SendEmail.reference</source.uri>
-    <target.uri>SendEmail</target.uri>
-  </wire>
-  <wire>
-    <source.uri>TwitterRequestFreightProcess.service</source.uri>
-    <target.uri>TwitterRequestFreightProcess/TwitterRequestFreightProcess.service</target.uri>
-  </wire>
+  <reference name="RequestQuotation"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationService/RequestQuotation.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotation)"
+                    callbackInterface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotationCallback)"/>
+    <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotation_pt)"
+                location="http://soabpm-vm:7001//soa-infra/services/default/RequestQuotationService/requestquotation_client_ep?WSDL"
+                soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+    <callback>
+      <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotationCallback_pt)"/>
+    </callback>
+  </reference>
+  <reference name="SendInvoice"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/SendInvoiceService/SendInvoiceProcess.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/SendInvoice/SendInvoice/SendInvoiceProcess#wsdl.interface(SendInvoiceProcess)"/>
+    <binding.ws port="http://xmlns.oracle.com/SendInvoice/SendInvoice/SendInvoiceProcess#wsdl.endpoint(sendinvoiceprocess_client_ep/SendInvoiceProcess_pt)"
+                location="http://soabpm-vm:7001//soa-infra/services/default/SendInvoiceService/sendinvoiceprocess_client_ep?WSDL"
+                soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
+  <reference name="StoreTransportation"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/StoreTransportationService/StoreTransportationProcess.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/StoreTransportation/StoreTransportation/StoreTransportationProcess#wsdl.interface(StoreTransportationProcess)"/>
+    <binding.ws port="http://xmlns.oracle.com/StoreTransportation/StoreTransportation/StoreTransportationProcess#wsdl.endpoint(storetransportationprocess_client_ep/StoreTransportationProcess_pt)"
+                location="http://soabpm-vm:7001//soa-infra/services/default/StoreTransportationService/storetransportationprocess_client_ep?WSDL"
+                soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
+  <reference name="GetUserId"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/GetClientIDService/GetClientIdService.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService#wsdl.interface(GetClientIdService)"/>
+    <binding.ws port="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService#wsdl.endpoint(getclientidservice_client_ep/GetClientIdService_pt)"
+                location="http://soabpm-vm:7001//soa-infra/services/default/GetClientIDService/getclientidservice_client_ep?WSDL"
+                soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
 </composite>

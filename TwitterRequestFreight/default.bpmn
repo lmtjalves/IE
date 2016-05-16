@@ -19,6 +19,9 @@
                     <ns5:StringFeature value="REGULAR" name="sealType"/>
                 </ns5:FeatureSet>
                 <ns5:CorrelationPropertyAliasExpressionModeMap>
+                    <ns5:CorrelationPropertyAliasExpressionMode id="M|http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess|getClientToken|parameters" propertyName="ns7:senderId" expressionMode="simple" xmlns:ns7="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreight"/>
+                    <ns5:CorrelationPropertyAliasExpressionMode id="M|http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess|receiveMessage|parameters" propertyName="ns7:senderId" expressionMode="simple" xmlns:ns7="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreight"/>
+                    <ns5:CorrelationPropertyAliasExpressionMode id="M|http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess|receiveDirectMessage|parameters" propertyName="ns7:senderId" expressionMode="simple" xmlns:ns7="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreight"/>
                     <ns5:CorrelationPropertyAliasExpressionMode id="M|http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess|receiveRequest|parameters" propertyName="ns7:senderId" expressionMode="simple" xmlns:ns7="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreight"/>
                     <ns5:CorrelationPropertyAliasExpressionMode id="M|http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess|start|parameters" propertyName="ns7:senderId" expressionMode="simple" xmlns:ns7="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreight"/>
                 </ns5:CorrelationPropertyAliasExpressionModeMap>

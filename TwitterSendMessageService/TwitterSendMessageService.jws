@@ -16,6 +16,8 @@
       <value n="oracle.mds.internal.dt.ide.migrator.MDSConfigMigratorHelper" v="11.1.1.0.5313"/>
    </hash>
    <list n="listOfChildren">
+      <hash><url n="URL" path="../TwitterRequestFreight/TwitterRequestFreight.jpr"/></hash>
+      <hash><url n="URL" path="../TwitterRouteMessages/TwitterRouteMessages.jpr"/></hash>
       <hash><url n="URL" path="TwitterSendMessage/TwitterSendMessage.jpr"/></hash>
    </list>
 </jws:workspace>

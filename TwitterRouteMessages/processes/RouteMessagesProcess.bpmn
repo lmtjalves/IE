@@ -153,26 +153,6 @@
                 <ns7:loopDataInputRef xmlns="" xmlns:ns7="http://www.omg.org/spec/BPMN/20100524/MODEL">loopDataInput</ns7:loopDataInputRef>
                 <completionCondition xsi:type="tFormalExpression"/>
             </loopCharacteristics>
-            <serviceTask isForCompensation="false" name="RouteMessage" id="ACT16166481092998">
-                <extensionElements>
-                    <ns5:OracleExtensions>
-                        <ns5:GraphicsAttributes>
-                            <ns5:Position x="167" y="101"/>
-                        </ns5:GraphicsAttributes>
-                        <ns5:FeatureSet>
-                            <ns5:BooleanFeature value="false" name="isDraft"/>
-                            <ns5:BooleanFeature value="false" name="inputValidation"/>
-                            <ns5:BooleanFeature value="false" name="outputValidation"/>
-                            <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
-                            <ns5:StringFeature value="Begin Level" name="level"/>
-                            <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
-                        </ns5:FeatureSet>
-                        <ns5:Conversational/>
-                        <ns5:LogHandlers/>
-                    </ns5:OracleExtensions>
-                </extensionElements>
-                <ioSpecification/>
-            </serviceTask>
             <startEvent isInterrupting="false" name="Start1" id="EVT16166475482271">
                 <extensionElements>
                     <ns5:OracleExtensions>
@@ -207,19 +187,7 @@
                 </extensionElements>
                 <inputSet/>
             </endEvent>
-            <sequenceFlow sourceRef="EVT16166475482271" targetRef="ACT16166481092998" name="sf15" id="sf15">
-                <extensionElements>
-                    <ns5:OracleExtensions>
-                        <ns5:SequenceFlowAttributes/>
-                        <ns5:FeatureSet>
-                            <ns5:BooleanFeature value="false" name="collapseMessage"/>
-                            <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
-                            <ns5:StringFeature value="STRAIGHT" name="routing"/>
-                        </ns5:FeatureSet>
-                    </ns5:OracleExtensions>
-                </extensionElements>
-            </sequenceFlow>
-            <sequenceFlow sourceRef="ACT16166481092998" targetRef="EVT16166475482297" name="sf17" id="sf17">
+            <sequenceFlow sourceRef="EVT16166475482271" targetRef="EVT16166475482297" name="sf15" id="sf15">
                 <extensionElements>
                     <ns5:OracleExtensions>
                         <ns5:SequenceFlowAttributes/>

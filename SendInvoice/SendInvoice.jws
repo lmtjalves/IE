@@ -14,5 +14,6 @@
    </hash>
    <list n="listOfChildren">
       <hash><url n="URL" path="SendInvoice/SendInvoice.jpr"/></hash>
+      <hash><url n="URL" path="../TwitterRequestFreight/TwitterRequestFreight.jpr"/></hash>
    </list>
 </jws:workspace>
