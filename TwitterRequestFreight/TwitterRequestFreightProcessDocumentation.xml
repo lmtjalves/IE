@@ -568,7 +568,11 @@
             <topicDocumentation name="sf227"/>
             <topicDocumentation name="sf228"/>
             <topicDocumentation name="sf229"/>
-            <topicDocumentation name="sf231"/>
+            <topicDocumentation name="sf231">
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
             <topicDocumentation name="sf233"/>
             <topicDocumentation name="EVT16184357095787">
                 <labels>
