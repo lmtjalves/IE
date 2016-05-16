@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="RequestQuotationToTransporterService"
+     targetNamespace="http://requestquotationtotransporter/"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://requestquotationtotransporter/"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    >
+    <plnk:partnerLinkType name="GetTransporterOffer">
+        <plnk:role name="RequestQuotationToTransporter" portType="tns:RequestQuotationToTransporter"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://requestquotationtotransporter/" location="http://soabpm-vm.site:7001/RequestQuotationToTransporterService-RequestQuotationToTransporter-context-root/RequestQuotationToTransporterSoap12HttpPort?wsdl"/>
+</wsdl:definitions>

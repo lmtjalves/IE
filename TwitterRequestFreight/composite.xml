@@ -17,6 +17,12 @@
           importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/bpmn/bpmnProcess/default"
           location="project_properties.wsdl" importType="wsdl"/>
+  <import namespace="http://twitterparsefreightrequest/"
+          location="http://soabpm-vm.site:7001/TwitterParseFreightRequest-Project1-context-root/FreightRequestParserSoap12HttpPort?wsdl"
+          importType="wsdl"/>
+  <import namespace="http://sendemailservice/"
+          location="http://soabpm-vm.site:7001/EmailSender-SendEmailService-context-root/SendEmailServiceSoap12HttpPort?wsdl"
+          importType="wsdl"/>
   <service name="TwitterRequestFreightProcess.service"
            ui:wsdlLocation="TwitterRequestFreightProcess.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/bpmn/bpmnProcess/TwitterRequestFreightProcess#wsdl.interface(TwitterRequestFreightProcessPortType)"/>
@@ -36,9 +42,37 @@
                 type="xs:string" many="false">WSDLDriven</property>
     </binding.ws>
   </reference>
+  <reference name="ParseRequest"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/TwitterParseFreightRequest-Project1-context-root/FreightRequestParserSoap12HttpPort?wsdl">
+    <interface.wsdl interface="http://twitterparsefreightrequest/#wsdl.interface(FreightRequestParser)"/>
+    <binding.ws port="http://twitterparsefreightrequest/#wsdl.endpoint(FreightRequestParserService/FreightRequestParserSoap12HttpPort)"
+                location="http://soabpm-vm.site:7001/TwitterParseFreightRequest-Project1-context-root/FreightRequestParserSoap12HttpPort?wsdl"
+                soapVersion="1.2">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
+  <reference name="SendEmail"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/EmailSender-SendEmailService-context-root/SendEmailServiceSoap12HttpPort?wsdl">
+    <interface.wsdl interface="http://sendemailservice/#wsdl.interface(SendEmailService)"/>
+    <binding.ws port="http://sendemailservice/#wsdl.endpoint(SendEmailService/SendEmailServiceSoap12HttpPort)"
+                location="http://soabpm-vm.site:7001/EmailSender-SendEmailService-context-root/SendEmailServiceSoap12HttpPort?wsdl"
+                soapVersion="1.2">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
   <wire>
     <source.uri>TwitterRequestFreightProcess/Services.Externals.SendMessage.reference</source.uri>
     <target.uri>SendMessage</target.uri>
+  </wire>
+  <wire>
+    <source.uri>TwitterRequestFreightProcess/Services.Externals.ParseRequest.reference</source.uri>
+    <target.uri>ParseRequest</target.uri>
+  </wire>
+  <wire>
+    <source.uri>TwitterRequestFreightProcess/Services.Externals.SendEmail.reference</source.uri>
+    <target.uri>SendEmail</target.uri>
   </wire>
   <wire>
     <source.uri>TwitterRequestFreightProcess.service</source.uri>

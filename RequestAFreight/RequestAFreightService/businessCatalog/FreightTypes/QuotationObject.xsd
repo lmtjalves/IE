@@ -12,6 +12,7 @@
             <xs:element name="offer" nillable="true" type="xs:double"/>
             <xs:element name="transporterName" nillable="true" type="xs:string"/>
             <xs:element name="transporterId" nillable="true" type="xs:long"/>
+            <xs:element name="status" nillable="true" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     <xs:element name="QuotationObject" type="QuotationObjectType"/>

@@ -14,4 +14,12 @@
              ui:wsdlLocation="http://soabpm-vm.site:7001/TwitterSendMessageService-TwitterSendMessage-context-root/TwitterSendMessageSoap12HttpPort?wsdl">
     <interface.wsdl interface="http://twittersendmessage/#wsdl.interface(TwitterSendMessage)"/>
   </reference>
+  <reference name="Services.Externals.ParseRequest.reference"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/TwitterParseFreightRequest-Project1-context-root/FreightRequestParserSoap12HttpPort?wsdl">
+    <interface.wsdl interface="http://twitterparsefreightrequest/#wsdl.interface(FreightRequestParser)"/>
+  </reference>
+  <reference name="Services.Externals.SendEmail.reference"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/EmailSender-SendEmailService-context-root/SendEmailServiceSoap12HttpPort?wsdl">
+    <interface.wsdl interface="http://sendemailservice/#wsdl.interface(SendEmailService)"/>
+  </reference>
 </componentType>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <definitions fileRevision="20120217" version="11.1.1.7.0.0.8" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:ns2="http://www.omg.org/spec/DD/20100524/DI" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:ns4="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns3="http://www.omg.org/spec/DD/20100524/DC" xmlns:ns5="http://xmlns.oracle.com/bpm/OracleExtensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <process isExecutable="true" processType="Public" name="RequestAFreightProcess" id="RequestAFreightProcess">
+    <process processType="Public" isExecutable="true" name="RequestAFreightProcess" id="RequestAFreightProcess">
         <extensionElements>
             <ns5:OracleExtensions>
                 <ns5:FeatureSet>
@@ -19,22 +19,22 @@
                     <ns5:StringFeature value="REGULAR" name="sealType"/>
                 </ns5:FeatureSet>
                 <ns5:Conversations>
-                    <ns5:Conversation type="define_interface" id="CONVERSATION160246238622">
+                    <ns5:Conversation id="CONVERSATION160246238622" type="define_interface">
                         <ns5:DefineInterfaceConversationDefinition exposeSOAPService="true"/>
                     </ns5:Conversation>
-                    <ns5:Conversation type="service_call" id="CONVERSATION160281227119">
+                    <ns5:Conversation id="CONVERSATION160281227119" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.RegisterClient"/>
                     </ns5:Conversation>
-                    <ns5:Conversation type="service_call" id="CONVERSATION160305400651">
+                    <ns5:Conversation id="CONVERSATION160305400651" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.RequestQuotation"/>
                     </ns5:Conversation>
-                    <ns5:Conversation type="service_call" id="CONVERSATION160309584656">
+                    <ns5:Conversation id="CONVERSATION160309584656" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.StoreTransportation"/>
                     </ns5:Conversation>
-                    <ns5:Conversation type="service_call" id="CONVERSATION160309833113">
+                    <ns5:Conversation id="CONVERSATION160309833113" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.SendInvoice"/>
                     </ns5:Conversation>
-                    <ns5:Conversation type="service_call" id="CONVERSATION160331560829">
+                    <ns5:Conversation id="CONVERSATION160331560829" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.GetClientIdService"/>
                     </ns5:Conversation>
                 </ns5:Conversations>
@@ -52,8 +52,8 @@
                 <extensionElements>
                     <ns5:OracleExtensions>
                         <ns5:GraphicsAttributes backgroundColor="-1761607681">
-                            <ns5:Position y="0" x="0"/>
-                            <ns5:Size height="0" width="302"/>
+                            <ns5:Position x="0" y="0"/>
+                            <ns5:Size width="302" height="0"/>
                         </ns5:GraphicsAttributes>
                         <ns5:LaneAttributes roleId="Client"/>
                         <ns5:FeatureSet/>
@@ -61,11 +61,11 @@
                 </extensionElements>
             </lane>
         </laneSet>
-        <serviceTask operationRef="process" implementation="Services.Externals.RegisterClient" isForCompensation="false" name="Register Client" id="ACT16024628325621">
+        <serviceTask implementation="Services.Externals.RegisterClient" operationRef="process" isForCompensation="false" name="Register Client" id="ACT16024628325621">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="34" x="464"/>
+                        <ns5:Position x="464" y="34"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
@@ -85,14 +85,14 @@
                 <dataInput name="request" id="request">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="Request" namespace="http://www.registerclient.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://www.registerclient.truckhub.org" element="Request" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataInput>
                 <dataOutput name="response" id="response">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="Response" namespace="http://www.registerclient.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://www.registerclient.truckhub.org" element="Response" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataOutput>
@@ -307,11 +307,11 @@
                 </assignment>
             </dataOutputAssociation>
         </serviceTask>
-        <sendTask operationRef="process" messageRef="Services.Externals.RequestQuotation" isForCompensation="false" name="Request Best Offer" id="ACT1602463784794">
+        <sendTask messageRef="Services.Externals.RequestQuotation" operationRef="process" isForCompensation="false" name="Request Best Offer" id="ACT1602463784794">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="88" x="587"/>
+                        <ns5:Position x="587" y="88"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
@@ -330,7 +330,7 @@
                 <dataInput name="request" id="request">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="request" namespace="http://quotation.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://quotation.truckhub.org" element="request" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataInput>
@@ -451,15 +451,15 @@
                 </assignment>
             </dataInputAssociation>
         </sendTask>
-        <receiveTask operationRef="processResponse" messageRef="Services.Externals.RequestQuotation.Callback" instantiate="false" isForCompensation="false" name="Receive Best Offer" id="ACT16024646512658">
+        <receiveTask instantiate="false" messageRef="Services.Externals.RequestQuotation.Callback" operationRef="processResponse" isForCompensation="false" name="Receive Best Offer" id="ACT16024646512658">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="88" x="697"/>
+                        <ns5:Position x="697" y="88"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
-                        <ns5:BooleanFeature value="false" name="outputValidation"/>
+                        <ns5:BooleanFeature value="true" name="outputValidation"/>
                         <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
                         <ns5:StringFeature value="Begin Level" name="level"/>
                         <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
@@ -474,7 +474,7 @@
                 <dataOutput name="response" id="response">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="response" namespace="http://quotation.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://quotation.truckhub.org" element="response" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataOutput>
@@ -502,6 +502,27 @@
                         </extensionElements>
                     </from>
                     <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:ns="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/QuotationObject" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('quotation')/ns:transporterId
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:ns="http://quotation.truckhub.org" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataOutput('response')/ns:status
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="xpath"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:ns="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/QuotationObject" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('quotation')/ns:status
                         <extensionElements>
                             <ns5:OracleExtensions>
                                 <ns5:Expression mode="simple"/>
@@ -588,11 +609,11 @@
                 </assignment>
             </dataOutputAssociation>
         </receiveTask>
-        <serviceTask operationRef="process" implementation="Services.Externals.StoreTransportation" isForCompensation="false" name="Store freight info in DB" id="ACT16024760688383">
+        <serviceTask implementation="Services.Externals.StoreTransportation" operationRef="process" isForCompensation="false" name="Store freight info in DB" id="ACT16024760688383">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="89" x="1105"/>
+                        <ns5:Position x="1216" y="89"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
@@ -612,14 +633,14 @@
                 <dataInput name="request" id="request">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="Request" namespace="http://www.storetransportation.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://www.storetransportation.truckhub.org" element="Request" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataInput>
                 <dataOutput name="response" id="response">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="Response" namespace="http://www.storetransportation.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://www.storetransportation.truckhub.org" element="Response" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataOutput>
@@ -730,11 +751,11 @@
                 </assignment>
             </dataOutputAssociation>
         </serviceTask>
-        <serviceTask operationRef="process" implementation="Services.Externals.SendInvoice" isForCompensation="false" name="Send invoice" id="ACT16024765135780">
+        <serviceTask implementation="Services.Externals.SendInvoice" operationRef="process" isForCompensation="false" name="Send invoice" id="ACT16024765135780">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="90" x="1222"/>
+                        <ns5:Position x="1333" y="90"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
@@ -754,14 +775,14 @@
                 <dataInput name="request" id="request">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="Request" namespace="http://www.sendinvoice.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://www.sendinvoice.truckhub.org" element="Request" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataInput>
                 <dataOutput name="response" id="response">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="Response" namespace="http://www.sendinvoice.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://www.sendinvoice.truckhub.org" element="Response" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataOutput>
@@ -956,7 +977,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="89" x="815"/>
+                        <ns5:Position x="926" y="89"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
@@ -979,28 +1000,28 @@
                 <dataInput name="quotationObject" id="quotationObject">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="QuotationObject" namespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/QuotationObject"/>
+                            <ns5:TypeRef namespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/QuotationObject" element="QuotationObject" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataInput>
                 <dataInput name="execData" id="execData">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" namespace="ExecData"/>
+                            <ns5:TypeRef namespace="http://xmlns.oracle.com/bpel/workflow/task" element="task" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataInput>
                 <dataOutput name="outcome" id="outcome">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" type="string" namespace="http://www.w3.org/2001/XMLSchema"/>
+                            <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="string" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataOutput>
                 <dataOutput name="execData" id="execData">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" namespace="ExecData"/>
+                            <ns5:TypeRef namespace="http://xmlns.oracle.com/bpel/workflow/task" element="task" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataOutput>
@@ -1071,11 +1092,11 @@
             </dataOutputAssociation>
             <resourceRole name="Client" id="lane0"/>
         </userTask>
-        <serviceTask operationRef="process" implementation="Services.Externals.GetClientIdService" isForCompensation="false" name="TryGetTheClientId" id="ACT16033147136845">
+        <serviceTask implementation="Services.Externals.GetClientIdService" operationRef="process" isForCompensation="false" name="TryGetTheClientId" id="ACT16033147136845">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="86" x="213"/>
+                        <ns5:Position x="213" y="86"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
@@ -1095,14 +1116,14 @@
                 <dataInput name="request" id="request">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="Request" namespace="http://www.getclientid.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://www.getclientid.truckhub.org" element="Request" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataInput>
                 <dataOutput name="response" id="response">
                     <extensionElements>
                         <ns5:OracleExtensions>
-                            <ns5:TypeRef isArray="false" element="Response" namespace="http://www.getclientid.truckhub.org"/>
+                            <ns5:TypeRef namespace="http://www.getclientid.truckhub.org" element="Response" isArray="false"/>
                         </ns5:OracleExtensions>
                     </extensionElements>
                 </dataOutput>
@@ -1202,7 +1223,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="85" x="94"/>
+                        <ns5:Position x="94" y="85"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="catchAllErrors"/>
@@ -1222,7 +1243,7 @@
             <dataOutput name="inputRequestAFreight" id="inputRequestAFreight">
                 <extensionElements>
                     <ns5:OracleExtensions>
-                        <ns5:TypeRef isArray="false" element="RequestObject" namespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/RequestObject"/>
+                        <ns5:TypeRef namespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/RequestObject" element="RequestObject" isArray="false"/>
                     </ns5:OracleExtensions>
                 </extensionElements>
             </dataOutput>
@@ -1515,7 +1536,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="89" x="1315"/>
+                        <ns5:Position x="1426" y="89"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="catchAllErrors"/>
@@ -1535,7 +1556,7 @@
             <dataInput name="OutputRequestAFreight" id="OutputRequestAFreight">
                 <extensionElements>
                     <ns5:OracleExtensions>
-                        <ns5:TypeRef isArray="false" type="string" namespace="http://www.w3.org/2001/XMLSchema"/>
+                        <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="string" isArray="false"/>
                     </ns5:OracleExtensions>
                 </extensionElements>
             </dataInput>
@@ -1572,11 +1593,71 @@
             </inputSet>
             <messageEventDefinition/>
         </endEvent>
+        <endEvent name="End No Offer" id="EVT16182375066776">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:GraphicsAttributes>
+                        <ns5:Position x="808" y="197"/>
+                    </ns5:GraphicsAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="catchAllErrors"/>
+                        <ns5:BooleanFeature value="false" name="catchAllSystemExceptions"/>
+                        <ns5:BooleanFeature value="false" name="inputValidation"/>
+                        <ns5:BooleanFeature value="false" name="isDraft"/>
+                        <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
+                        <ns5:StringFeature value="Begin Level" name="level"/>
+                        <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
+                    </ns5:FeatureSet>
+                    <ns5:Conversational conversation="CONVERSATION160246238622">
+                        <ns5:DefineInterfaceConversationalDefinition definedOperationName="endNoOffer"/>
+                    </ns5:Conversational>
+                    <ns5:LogHandlers/>
+                </ns5:OracleExtensions>
+            </extensionElements>
+            <dataInput name="OutputRequestAFreight" id="OutputRequestAFreight">
+                <extensionElements>
+                    <ns5:OracleExtensions>
+                        <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="string" isArray="false"/>
+                    </ns5:OracleExtensions>
+                </extensionElements>
+            </dataInput>
+            <dataInputAssociation>
+                <extensionElements>
+                    <ns5:OracleExtensions/>
+                </extensionElements>
+                <targetRef>OutputRequestAFreight</targetRef>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath">'No offer available'
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataInput('OutputRequestAFreight')
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+            </dataInputAssociation>
+            <inputSet id="EVT16182375066776_uniqueInputSet">
+                <dataInputRefs>OutputRequestAFreight</dataInputRefs>
+            </inputSet>
+            <messageEventDefinition/>
+        </endEvent>
         <exclusiveGateway gatewayDirection="Unspecified" name="Quotation approved?" id="GTW16024702549652">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="91" x="937"/>
+                        <ns5:Position x="1048" y="91"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
@@ -1590,7 +1671,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position y="83" x="346"/>
+                        <ns5:Position x="346" y="83"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
@@ -1600,11 +1681,25 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </exclusiveGateway>
-        <sequenceFlow targetRef="ACT16033147136845" sourceRef="EVT1602462386219" name="sf40" id="sf40">
+        <exclusiveGateway gatewayDirection="Unspecified" name="GotOffer?" id="GTW16182360441434">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:GraphicsAttributes>
+                        <ns5:Position x="807" y="89"/>
+                    </ns5:GraphicsAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
+                        <ns5:StringFeature value="Begin Level" name="level"/>
+                        <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </exclusiveGateway>
+        <sequenceFlow sourceRef="EVT1602462386219" targetRef="ACT16033147136845" name="sf40" id="sf40">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes>
-                        <ns5:Positions y="87" x="114"/>
+                        <ns5:Positions x="114" y="87"/>
                     </ns5:SequenceFlowAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="collapseMessage"/>
@@ -1614,11 +1709,11 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="ACT1602463784794" sourceRef="ACT16024628325621" name="sf42" id="sf42">
+        <sequenceFlow sourceRef="ACT16024628325621" targetRef="ACT1602463784794" name="sf42" id="sf42">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes>
-                        <ns5:Positions y="38" x="586"/>
+                        <ns5:Positions x="586" y="38"/>
                     </ns5:SequenceFlowAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="collapseMessage"/>
@@ -1628,7 +1723,7 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="ACT16024646512658" sourceRef="ACT1602463784794" name="sf43" id="sf43">
+        <sequenceFlow sourceRef="ACT1602463784794" targetRef="ACT16024646512658" name="sf43" id="sf43">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -1640,7 +1735,7 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="ACT16024872385720" sourceRef="ACT16024646512658" name="sf44" id="sf44">
+        <sequenceFlow sourceRef="ACT16024646512658" targetRef="GTW16182360441434" name="sf44" id="sf44">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -1652,7 +1747,7 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="ACT16024760688383" sourceRef="GTW16024702549652" name="sf48" id="sf48">
+        <sequenceFlow sourceRef="GTW16024702549652" targetRef="ACT16024760688383" name="sf48" id="sf48">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -1665,7 +1760,7 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="ACT16024765135780" sourceRef="ACT16024760688383" name="sf51" id="sf51">
+        <sequenceFlow sourceRef="ACT16024760688383" targetRef="ACT16024765135780" name="sf51" id="sf51">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -1677,7 +1772,7 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="EVT16024623862223" sourceRef="ACT16024765135780" name="sf52" id="sf52">
+        <sequenceFlow sourceRef="ACT16024765135780" targetRef="EVT16024623862223" name="sf52" id="sf52">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -1689,7 +1784,7 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="GTW16024702549652" sourceRef="ACT16024872385720" name="sf53" id="sf53">
+        <sequenceFlow sourceRef="ACT16024872385720" targetRef="GTW16024702549652" name="sf53" id="sf53">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -1701,15 +1796,15 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="EVT16024623862223" sourceRef="GTW16024702549652" name="sf55" id="sf55">
+        <sequenceFlow sourceRef="GTW16024702549652" targetRef="EVT16024623862223" name="sf55" id="sf55">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes>
-                        <ns5:Positions y="32" x="1224"/>
+                        <ns5:Positions x="1335" y="32"/>
                     </ns5:SequenceFlowAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="collapseMessage"/>
-                        <ns5:StringFeature value="1224,32" name="curve"/>
+                        <ns5:StringFeature value="1335,32" name="curve"/>
                         <ns5:StringFeature value="ORTHOGONAL" name="routing"/>
                         <ns5:StringFeature value="No" name="userName"/>
                         <ns5:IntegerFeature value="0" name="order"/>
@@ -1724,7 +1819,7 @@
                 </extensionElements>
             </conditionExpression>
         </sequenceFlow>
-        <sequenceFlow targetRef="GTW16033158403854" sourceRef="ACT16033147136845" name="sf37" id="sf37">
+        <sequenceFlow sourceRef="ACT16033147136845" targetRef="GTW16033158403854" name="sf37" id="sf37">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -1736,11 +1831,11 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="ACT16024628325621" sourceRef="GTW16033158403854" name="sf56" id="sf56">
+        <sequenceFlow sourceRef="GTW16033158403854" targetRef="ACT16024628325621" name="sf56" id="sf56">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes>
-                        <ns5:Positions y="34" x="351"/>
+                        <ns5:Positions x="351" y="34"/>
                     </ns5:SequenceFlowAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="collapseMessage"/>
@@ -1750,11 +1845,11 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow targetRef="ACT1602463784794" sourceRef="GTW16033158403854" name="sf58" id="sf58">
+        <sequenceFlow sourceRef="GTW16033158403854" targetRef="ACT1602463784794" name="sf58" id="sf58">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes>
-                        <ns5:Positions y="180" x="426"/>
+                        <ns5:Positions x="426" y="180"/>
                     </ns5:SequenceFlowAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="collapseMessage"/>
@@ -1773,11 +1868,47 @@
                 </extensionElements>
             </conditionExpression>
         </sequenceFlow>
+        <sequenceFlow sourceRef="GTW16182360441434" targetRef="ACT16024872385720" name="sf16" id="sf16">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes/>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
+                        <ns5:StringFeature value="STRAIGHT" name="routing"/>
+                        <ns5:StringFeature value="Yes" name="userName"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="GTW16182360441434" targetRef="EVT16182375066776" name="sf18" id="sf18">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes>
+                        <ns5:Positions x="807" y="162"/>
+                    </ns5:SequenceFlowAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="807,162" name="curve"/>
+                        <ns5:StringFeature value="ORTHOGONAL" name="routing"/>
+                        <ns5:StringFeature value="No" name="userName"/>
+                        <ns5:IntegerFeature value="0" name="order"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+            <conditionExpression xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:ns="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/QuotationObject" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('quotation')/ns:status != "OK"
+                <extensionElements>
+                    <ns5:OracleExtensions>
+                        <ns5:Expression mode="xpath"/>
+                    </ns5:OracleExtensions>
+                </extensionElements>
+            </conditionExpression>
+        </sequenceFlow>
         <dataObject name="request" id="request">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:DataObjectType initialize="true">
-                        <ns5:TypeRef isArray="false" element="RequestObject" namespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/RequestObject"/>
+                        <ns5:TypeRef namespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/RequestObject" element="RequestObject" isArray="false"/>
                     </ns5:DataObjectType>
                 </ns5:OracleExtensions>
             </extensionElements>
@@ -1786,7 +1917,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:DataObjectType initialize="true">
-                        <ns5:TypeRef isArray="false" element="QuotationObject" namespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/QuotationObject"/>
+                        <ns5:TypeRef namespace="http://xmlns.oracle.com/bpm/bpmobject/FreightTypes/QuotationObject" element="QuotationObject" isArray="false"/>
                     </ns5:DataObjectType>
                 </ns5:OracleExtensions>
             </extensionElements>
@@ -1795,7 +1926,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:DataObjectType initialize="true">
-                        <ns5:TypeRef isArray="false" type="string" namespace="http://www.w3.org/2001/XMLSchema"/>
+                        <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="string" isArray="false"/>
                     </ns5:DataObjectType>
                 </ns5:OracleExtensions>
             </extensionElements>
@@ -1804,7 +1935,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:DataObjectType initialize="true">
-                        <ns5:TypeRef isArray="false" type="long" namespace="http://www.w3.org/2001/XMLSchema"/>
+                        <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="long" isArray="false"/>
                     </ns5:DataObjectType>
                 </ns5:OracleExtensions>
             </extensionElements>
@@ -1813,7 +1944,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:DataObjectType initialize="true">
-                        <ns5:TypeRef isArray="false" type="long" namespace="http://www.w3.org/2001/XMLSchema"/>
+                        <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="long" isArray="false"/>
                     </ns5:DataObjectType>
                 </ns5:OracleExtensions>
             </extensionElements>
@@ -1822,7 +1953,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:DataObjectType initialize="true">
-                        <ns5:TypeRef isArray="false" type="double" namespace="http://www.w3.org/2001/XMLSchema"/>
+                        <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="double" isArray="false"/>
                     </ns5:DataObjectType>
                 </ns5:OracleExtensions>
             </extensionElements>
@@ -1831,7 +1962,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:DataObjectType initialize="true">
-                        <ns5:TypeRef isArray="false" type="boolean" namespace="http://www.w3.org/2001/XMLSchema"/>
+                        <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="boolean" isArray="false"/>
                     </ns5:DataObjectType>
                 </ns5:OracleExtensions>
             </extensionElements>

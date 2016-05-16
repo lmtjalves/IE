@@ -16,6 +16,13 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
+            <xsd:element name="endNoOfferResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="OutputRequestAFreight" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
             <xsd:element name="endResponse">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -28,6 +35,9 @@
     <wsdl:message name="start">
         <wsdl:part name="parameters" element="tns:start"/>
     </wsdl:message>
+    <wsdl:message name="endNoOfferResponse">
+        <wsdl:part name="parameters" element="tns:endNoOfferResponse"/>
+    </wsdl:message>
     <wsdl:message name="endResponse">
         <wsdl:part name="parameters" element="tns:endResponse"/>
     </wsdl:message>
@@ -39,6 +49,9 @@
     <wsdl:portType name="RequestAFreightProcessPortTypeCallBack">
         <wsdl:operation name="end">
             <wsdl:input message="tns:endResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="endNoOffer">
+            <wsdl:input message="tns:endNoOfferResponse"/>
         </wsdl:operation>
     </wsdl:portType>
     <plnk:partnerLinkType name="RequestAFreightProcessPortTypePartnerLinkType">

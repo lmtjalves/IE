@@ -1,0 +1,157 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon May 16 08:07:20 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="RegisterTransporter"
+               targetNamespace="http://xmlns.oracle.com/RegisterTransporter/RegisterTransporter/RegisterTransporter"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/RegisterTransporter/RegisterTransporter/RegisterTransporter"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/RegisterTransporter/RegisterTransporter/InsertTransporter"
+         xmlns:ns2="http://requestquotationtotransporter/"
+         xmlns:ns3="http://www.registertransporter.truckhub.org"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/top/InsertTransporter"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <import namespace="http://xmlns.oracle.com/RegisterTransporter/RegisterTransporter/RegisterTransporter" location="RegisterTransporter.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="registertransporter_client" partnerLinkType="client:RegisterTransporter" myRole="RegisterTransporterProvider"/>
+    <partnerLink name="InsertTransporter"
+                 partnerLinkType="ns1:InsertTransporter_plt"
+                 partnerRole="InsertTransporter_role"/>
+    <partnerLink name="GetTransporterOffer"
+                 partnerLinkType="ns2:GetTransporterOffer"
+                 partnerRole="RequestQuotationToTransporter"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:RegisterTransporterRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:RegisterTransporterResponseMessage"/>
+    <variable name="TestWebService_doRequest_InputVariable"
+              messageType="ns2:doRequest"/>
+    <variable name="TestWebService_doRequest_OutputVariable"
+              messageType="ns2:doRequestResponse"/>
+    <variable name="CreateTransporter_insert_InputVariable"
+              messageType="ns1:TransporterCollection_msg"/>
+    <variable name="CreateTransporter_insert_OutputVariable"
+              messageType="ns1:TransporterCollection_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in RegisterTransporter.wsdl) -->
+    <receive name="receiveInput" partnerLink="registertransporter_client" portType="client:RegisterTransporter" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignForWSCall">
+      <copy>
+        <from>$inputVariable.payload/ns3:WebServiceURL</from>
+        <to>$TestWebService_doRequest_InputVariable.parameters/url</to>
+      </copy>
+      <copy>
+        <from>1</from>
+        <to>$TestWebService_doRequest_InputVariable.parameters/distanceInKm</to>
+      </copy>
+      <copy>
+        <from>1</from>
+        <to>$TestWebService_doRequest_InputVariable.parameters/parcelWeight</to>
+      </copy>
+    </assign>
+    <invoke name="TestWebService" bpelx:invokeAsDetail="no"
+            partnerLink="GetTransporterOffer"
+            portType="ns2:RequestQuotationToTransporter" operation="doRequest"
+            inputVariable="TestWebService_doRequest_InputVariable"
+            outputVariable="TestWebService_doRequest_OutputVariable"/>
+    <if name="If1">
+      <documentation>
+        <![CDATA[WebServiceTestSuccess]]>
+      </documentation>
+      <condition>$TestWebService_doRequest_OutputVariable.parameters/return &gt;  0</condition>
+      <sequence>
+        <assign name="AssignCreateTransporter">
+          <copy>
+            <from>$inputVariable.payload/ns3:Name</from>
+            <to>$CreateTransporter_insert_InputVariable.TransporterCollection/ns4:Transporter/ns4:name</to>
+          </copy>
+          <copy>
+            <from>$inputVariable.payload/ns3:WebServiceURL</from>
+            <to>$CreateTransporter_insert_InputVariable.TransporterCollection/ns4:Transporter/ns4:url</to>
+          </copy>
+        </assign>
+        <invoke name="CreateTransporter"
+                partnerLink="InsertTransporter"
+                portType="ns1:InsertTransporter_ptt" operation="insert"
+                inputVariable="CreateTransporter_insert_InputVariable"
+                outputVariable="CreateTransporter_insert_OutputVariable"
+                bpelx:invokeAsDetail="no"/>
+        <assign name="AssignSuccessOutput">
+          <copy>
+            <from>"OK"</from>
+            <to>$outputVariable.payload/ns3:Status</to>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[Fail]]>
+        </documentation>
+        <assign name="AssignFailWebserviceOutput">
+          <copy>
+            <from>"Error"</from>
+            <to>$outputVariable.payload/ns3:Status</to>
+          </copy>
+          <copy>
+            <from>"Fail testing web service"</from>
+            <to>$outputVariable.payload/ns3:Cause</to>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="registertransporter_client" portType="client:RegisterTransporter" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

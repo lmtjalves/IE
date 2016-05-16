@@ -30,6 +30,12 @@
                     <ns5:Conversation id="CONVERSATION161665493001" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.SendMessage"/>
                     </ns5:Conversation>
+                    <ns5:Conversation id="CONVERSATION161718238207" type="service_call">
+                        <ns5:ServiceCallConversationDefinition service="Services.Externals.ParseRequest"/>
+                    </ns5:Conversation>
+                    <ns5:Conversation id="CONVERSATION161735086063" type="service_call">
+                        <ns5:ServiceCallConversationDefinition service="Services.Externals.SendEmail"/>
+                    </ns5:Conversation>
                 </ns5:Conversations>
                 <ns5:ApplicationInfo>
                     <ns5:AppLinkName/>
@@ -54,7 +60,7 @@
                 </extensionElements>
             </lane>
         </laneSet>
-        <serviceTask implementation="Services.Externals.SendMessage" operationRef="sendMessage" isForCompensation="false" name="SendHelpMessage" id="ACT16166546613312">
+        <serviceTask implementation="Services.Externals.SendMessage" operationRef="sendMessage" isForCompensation="false" name="Send Help Message" id="ACT16166546613312">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
@@ -146,7 +152,7 @@
                 </assignment>
             </dataInputAssociation>
         </serviceTask>
-        <serviceTask implementation="Services.Externals.SendMessage" operationRef="sendMessage" isForCompensation="false" name="SendStartRequestMessage" id="ACT16166561412070">
+        <serviceTask implementation="Services.Externals.SendMessage" operationRef="sendMessage" isForCompensation="false" name="Send Start Request Message" id="ACT16166561412070">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
@@ -238,7 +244,7 @@
                 </assignment>
             </dataInputAssociation>
         </serviceTask>
-        <serviceTask implementation="Services.Externals.SendMessage" operationRef="sendMessage" isForCompensation="false" name="SendCanceledMessage" id="ACT16166657146724">
+        <serviceTask implementation="Services.Externals.SendMessage" operationRef="sendMessage" isForCompensation="false" name="Send Cancel Message" id="ACT16166657146724">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
@@ -330,7 +336,7 @@
                 </assignment>
             </dataInputAssociation>
         </serviceTask>
-        <serviceTask isForCompensation="false" name="ServiceTask" id="ACT16171430400363">
+        <serviceTask implementation="Services.Externals.ParseRequest" operationRef="parse" isForCompensation="false" name="Parse Request" id="ACT16171430400363">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
@@ -344,13 +350,239 @@
                         <ns5:StringFeature value="Begin Level" name="level"/>
                         <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
                     </ns5:FeatureSet>
-                    <ns5:Conversational/>
+                    <ns5:Conversational conversation="CONVERSATION161718238207">
+                        <ns5:ServiceCallConversationalDefinition operation="parse"/>
+                    </ns5:Conversational>
                     <ns5:LogHandlers/>
                 </ns5:OracleExtensions>
             </extensionElements>
-            <ioSpecification/>
+            <ioSpecification>
+                <dataInput name="parse" id="parse">
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:TypeRef namespace="http://twitterparsefreightrequest/" element="parse" isArray="false"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                </dataInput>
+                <dataOutput name="parseResponse" id="parseResponse">
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:TypeRef namespace="http://twitterparsefreightrequest/" element="parseResponse" isArray="false"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                </dataOutput>
+                <inputSet id="ACT16171430400363_uniqueInputSet">
+                    <dataInputRefs>parse</dataInputRefs>
+                </inputSet>
+                <outputSet id="ACT16171430400363_uniqueOutputSet">
+                    <dataOutputRefs>parseResponse</dataOutputRefs>
+                </outputSet>
+            </ioSpecification>
+            <dataInputAssociation>
+                <extensionElements>
+                    <ns5:OracleExtensions/>
+                </extensionElements>
+                <sourceRef>CurrentMessage</sourceRef>
+                <targetRef>parse</targetRef>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:ns="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/Message" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('CurrentMessage')/ns:text
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataInput('parse')/requestString
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+            </dataInputAssociation>
+            <dataOutputAssociation>
+                <extensionElements>
+                    <ns5:OracleExtensions/>
+                </extensionElements>
+                <sourceRef>parseResponse</sourceRef>
+                <targetRef>ParsedRequest</targetRef>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataOutput('parseResponse')/return/cause
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/cause
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataOutput('parseResponse')/return/destinationLatitude
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/destinationLatitude
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataOutput('parseResponse')/return/destinationLongitude
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/destinationLongitude
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataOutput('parseResponse')/return/email
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/email
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataOutput('parseResponse')/return/originLatitude
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/originLatitude
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataOutput('parseResponse')/return/originLongitude
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/originLongitude
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataOutput('parseResponse')/return/parcelWeight
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/parcelWeight
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">xp20:matches(string(bpmn:getDataOutput('parseResponse')/return/valid), '\s*(?i:true|1)\s*')
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/valid
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+            </dataOutputAssociation>
         </serviceTask>
-        <serviceTask isForCompensation="false" name="SendInvalidAndRepeatMessage" id="ACT16171443413746">
+        <serviceTask implementation="Services.Externals.SendMessage" operationRef="sendMessage" isForCompensation="false" name="SendInvalidAndRepeatMessage" id="ACT16171443413746">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
@@ -364,17 +596,90 @@
                         <ns5:StringFeature value="Begin Level" name="level"/>
                         <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
                     </ns5:FeatureSet>
-                    <ns5:Conversational/>
+                    <ns5:Conversational conversation="CONVERSATION161665493001">
+                        <ns5:ServiceCallConversationalDefinition operation="sendMessage"/>
+                    </ns5:Conversational>
                     <ns5:LogHandlers/>
                 </ns5:OracleExtensions>
             </extensionElements>
-            <ioSpecification/>
+            <ioSpecification>
+                <dataInput name="sendMessage" id="sendMessage">
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:TypeRef namespace="http://twittersendmessage/" element="sendMessage" isArray="false"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                </dataInput>
+                <dataOutput name="sendMessageResponse" id="sendMessageResponse">
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:TypeRef namespace="http://twittersendmessage/" element="sendMessageResponse" isArray="false"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                </dataOutput>
+                <inputSet id="ACT16171443413746_uniqueInputSet">
+                    <dataInputRefs>sendMessage</dataInputRefs>
+                </inputSet>
+                <outputSet id="ACT16171443413746_uniqueOutputSet">
+                    <dataOutputRefs>sendMessageResponse</dataOutputRefs>
+                </outputSet>
+            </ioSpecification>
+            <dataInputAssociation>
+                <extensionElements>
+                    <ns5:OracleExtensions/>
+                </extensionElements>
+                <sourceRef>CurrentMessage</sourceRef>
+                <sourceRef>ParsedRequest</sourceRef>
+                <targetRef>sendMessage</targetRef>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:ns="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/Message" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('CurrentMessage')/ns:senderId
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataInput('sendMessage')/recepientId
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">concat('Invalid request, try again (reason: ', bpmn:getDataObject('ParsedRequest')/return/cause, ')')
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataInput('sendMessage')/text
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+            </dataInputAssociation>
         </serviceTask>
-        <serviceTask isForCompensation="false" name="SendBestOfferAndAskForConfirmation" id="ACT16171496444525">
+        <serviceTask isForCompensation="false" name="Send Invoice" id="ACT1617151347004">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position x="1225" y="161"/>
+                        <ns5:Position x="2234" y="162"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
@@ -390,11 +695,212 @@
             </extensionElements>
             <ioSpecification/>
         </serviceTask>
-        <serviceTask isForCompensation="false" name="Do Transportation" id="ACT1617151347004">
+        <scriptTask isForCompensation="false" name="Generate Security Token" id="ACT16173472983296">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position x="1631" y="162"/>
+                        <ns5:Position x="1424" y="164"/>
+                    </ns5:GraphicsAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="isDraft"/>
+                        <ns5:BooleanFeature value="false" name="outputValidation"/>
+                        <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
+                        <ns5:StringFeature value="Begin Level" name="level"/>
+                        <ns5:StringFeature value="" name="script"/>
+                        <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
+                    </ns5:FeatureSet>
+                    <ns5:LogHandlers/>
+                </ns5:OracleExtensions>
+            </extensionElements>
+            <ioSpecification/>
+            <dataOutputAssociation>
+                <extensionElements>
+                    <ns5:OracleExtensions/>
+                </extensionElements>
+                <targetRef>token</targetRef>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:ora="http://schemas.oracle.com/xpath/extension" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">ora:generateGUID()
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="xpath"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('token')
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+            </dataOutputAssociation>
+            <script></script>
+        </scriptTask>
+        <serviceTask implementation="Services.Externals.SendEmail" operationRef="sendEmail" isForCompensation="false" name="Send Token By Email" id="ACT16173489715542">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:GraphicsAttributes>
+                        <ns5:Position x="1553" y="163"/>
+                    </ns5:GraphicsAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="isDraft"/>
+                        <ns5:BooleanFeature value="false" name="inputValidation"/>
+                        <ns5:BooleanFeature value="false" name="outputValidation"/>
+                        <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
+                        <ns5:StringFeature value="Begin Level" name="level"/>
+                        <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
+                    </ns5:FeatureSet>
+                    <ns5:Conversational conversation="CONVERSATION161735086063">
+                        <ns5:ServiceCallConversationalDefinition operation="sendEmail"/>
+                    </ns5:Conversational>
+                    <ns5:LogHandlers/>
+                </ns5:OracleExtensions>
+            </extensionElements>
+            <ioSpecification>
+                <dataInput name="sendEmail" id="sendEmail">
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:TypeRef namespace="http://sendemailservice/" element="sendEmail" isArray="false"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                </dataInput>
+                <dataOutput name="sendEmailResponse" id="sendEmailResponse">
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:TypeRef namespace="http://sendemailservice/" element="sendEmailResponse" isArray="false"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                </dataOutput>
+                <inputSet id="ACT16173489715542_uniqueInputSet">
+                    <dataInputRefs>sendEmail</dataInputRefs>
+                </inputSet>
+                <outputSet id="ACT16173489715542_uniqueOutputSet">
+                    <dataOutputRefs>sendEmailResponse</dataOutputRefs>
+                </outputSet>
+            </ioSpecification>
+            <dataInputAssociation>
+                <extensionElements>
+                    <ns5:OracleExtensions/>
+                </extensionElements>
+                <sourceRef>ParsedRequest</sourceRef>
+                <sourceRef>token</sourceRef>
+                <targetRef>sendEmail</targetRef>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataObject('ParsedRequest')/return/email
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataInput('sendEmail')/to
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath">'Twitter Request Authentication'
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataInput('sendEmail')/subject
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+                <assignment>
+                    <extensionElements>
+                        <ns5:OracleExtensions>
+                            <ns5:DataAssignment operation="copy"/>
+                        </ns5:OracleExtensions>
+                    </extensionElements>
+                    <from xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">concat('Your token is: ', bpmn:getDataObject('token'))
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </from>
+                    <to xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">bpmn:getDataInput('sendEmail')/message
+                        <extensionElements>
+                            <ns5:OracleExtensions>
+                                <ns5:Expression mode="simple"/>
+                            </ns5:OracleExtensions>
+                        </extensionElements>
+                    </to>
+                </assignment>
+            </dataInputAssociation>
+        </serviceTask>
+        <serviceTask isForCompensation="false" name="Send Best Offer Message" id="ACT1617349140469">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:GraphicsAttributes>
+                        <ns5:Position x="1693" y="163"/>
+                    </ns5:GraphicsAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="isDraft"/>
+                        <ns5:BooleanFeature value="false" name="inputValidation"/>
+                        <ns5:BooleanFeature value="false" name="outputValidation"/>
+                        <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
+                        <ns5:StringFeature value="Begin Level" name="level"/>
+                        <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
+                    </ns5:FeatureSet>
+                    <ns5:Conversational/>
+                    <ns5:LogHandlers/>
+                </ns5:OracleExtensions>
+            </extensionElements>
+            <ioSpecification/>
+        </serviceTask>
+        <serviceTask isForCompensation="false" name="Get Best Offer" id="ACT16173527275480">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:GraphicsAttributes>
+                        <ns5:Position x="1268" y="164"/>
+                    </ns5:GraphicsAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="isDraft"/>
+                        <ns5:BooleanFeature value="false" name="inputValidation"/>
+                        <ns5:BooleanFeature value="false" name="outputValidation"/>
+                        <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
+                        <ns5:StringFeature value="Begin Level" name="level"/>
+                        <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
+                    </ns5:FeatureSet>
+                    <ns5:Conversational/>
+                    <ns5:LogHandlers/>
+                </ns5:OracleExtensions>
+            </extensionElements>
+            <ioSpecification/>
+        </serviceTask>
+        <serviceTask isForCompensation="false" name="Store Trasnportation" id="ACT16173531821727">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:GraphicsAttributes>
+                        <ns5:Position x="2079" y="163"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
@@ -532,6 +1038,7 @@
                         <ns5:Position x="231" y="388"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="inputValidation"/>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
                         <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
                         <ns5:StringFeature value="Begin Level" name="level"/>
@@ -643,9 +1150,10 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position x="1802" y="161"/>
+                        <ns5:Position x="2333" y="163"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="inputValidation"/>
                         <ns5:BooleanFeature value="false" name="isDraft"/>
                         <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
                         <ns5:StringFeature value="Begin Level" name="level"/>
@@ -659,7 +1167,7 @@
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
-                        <ns5:Position x="1367" y="162"/>
+                        <ns5:Position x="1929" y="164"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:BooleanFeature value="false" name="catchAllErrors"/>
@@ -710,6 +1218,20 @@
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
                         <ns5:Position x="1086" y="162"/>
+                    </ns5:GraphicsAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
+                        <ns5:StringFeature value="Begin Level" name="level"/>
+                        <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </exclusiveGateway>
+        <exclusiveGateway gatewayDirection="Unspecified" name="Cancel? / Invalid?" id="GTW16173495526844">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:GraphicsAttributes>
+                        <ns5:Position x="1787" y="162"/>
                     </ns5:GraphicsAttributes>
                     <ns5:FeatureSet>
                         <ns5:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
@@ -865,7 +1387,7 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow sourceRef="GTW1617143749689" targetRef="ACT16171496444525" name="sf38" id="sf38">
+        <sequenceFlow sourceRef="GTW1617143749689" targetRef="ACT16173527275480" name="sf38" id="sf38">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -892,7 +1414,13 @@
                     </ns5:FeatureSet>
                 </ns5:OracleExtensions>
             </extensionElements>
-            <conditionExpression xsi:type="tFormalExpression"/>
+            <conditionExpression xsi:type="tFormalExpression" language="http://www.w3.org/1999/XPath" ns7:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" ns7:bpmn="http://www.omg.org/bpmn20" xmlns:ns7="http://xmlns.oracle.com/bpm/XPathNamespace">not(xp20:matches(string(bpmn:getDataObject('ParsedRequest')/return/valid), '\s*(?i:true|1)\s*'))
+                <extensionElements>
+                    <ns5:OracleExtensions>
+                        <ns5:Expression mode="simple"/>
+                    </ns5:OracleExtensions>
+                </extensionElements>
+            </conditionExpression>
         </sequenceFlow>
         <sequenceFlow sourceRef="ACT16171443413746" targetRef="EVT16166602941058" name="sf41" id="sf41">
             <extensionElements>
@@ -908,19 +1436,7 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
-        <sequenceFlow sourceRef="ACT16171496444525" targetRef="EVT16171501156862" name="sf42" id="sf42">
-            <extensionElements>
-                <ns5:OracleExtensions>
-                    <ns5:SequenceFlowAttributes/>
-                    <ns5:FeatureSet>
-                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
-                        <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
-                        <ns5:StringFeature value="STRAIGHT" name="routing"/>
-                    </ns5:FeatureSet>
-                </ns5:OracleExtensions>
-            </extensionElements>
-        </sequenceFlow>
-        <sequenceFlow sourceRef="EVT16171501156862" targetRef="ACT1617151347004" name="sf43" id="sf43">
+        <sequenceFlow sourceRef="EVT16171501156862" targetRef="ACT16173531821727" name="sf43" id="sf43">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:SequenceFlowAttributes/>
@@ -944,11 +1460,117 @@
                 </ns5:OracleExtensions>
             </extensionElements>
         </sequenceFlow>
+        <sequenceFlow sourceRef="ACT16173472983296" targetRef="ACT16173489715542" name="sf89" id="sf89">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes/>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
+                        <ns5:StringFeature value="STRAIGHT" name="routing"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="ACT16173489715542" targetRef="ACT1617349140469" name="sf90" id="sf90">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes/>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
+                        <ns5:StringFeature value="STRAIGHT" name="routing"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="ACT1617349140469" targetRef="GTW16173495526844" name="sf91" id="sf91">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes/>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
+                        <ns5:StringFeature value="STRAIGHT" name="routing"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="GTW16173495526844" targetRef="EVT16171501156862" name="sf92" id="sf92">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes/>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
+                        <ns5:StringFeature value="STRAIGHT" name="routing"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="GTW16173495526844" targetRef="EVT16166651188547" name="sf94" id="sf94">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes>
+                        <ns5:Positions x="2067" y="80"/>
+                    </ns5:SequenceFlowAttributes>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="2067,80" name="curve"/>
+                        <ns5:StringFeature value="ORTHOGONAL" name="routing"/>
+                        <ns5:IntegerFeature value="0" name="order"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+            <conditionExpression xsi:type="tFormalExpression"/>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="ACT16173527275480" targetRef="ACT16173472983296" name="sf131" id="sf131">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes/>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
+                        <ns5:StringFeature value="STRAIGHT" name="routing"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="ACT16173531821727" targetRef="ACT1617151347004" name="sf132" id="sf132">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:SequenceFlowAttributes/>
+                    <ns5:FeatureSet>
+                        <ns5:BooleanFeature value="false" name="collapseMessage"/>
+                        <ns5:StringFeature value="-2147483648,-2147483648" name="curve"/>
+                        <ns5:StringFeature value="STRAIGHT" name="routing"/>
+                    </ns5:FeatureSet>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </sequenceFlow>
         <dataObject name="CurrentMessage" id="CurrentMessage">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:DataObjectType initialize="true">
                         <ns5:TypeRef namespace="http://xmlns.oracle.com/bpm/bpmobject/ProcessTypes/Message" element="Message" isArray="false"/>
+                    </ns5:DataObjectType>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </dataObject>
+        <dataObject name="ParsedRequest" id="ParsedRequest">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:DataObjectType initialize="true">
+                        <ns5:TypeRef namespace="http://twitterparsefreightrequest/" element="parseResponse" isArray="false"/>
+                    </ns5:DataObjectType>
+                </ns5:OracleExtensions>
+            </extensionElements>
+        </dataObject>
+        <dataObject name="token" id="token">
+            <extensionElements>
+                <ns5:OracleExtensions>
+                    <ns5:DataObjectType initialize="true">
+                        <ns5:TypeRef namespace="http://www.w3.org/2001/XMLSchema" type="string" isArray="false"/>
                     </ns5:DataObjectType>
                 </ns5:OracleExtensions>
             </extensionElements>

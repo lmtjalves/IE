@@ -4,13 +4,16 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="quotationprocess_client" x="0" y="367" side="left"/>
-      <partnerlink name="CalculateCoordinatesDistance" x="671" y="278" side="right"/>
-      <partnerlink name="ObtainBestOffer" x="671" y="461" side="right"/>
+      <partnerlink name="obtainbestoffer_client" x="0" y="536" side="left"/>
+      <partnerlink name="GetAllTransporters" x="1179" y="278" side="right"/>
+      <partnerlink name="GetTransporterOffer" x="1179" y="560" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,523,800,273" show_swimlanes="true">
+   <graph_layout viewport="0,0,1308,468" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach" type="foreach"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>
 </graphics>

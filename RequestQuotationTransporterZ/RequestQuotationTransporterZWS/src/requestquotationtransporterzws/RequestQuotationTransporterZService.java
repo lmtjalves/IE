@@ -7,8 +7,9 @@ import javax.jws.WebService;
 import javax.xml.ws.BindingType;
 import javax.xml.ws.soap.SOAPBinding;
 
-@WebService(name = "RequestQuotationTransporterZService", serviceName = "RequestQuotationTransporterZService", portName = "RequestQuotationTransporterZServiceSoap12HttpPort")
+@WebService(name = "RequestQuotationTransporterZService", serviceName = "RequestQuotationTransporterZService", portName = "RequestQuotationTransporterZServiceSoap12HttpPort",targetNamespace = "http://transporterrequest/")
 @BindingType(SOAPBinding.SOAP12HTTP_BINDING)
+
 public class RequestQuotationTransporterZService {
     
     public RequestQuotationTransporterZService() {
@@ -23,17 +24,7 @@ public class RequestQuotationTransporterZService {
         
         double profitPercentage = 1 + (randomNumber / 100.0);
         
-        wait30Seconds();
-        
         return distanceInKm * parcelWeight * profitPercentage;
     }
 
-    @WebMethod(exclude = true)
-    public void wait30Seconds(){
-        try {
-            Thread.sleep(30*1000);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-    }
 }

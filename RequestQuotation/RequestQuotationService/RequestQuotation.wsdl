@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="QuotationProcess"
-             targetNamespace="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/QuotationProcess"
+<wsdl:definitions name="RequestQuotation"
+             targetNamespace="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-             xmlns:client="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/QuotationProcess"
+             xmlns:client="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
              xmlns:ns1="http://quotation.truckhub.org"
              xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
 
@@ -22,11 +22,11 @@
 	MESSAGE TYPE DEFINITION - Definition of the message types used as 
 	part of the port type defintions
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
-	<wsdl:message name="QuotationProcessRequestMessage">
+	<wsdl:message name="RequestQuotationRequestMessage">
 		<wsdl:part name="payload" element="ns1:request" />
 	</wsdl:message>
 
-	<wsdl:message name="QuotationProcessResponseMessage">
+	<wsdl:message name="RequestQuotationResponseMessage">
 		<wsdl:part name="payload" element="ns1:response" />
 	</wsdl:message>
 
@@ -35,29 +35,29 @@
 	PORT TYPE DEFINITION - A port type groups a set of operations into
 	a logical service unit.
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	<!-- portType implemented by the QuotationProcess BPEL process -->
-	<wsdl:portType name="QuotationProcess">
+	<!-- portType implemented by the RequestQuotation BPEL process -->
+	<wsdl:portType name="RequestQuotation">
 		<wsdl:operation name="process">
-			<wsdl:input message="client:QuotationProcessRequestMessage"/>
+			<wsdl:input message="client:RequestQuotationRequestMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 
-	<!-- portType implemented by the requester of QuotationProcess BPEL process
+	<!-- portType implemented by the requester of RequestQuotation BPEL process
 	for asynchronous callback purposes
 	-->
-	<wsdl:portType name="QuotationProcessCallback">
+	<wsdl:portType name="RequestQuotationCallback">
 		<wsdl:operation name="processResponse">
-			<wsdl:input message="client:QuotationProcessResponseMessage"/>
+			<wsdl:input message="client:RequestQuotationResponseMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PARTNER LINK TYPE DEFINITION
-	the QuotationProcess partnerLinkType binds the provider and
+	the RequestQuotation partnerLinkType binds the provider and
 	requester portType into an asynchronous conversation.
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-	<plnk:partnerLinkType name="QuotationProcess">
-		<plnk:role name="QuotationProcessProvider" portType="client:QuotationProcess"/>
-		<plnk:role name="QuotationProcessRequester" portType="client:QuotationProcessCallback"/>
+	<plnk:partnerLinkType name="RequestQuotation">
+		<plnk:role name="RequestQuotationProvider" portType="client:RequestQuotation"/>
+		<plnk:role name="RequestQuotationRequester" portType="client:RequestQuotationCallback"/>
 	</plnk:partnerLinkType>
 </wsdl:definitions>

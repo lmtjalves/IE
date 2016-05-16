@@ -61,7 +61,7 @@
       <string v="oracle.toplink.workbench.addin/toplinkContentSet"/>
    </list>
    <value n="defaultPackage" v="requestquotationservice"/>
-   <value n="Namespace" v="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/QuotationProcess"/>
+   <value n="Namespace" v="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"/>
    <hash n="oracle.ide.model.ResourcePaths">
       <hash n="resourcesContentSet">
          <list n="url-path"/>
@@ -70,7 +70,6 @@
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
          <string v="SOA"/>
-         <string v="XML"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.compiler.OjcConfiguration">
@@ -369,11 +368,11 @@
          </list>
       </hash>
    </hash>
-   <value n="ProcessName" v="QuotationProcess"/>
-   <url n="QuotationProcess_bpelFileURL" path="QuotationProcess.bpel"/>
-   <value n="QuotationProcess_Namespace" v="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/QuotationProcess"/>
-   <value n="QuotationProcess_ProcessName" v="QuotationProcess"/>
-   <value n="QuotationProcess_Template" v="BPEL_ASYNC_PROCESS"/>
-   <value n="QuotationProcess_wsdl" v="QuotationProcess.wsdl"/>
+   <value n="ProcessName" v="RequestQuotation"/>
+   <url n="RequestQuotation_bpelFileURL" path="RequestQuotation.bpel"/>
+   <value n="RequestQuotation_Namespace" v="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"/>
+   <value n="RequestQuotation_ProcessName" v="RequestQuotation"/>
+   <value n="RequestQuotation_Template" v="BPEL_ASYNC_PROCESS"/>
+   <value n="RequestQuotation_wsdl" v="RequestQuotation.wsdl"/>
    <value n="Template" v="BPEL_ASYNC_PROCESS"/>
 </jpr:project>

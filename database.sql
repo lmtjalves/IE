@@ -23,6 +23,7 @@ CREATE sequence seq_transporterId start with 1 increment by 1;
 CREATE TABLE transporter (
 	id NUMBER(10),
 	name VARCHAR(255) NOT NULL,
+        url VARCHAR(500) NOt NULL,
 	PRIMARY KEY(id),
 	CONSTRAINT name_unique UNIQUE (name)
 );

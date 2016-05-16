@@ -1,0 +1,188 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon May 16 07:38:55 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ObtainBestOffer"
+               targetNamespace="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOffer/ObtainBestOffer"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOffer/ObtainBestOffer"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/ObtainBestOffer/ObtainBestOffer/GetAllTransporters"
+         xmlns:ns2="http://requestquotationtotransporter/"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetAllTransporters"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://bestoffer.truckhub.org">
+
+    <import namespace="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOffer/ObtainBestOffer" location="ObtainBestOffer.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="obtainbestoffer_client" partnerLinkType="client:ObtainBestOffer" myRole="ObtainBestOfferProvider"/>
+    <partnerLink name="GetAllTransporters"
+                 partnerLinkType="ns1:GetAllTransporters_plt"
+                 partnerRole="GetAllTransporters_role"/>
+    <partnerLink name="GetTransporterOffer"
+                 partnerLinkType="ns2:GetTransporterOffer"
+                 partnerRole="RequestQuotationToTransporter"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:ObtainBestOfferRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:ObtainBestOfferResponseMessage"/>
+    <variable name="GetAllTransporters_GetAllTransportersSelect_InputVariable"
+              messageType="ns1:GetAllTransportersSelect_inputParameters"/>
+    <variable name="GetAllTransporters_GetAllTransportersSelect_OutputVariable"
+              messageType="ns1:TransporterCollection_msg"/>
+    <variable name="GetTransporterOffer_doRequest_InputVariable"
+              messageType="ns2:doRequest"/>
+    <variable name="GetTransporterOffer_doRequest_OutputVariable"
+              messageType="ns2:doRequestResponse"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in ObtainBestOffer.wsdl) -->
+    <receive name="receiveInput" partnerLink="obtainbestoffer_client" portType="client:ObtainBestOffer" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="IntializeOfferTo-1">
+      <copy>
+        <from>0</from>
+        <to>$outputVariable.payload/ns4:transporterId</to>
+      </copy>
+      <copy>
+        <from>"NONE"</from>
+        <to>$outputVariable.payload/ns4:transporterName</to>
+      </copy>
+      <copy>
+        <from>0</from>
+        <to>$outputVariable.payload/ns4:offer</to>
+      </copy>
+    </assign>
+    <invoke name="GetAllTransporters"
+            partnerLink="GetAllTransporters"
+            portType="ns1:GetAllTransporters_ptt"
+            operation="GetAllTransportersSelect"
+            inputVariable="GetAllTransporters_GetAllTransportersSelect_InputVariable"
+            outputVariable="GetAllTransporters_GetAllTransportersSelect_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <forEach parallel="no" counterName="ForEach1Counter" name="ForEach1">
+      <startCounterValue>1</startCounterValue>
+      <finalCounterValue>count($GetAllTransporters_GetAllTransportersSelect_OutputVariable.TransporterCollection/ns3:Transporter) </finalCounterValue>
+      <scope name="Scope1">
+        <sequence name="Sequence1">
+          <assign name="AssignTransporter">
+            <copy>
+              <from>$inputVariable.payload/ns4:distanceInKm</from>
+              <to>$GetTransporterOffer_doRequest_InputVariable.parameters/distanceInKm</to>
+            </copy>
+            <copy>
+              <from>$inputVariable.payload/ns4:parcelWeight</from>
+              <to>$GetTransporterOffer_doRequest_InputVariable.parameters/parcelWeight</to>
+            </copy>
+            <copy>
+              <from>$GetAllTransporters_GetAllTransportersSelect_OutputVariable.TransporterCollection/ns3:Transporter[$ForEach1Counter]/ns3:url</from>
+              <to>$GetTransporterOffer_doRequest_InputVariable.parameters/url</to>
+            </copy>
+          </assign>
+          <invoke name="GetTransporterOffer" partnerLink="GetTransporterOffer"
+                  portType="ns2:RequestQuotationToTransporter"
+                  operation="doRequest"
+                  inputVariable="GetTransporterOffer_doRequest_InputVariable"
+                  outputVariable="GetTransporterOffer_doRequest_OutputVariable"
+                  bpelx:invokeAsDetail="no"/>
+          <if name="If1">
+            <documentation>
+              <![CDATA[Is First Offer]]>
+            </documentation>
+            <condition>$outputVariable.payload/ns4:transporterId = 0 and $GetTransporterOffer_doRequest_OutputVariable.parameters/return &gt; 0</condition>
+            <assign name="AssignFirstOffer">
+              <copy>
+                <from>$GetTransporterOffer_doRequest_OutputVariable.parameters/return</from>
+                <to>$outputVariable.payload/ns4:offer</to>
+              </copy>
+              <copy>
+                <from>$GetAllTransporters_GetAllTransportersSelect_OutputVariable.TransporterCollection/ns3:Transporter[$ForEach1Counter]/ns3:name</from>
+                <to>$outputVariable.payload/ns4:transporterName</to>
+              </copy>
+              <copy>
+                <from>$GetAllTransporters_GetAllTransportersSelect_OutputVariable.TransporterCollection/ns3:Transporter[$ForEach1Counter]/ns3:id</from>
+                <to>$outputVariable.payload/ns4:transporterId</to>
+              </copy>
+            </assign>
+            <elseif>
+              <documentation>
+                <![CDATA[BetterOffer]]>
+              </documentation>
+              <condition>$GetTransporterOffer_doRequest_OutputVariable.parameters/return &lt; $outputVariable.payload/ns4:offer  and $GetTransporterOffer_doRequest_OutputVariable.parameters/return &gt; 0</condition>
+              <assign name="AssignBetterOffer">
+                <copy>
+                  <from>$GetTransporterOffer_doRequest_OutputVariable.parameters/return</from>
+                  <to>$outputVariable.payload/ns4:offer</to>
+                </copy>
+                <copy>
+                  <from>$GetAllTransporters_GetAllTransportersSelect_OutputVariable.TransporterCollection/ns3:Transporter[$ForEach1Counter]/ns3:name</from>
+                  <to>$outputVariable.payload/ns4:transporterName</to>
+                </copy>
+                <copy>
+                  <from>$GetAllTransporters_GetAllTransportersSelect_OutputVariable.TransporterCollection/ns3:Transporter[$ForEach1Counter]/ns3:id</from>
+                  <to>$outputVariable.payload/ns4:transporterId</to>
+                </copy>
+              </assign>
+            </elseif>
+            <else>
+              <documentation>
+                <![CDATA[Worse Offer]]>
+              </documentation>
+              <empty name="DoNothing"/>
+            </else>
+          </if>
+        </sequence>
+      </scope>
+    </forEach>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="obtainbestoffer_client" portType="client:ObtainBestOffer" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

@@ -36,7 +36,7 @@ public class RequestQuotationToTransporter {
      * @param parcelWeight
      */
     @WebMethod
-    public String doRequest(@WebParam(name = "url")
+    public double doRequest(@WebParam(name = "url")
         String url, @WebParam(name = "distanceInKm")
         double distanceInKm, @WebParam(name = "parcelWeight")
         double parcelWeight) {
@@ -53,9 +53,9 @@ public class RequestQuotationToTransporter {
             
             SOAPBody responseBody = soapResponse.getSOAPBody();
             
-            return responseBody.getFirstChild().getFirstChild().getTextContent();
+            return new Double(responseBody.getFirstChild().getFirstChild().getTextContent());
         } catch(Exception e) {
-            return "-1";
+            return -1;
         }
     }
     

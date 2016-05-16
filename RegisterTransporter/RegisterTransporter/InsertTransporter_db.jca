@@ -1,0 +1,15 @@
+<adapter-config name="InsertTransporter" adapter="Database Adapter" wsdlLocation="InsertTransporter.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/db/truckhubdb" UIConnectionName="TruckHubDB" adapterRef=""/>
+  <endpoint-interaction portType="InsertTransporter_ptt" operation="insert">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="InsertTransporter.Transporter"/>
+      <property name="DmlType" value="insert"/>
+      <property name="OutputCompletedXml" value="true"/>
+      <property name="MappingsMetaDataURL" value="InsertTransporter-or-mappings.xml"/>
+      <property name="DetectOmissions" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

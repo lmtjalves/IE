@@ -96,6 +96,22 @@
                     <description locale="en"></description>
                 </descriptions>
             </topicDocumentation>
+            <topicDocumentation name="GTW16182360441434">
+                <labels>
+                    <label locale="en">GotOffer?</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="EVT16182375066776">
+                <labels>
+                    <label locale="en">End No Offer</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
             <topicDocumentation name="sf40"/>
             <topicDocumentation name="sf42"/>
             <topicDocumentation name="sf43"/>
@@ -116,6 +132,16 @@
             <topicDocumentation name="sf37"/>
             <topicDocumentation name="sf56"/>
             <topicDocumentation name="sf58">
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf16">
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf18">
                 <descriptions>
                     <description locale="en"></description>
                 </descriptions>

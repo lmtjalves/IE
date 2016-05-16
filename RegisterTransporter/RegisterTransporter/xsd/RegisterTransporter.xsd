@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://www.registertransporter.truckhub.org"
+            targetNamespace="http://www.registertransporter.truckhub.org"
+            elementFormDefault="qualified">
+  <xsd:simpleType name="StatusType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="OK" />
+        <xsd:enumeration value="Error" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="Name" type="xsd:string"/>
+      <xsd:element name="WebServiceURL" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="Status" type="tns:StatusType"/>
+      <xsd:element name="Cause" minOccurs="0" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="request" type="tns:RequestType">
+    <xsd:annotation>
+      <xsd:documentation>
+        A sample element
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="response" type="tns:ResponseType"/>
+</xsd:schema>
