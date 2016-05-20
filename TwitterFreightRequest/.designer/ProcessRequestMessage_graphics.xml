@@ -4,15 +4,15 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="processrequestmessage_client" x="1" y="1121" side="left"/>
-      <partnerlink name="ParseRequest" x="1" y="412" side="left"/>
-      <partnerlink name="GetClientId" x="1" y="729" side="left"/>
-      <partnerlink name="RequestQuotation" x="1" y="1064" side="left"/>
-      <partnerlink name="SendEmail" x="1" y="1551" side="left"/>
-      <partnerlink name="SendDirectMessage" x="1708" y="1242" side="right"/>
-      <partnerlink name="SendCancelMessage.sendcancelmessage_client" x="1708" y="412" side="right"/>
+      <partnerlink name="processrequestmessage_client" x="0" y="1072" side="left"/>
+      <partnerlink name="ParseRequest" x="0" y="412" side="left"/>
+      <partnerlink name="GetClientId" x="0" y="729" side="left"/>
+      <partnerlink name="SendEmail" x="0" y="1452" side="left"/>
+      <partnerlink name="RequestQuotationSync.requestquotationsync_client" x="0" y="1015" side="left"/>
+      <partnerlink name="SendDirectMessage" x="1709" y="1193" side="right"/>
+      <partnerlink name="SendCancelMessage.sendcancelmessage_client" x="1709" y="412" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="464,975,751,402" show_swimlanes="true">
+   <graph_layout viewport="342,1477,798,402" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence" type="sequence"/>

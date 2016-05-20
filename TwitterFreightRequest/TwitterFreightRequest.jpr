@@ -71,7 +71,7 @@
    <value n="GetCurrentSenderConversation_ProcessName" v="GetCurrentSenderConversation"/>
    <value n="GetCurrentSenderConversation_Template" v="BPEL_SYNC_PROCESS"/>
    <value n="GetCurrentSenderConversation_wsdl" v="GetCurrentSenderConversation.wsdl"/>
-   <value n="Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"/>
+   <value n="Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTokenMessage"/>
    <hash n="oracle.ide.model.ResourcePaths">
       <hash n="resourcesContentSet">
          <list n="url-path"/>
@@ -394,7 +394,7 @@
    <value n="ProcessHiRequest_ProcessName" v="ProcessHiRequest"/>
    <value n="ProcessHiRequest_Template" v="BPEL_SYNC_PROCESS"/>
    <value n="ProcessHiRequest_wsdl" v="ProcessHiRequest.wsdl"/>
-   <value n="ProcessName" v="ProcessRequestMessage"/>
+   <value n="ProcessName" v="ProcessTokenMessage"/>
    <url n="ProcessRequestMessage_bpelFileURL" path="ProcessRequestMessage.bpel"/>
    <value n="ProcessRequestMessage_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"/>
    <value n="ProcessRequestMessage_ProcessName" v="ProcessRequestMessage"/>
@@ -410,6 +410,11 @@
    <value n="ProcessTwitterClientRequest_ProcessName" v="ProcessTwitterClientRequest"/>
    <value n="ProcessTwitterClientRequest_Template" v="BPEL_ONE_WAY_PROCESS"/>
    <value n="ProcessTwitterClientRequest_wsdl" v="ProcessTwitterClientRequest.wsdl"/>
+   <url n="RequestQuotationSync_bpelFileURL" path="RequestQuotationSync.bpel"/>
+   <value n="RequestQuotationSync_Namespace" v="http://xmlns.oracle.com/RequestQuotation/TwitterFreightRequest/RequestQuotationSync"/>
+   <value n="RequestQuotationSync_ProcessName" v="RequestQuotationSync"/>
+   <value n="RequestQuotationSync_Template" v="BPEL_SYNC_PROCESS"/>
+   <value n="RequestQuotationSync_wsdl" v="RequestQuotationSync.wsdl"/>
    <url n="SendCancelMessage_bpelFileURL" path="SendCancelMessage.bpel"/>
    <value n="SendCancelMessage_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessage"/>
    <value n="SendCancelMessage_ProcessName" v="SendCancelMessage"/>

@@ -37,7 +37,9 @@
          xmlns:ns9="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
          xmlns:ns10="http://quotation.truckhub.org"
          xmlns:ns11="http://sendemailservice/"
-         xmlns:ns12="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage/correlationset">
+         xmlns:ns12="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage/correlationset"
+         xmlns:ns13="http://xmlns.oracle.com/RequestQuotation/TwitterFreightRequest/RequestQuotationSync"
+         xmlns:ns14="http://www.requestquotationsync.truckhub.org">
 
     <import namespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage" location="ProcessRequestMessage.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -63,11 +65,11 @@
                  partnerRole="FreightRequestParser"/>
     <partnerLink name="GetClientId" partnerLinkType="ns7:GetClientIdService"
                  partnerRole="GetClientIdServiceProvider"/>
-    <partnerLink name="RequestQuotation" partnerLinkType="ns9:RequestQuotation"
-                 partnerRole="RequestQuotationProvider"
-                 myRole="RequestQuotationRequester"/>
     <partnerLink name="SendEmail" partnerLinkType="ns11:SendEmail"
                  partnerRole="SendEmailService"/>
+    <partnerLink name="RequestQuotationSync.requestquotationsync_client"
+                 partnerLinkType="ns13:RequestQuotationSync"
+                 partnerRole="RequestQuotationSyncProvider"/>
   </partnerLinks>
 
   <!-- 
@@ -93,10 +95,6 @@
               messageType="ns7:GetClientIdServiceRequestMessage"/>
     <variable name="GetClientId_process_OutputVariable"
               messageType="ns7:GetClientIdServiceResponseMessage"/>
-    <variable name="RequestQuotation_process_InputVariable"
-              messageType="ns9:RequestQuotationRequestMessage"/>
-    <variable name="GetQuotation_processResponse_InputVariable"
-              messageType="ns9:RequestQuotationResponseMessage"/>
     <variable name="SendNoOfferMessage_sendMessage_InputVariable"
               messageType="ns2:sendMessage"/>
     <variable name="SendTokenEmail_sendEmail_InputVariable"
@@ -115,6 +113,10 @@
               messageType="ns2:sendMessageResponse"/>
     <variable name="SendTokenEmail_sendEmail_OutputVariable"
               messageType="ns11:sendEmailResponse"/>
+    <variable name="RequestQuotation_process_InputVariable"
+              messageType="ns13:RequestQuotationSyncRequestMessage"/>
+    <variable name="RequestQuotation_process_OutputVariable"
+              messageType="ns13:RequestQuotationSyncResponseMessage"/>
   </variables>
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,43 +196,38 @@
                 <sequence name="Sequence4">
                   <assign name="AssignRequestQuotation">
                     <copy>
-                      <from>$ParseRequest_parse_OutputVariable.parameters/return/destinationLatitude</from>
-                      <to>$RequestQuotation_process_InputVariable.payload/ns10:destination/ns10:latitude</to>
-                    </copy>
-                    <copy>
-                      <from>$ParseRequest_parse_OutputVariable.parameters/return/destinationLongitude</from>
-                      <to>$RequestQuotation_process_InputVariable.payload/ns10:destination/ns10:longitude</to>
-                    </copy>
-                    <copy>
                       <from>$ParseRequest_parse_OutputVariable.parameters/return/originLatitude</from>
-                      <to>$RequestQuotation_process_InputVariable.payload/ns10:origin/ns10:latitude</to>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns14:origin/ns14:latitude</to>
                     </copy>
                     <copy>
                       <from>$ParseRequest_parse_OutputVariable.parameters/return/originLongitude</from>
-                      <to>$RequestQuotation_process_InputVariable.payload/ns10:origin/ns10:longitude</to>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns14:origin/ns14:longitude</to>
+                    </copy>
+                    <copy>
+                      <from>$ParseRequest_parse_OutputVariable.parameters/return/destinationLongitude</from>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns14:destination/ns14:longitude</to>
+                    </copy>
+                    <copy>
+                      <from>$ParseRequest_parse_OutputVariable.parameters/return/destinationLatitude</from>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns14:destination/ns14:latitude</to>
                     </copy>
                     <copy>
                       <from>$ParseRequest_parse_OutputVariable.parameters/return/parcelWeight</from>
-                      <to>$RequestQuotation_process_InputVariable.payload/ns10:parcelWeight</to>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns14:parcelWeight</to>
                     </copy>
                   </assign>
                   <invoke name="RequestQuotation"
+                          partnerLink="RequestQuotationSync.requestquotationsync_client"
+                          portType="ns13:RequestQuotationSync"
+                          operation="process"
                           inputVariable="RequestQuotation_process_InputVariable"
-                          partnerLink="RequestQuotation"
-                          portType="ns9:RequestQuotation" operation="process"
+                          outputVariable="RequestQuotation_process_OutputVariable"
                           bpelx:invokeAsDetail="no"/>
-                  <receive name="GetQuotation" createInstance="no"
-                           partnerLink="RequestQuotation"
-                           portType="ns9:RequestQuotationCallback"
-                           operation="processResponse"
-                           variable="GetQuotation_processResponse_InputVariable">
-                    <bpelx:for>'PT10M'</bpelx:for>
-                  </receive>
                   <if name="If">
                     <documentation>
                       <![CDATA[Got Offer]]>
                     </documentation>
-                    <condition>$GetQuotation_processResponse_InputVariable.payload/ns10:status = "Error"</condition>
+                    <condition>$RequestQuotation_process_OutputVariable.payload/ns14:status = "OK"</condition>
                     <sequence>
                       <assign name="AssignOutputToken">
                         <copy>
@@ -248,7 +245,7 @@
                           <to>$SendTokenEmail_sendEmail_InputVariable.parameters/subject</to>
                         </copy>
                         <copy>
-                          <from>"Your security token: " + $outputVariable.payload/ns5:Token</from>
+                          <from>concat("Your security token: ", $outputVariable.payload/ns5:Token)</from>
                           <to>$SendTokenEmail_sendEmail_InputVariable.parameters/message</to>
                         </copy>
                       </assign>
@@ -265,7 +262,7 @@
                           <to>$AskTokenMessage_sendMessage_InputVariable.parameters/recepientId</to>
                         </copy>
                         <copy>
-                          <from>"You got an offer from " + $GetQuotation_processResponse_InputVariable.payload/ns10:transporterName + " of " + $GetQuotation_processResponse_InputVariable.payload/ns10:offer +  "€. We sent  a security token to your email. Insert it here to accept the offer, or type 'Cancel' to cancel the request."</from>
+                          <from>concat("You got an offer from ", $RequestQuotation_process_OutputVariable.payload/ns14:transporterName , " of " , $RequestQuotation_process_OutputVariable.payload/ns14:offer ,  "€. We sent  a security token to your email. Insert it here to accept the offer, or type 'Cancel' to cancel the request.")</from>
                           <to>$AskTokenMessage_sendMessage_InputVariable.parameters/text</to>
                         </copy>
                       </assign>
@@ -286,24 +283,24 @@
                           <to>$outputVariable.payload/ns5:Token</to>
                         </copy>
                         <copy>
-                          <from>$GetQuotation_processResponse_InputVariable.payload/ns10:offer</from>
-                          <to>$outputVariable.payload/ns5:Transportation/ns5:Quotation</to>
+                          <from>$ParseRequest_parse_OutputVariable.parameters/return/email</from>
+                          <to>$outputVariable.payload/ns5:Client/ns5:Email</to>
                         </copy>
                         <copy>
-                          <from>$GetQuotation_processResponse_InputVariable.payload/ns10:distance</from>
+                          <from>$RequestQuotation_process_OutputVariable.payload/ns14:distance</from>
                           <to>$outputVariable.payload/ns5:Transportation/ns5:Distance</to>
                         </copy>
                         <copy>
-                          <from>$GetQuotation_processResponse_InputVariable.payload/ns10:transporterName</from>
+                          <from>$RequestQuotation_process_OutputVariable.payload/ns14:offer</from>
+                          <to>$outputVariable.payload/ns5:Transportation/ns5:Quotation</to>
+                        </copy>
+                        <copy>
+                          <from>$RequestQuotation_process_OutputVariable.payload/ns14:transporterName</from>
                           <to>$outputVariable.payload/ns5:Transporter/ns5:Name</to>
                         </copy>
                         <copy>
-                          <from>$GetQuotation_processResponse_InputVariable.payload/ns10:transporterId</from>
+                          <from>$RequestQuotation_process_OutputVariable.payload/ns14:transporterId</from>
                           <to>$outputVariable.payload/ns5:Transporter/ns5:Id</to>
-                        </copy>
-                        <copy>
-                          <from>$ParseRequest_parse_OutputVariable.parameters/return/email</from>
-                          <to>$outputVariable.payload/ns5:Client/ns5:Email</to>
                         </copy>
                         <copy>
                           <from>$GetClientId_process_OutputVariable.payload/ns8:ClientId</from>
@@ -390,7 +387,7 @@
                     <to>$SendInvalidRequestMessage_sendMessage_InputVariable.parameters/recepientId</to>
                   </copy>
                   <copy>
-                    <from>"Invalid request (reason: " + $ParseRequest_parse_OutputVariable.parameters/return/cause + ")"</from>
+                    <from>concat("Invalid request (reason: " ,$ParseRequest_parse_OutputVariable.parameters/return/cause, ")")</from>
                     <to>$SendInvalidRequestMessage_sendMessage_InputVariable.parameters/text</to>
                   </copy>
                 </assign>

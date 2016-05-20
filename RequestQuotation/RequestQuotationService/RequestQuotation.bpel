@@ -110,12 +110,12 @@
                 bpelx:invokeAsDetail="no"/>
         <assign name="AssignGetBestOffer">
             <copy>
-                <from>$inputVariable.payload/ns3:parcelWeight</from>
-                <to>$GetBestOffer_process_InputVariable.payload/ns4:parcelWeight</to>
+                <from>1</from>
+                <to>$GetBestOffer_process_InputVariable.payload/ns4:distanceInKm</to>
             </copy>
             <copy>
-                <from>$GetDistance_getCoordinatesDistance_OutputVariable.parameters/return</from>
-                <to>$GetBestOffer_process_InputVariable.payload/ns4:distanceInKm</to>
+                <from>1</from>
+                <to>$GetBestOffer_process_InputVariable.payload/ns4:parcelWeight</to>
             </copy>
         </assign>
         <invoke name="GetBestOffer"

@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="CalculateCoordinatesDistanceService"
+     targetNamespace="http://calculatecoordinatesdistanceservice/"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://calculatecoordinatesdistanceservice/"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    >
+    <plnk:partnerLinkType name="GetDistance">
+        <plnk:role name="CalculateCoordinatesDistanceService" portType="tns:CalculateCoordinatesDistanceService"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://calculatecoordinatesdistanceservice/" location="http://soabpm-vm.site:7001/CalculateCoordinatesDistance-CalculateCoordinatesDistanceService-context-root/ExternalCalculateCoordinatesDistanceServiceSoap12HttpPort?wsdl"/>
+</wsdl:definitions>

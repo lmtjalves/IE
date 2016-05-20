@@ -4,18 +4,13 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="processtokenmessage_client" x="0" y="538" side="left"/>
-      <partnerlink name="StoreTransportation" x="0" y="412" side="left"/>
-      <partnerlink name="SendInvoice" x="0" y="595" side="left"/>
-      <partnerlink name="SendDirectMessage" x="990" y="595" side="right"/>
-      <partnerlink name="SendCancelMessage.sendcancelmessage_client" x="990" y="412" side="right"/>
+      <partnerlink name="requestquotationsync_client" x="2" y="456" side="left"/>
+      <partnerlink name="GetBestOffer" x="682" y="461" side="right"/>
+      <partnerlink name="GetDistance" x="682" y="278" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,627,798,402" show_swimlanes="true">
+   <graph_layout viewport="0,558,798,416" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
-      <layout_item collapsed="false" xpath="/process/sequence/if/sequence" type="sequence"/>
-      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence" type="sequence"/>
-      <layout_item collapsed="false" xpath="/process/sequence/if/else/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>
 </graphics>

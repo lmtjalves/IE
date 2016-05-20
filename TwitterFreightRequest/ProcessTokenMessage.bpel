@@ -89,6 +89,10 @@
               messageType="ns1:sendMessageResponse"/>
     <variable name="SendInvoice_process_OutputVariable"
               messageType="ns8:SendInvoiceProcessResponseMessage"/>
+    <variable name="InvokeSendSuccessMessage_sendMessage_InputVariable"
+              messageType="ns1:sendMessage"/>
+    <variable name="InvokeSendSuccessMessage_sendMessage_OutputVariable"
+              messageType="ns1:sendMessageResponse"/>
   </variables>
 
   <!-- 
@@ -192,6 +196,22 @@
                   operation="process"
                   inputVariable="SendInvoice_process_InputVariable"
                   outputVariable="SendInvoice_process_OutputVariable"
+                  bpelx:invokeAsDetail="no"/>
+          <assign name="AssignSendSuccessMessage">
+            <copy>
+              <from>$inputVariable.payload/ns4:SenderId</from>
+              <to>$InvokeSendSuccessMessage_sendMessage_InputVariable.parameters/recepientId</to>
+            </copy>
+            <copy>
+              <from>"Your transportation was registered with success. See you next time!"</from>
+              <to>$InvokeSendSuccessMessage_sendMessage_InputVariable.parameters/text</to>
+            </copy>
+          </assign>
+          <invoke name="InvokeSendSuccessMessage"
+                  partnerLink="SendDirectMessage"
+                  portType="ns1:TwitterSendMessage" operation="sendMessage"
+                  inputVariable="InvokeSendSuccessMessage_sendMessage_InputVariable"
+                  outputVariable="InvokeSendSuccessMessage_sendMessage_OutputVariable"
                   bpelx:invokeAsDetail="no"/>
           <assign name="AssignOutputContinue">
             <copy>
