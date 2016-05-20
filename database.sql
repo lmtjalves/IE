@@ -24,6 +24,7 @@ CREATE TABLE transporter (
 	id NUMBER(10),
 	name VARCHAR(255) NOT NULL,
         url VARCHAR(500) NOt NULL,
+        removed VARCHAR(1) DEFAULT 'N' NOT NULL,
 	PRIMARY KEY(id),
 	CONSTRAINT name_unique UNIQUE (name)
 );
