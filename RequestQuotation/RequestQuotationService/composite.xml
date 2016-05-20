@@ -25,7 +25,10 @@
            ui:wsdlLocation="RequestQuotation.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotation)"
                     callbackInterface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotationCallback)"/>
-    <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotation_pt)"/>
+    <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotation_pt)">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">NEVER</property>
+    </binding.ws>
     <callback>
       <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotationCallback_pt)"/>
     </callback>

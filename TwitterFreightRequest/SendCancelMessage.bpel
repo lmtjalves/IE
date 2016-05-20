@@ -1,0 +1,94 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed May 18 15:24:08 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="SendCancelMessage"
+               targetNamespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessage"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessage"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://twittersendmessage/"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns2="http://www.cancelmessageservice.org">
+
+  <import namespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessage" location="SendCancelMessage.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="sendcancelmessage_client" partnerLinkType="client:SendCancelMessage" myRole="SendCancelMessageProvider"/>
+    <partnerLink name="SendDirectMessage"
+                 partnerLinkType="ns1:SendDirectMessage"
+                 partnerRole="TwitterSendMessage"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:SendCancelMessageRequestMessage"/>
+    <variable name="InvokeSendCancelMessage_sendMessage_InputVariable"
+              messageType="ns1:sendMessage"/>
+    <variable name="InvokeSendCancelMessage_sendMessage_OutputVariable"
+              messageType="ns1:sendMessageResponse"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in SendCancelMessage.wsdl) -->
+    <receive name="receiveInput" partnerLink="sendcancelmessage_client" portType="client:SendCancelMessage" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignCancelMessage">
+      <copy>
+        <from>"Request canceled."</from>
+        <to>$InvokeSendCancelMessage_sendMessage_InputVariable.parameters/text</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload</from>
+        <to>$InvokeSendCancelMessage_sendMessage_InputVariable.parameters/recepientId</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeSendCancelMessage"
+            partnerLink="SendDirectMessage" portType="ns1:TwitterSendMessage"
+            operation="sendMessage"
+            inputVariable="InvokeSendCancelMessage_sendMessage_InputVariable"
+            outputVariable="InvokeSendCancelMessage_sendMessage_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

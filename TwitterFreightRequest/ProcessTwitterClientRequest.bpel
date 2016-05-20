@@ -1,0 +1,262 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed May 18 14:01:54 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ProcessTwitterClientRequest"
+               targetNamespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns1="http://twittersendmessage/"
+         xmlns:ns2="http://www.message.truckhub.org"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessageService"
+         xmlns:ns4="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessHiRequest"
+         xmlns:ns5="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessHiMessage"
+         xmlns:ns6="http://www.processhi.truckhub.org"
+         xmlns:ns7="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"
+         xmlns:ns8="http://www.processrequest.truckhub.org"
+         xmlns:ns9="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTokenMessage"
+         xmlns:ns10="http://www.processtoken.truckhub.org"
+         xmlns:ns11="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest/correlationset"
+         xmlns:ns12="http://xmlns.oracle.com/pcbpel/adapter/db/TwitterMessagesFetchService/TwitterFreightRequest/IncrementConversationNumber"
+         xmlns:ns13="http://xmlns.oracle.com/pcbpel/adapter/db/IncrementConversationNumber"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <import namespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest" location="ProcessTwitterClientRequest.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="processtwitterclientrequest_client" partnerLinkType="client:ProcessTwitterClientRequest" myRole="ProcessTwitterClientRequestProvider"/>
+    <partnerLink name="ProcessHiMessage.processhimessage_client"
+                 partnerLinkType="ns5:ProcessHiMessage"
+                 partnerRole="ProcessHiMessageProvider"/>
+    <partnerLink name="ProcessRequestMessage.processrequestmessage_client"
+                 partnerLinkType="ns7:ProcessRequestMessage"
+                 partnerRole="ProcessRequestMessageProvider"/>
+    <partnerLink name="ProcessTokenMessage.processtokenmessage_client"
+                 partnerLinkType="ns9:ProcessTokenMessage"
+                 partnerRole="ProcessTokenMessageProvider"/>
+    <partnerLink name="IncrementConversationNumber"
+                 partnerLinkType="ns12:IncrementConversationNumber_plt"
+                 partnerRole="IncrementConversationNumber_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:ProcessTwitterClientRequestRequestMessage"/>
+    <variable name="InvokeProcessHiMessage_process_InputVariable"
+              messageType="ns5:ProcessHiMessageRequestMessage"/>
+    <variable name="InvokeProcessHiMessage_process_OutputVariable"
+              messageType="ns5:ProcessHiMessageResponseMessage"/>
+    <variable name="ReceiveRequest_process_InputVariable"
+              messageType="client:ProcessTwitterClientRequestRequestMessage"/>
+    <variable name="InvokeProcessRequestMessage_process_InputVariable"
+              messageType="ns7:ProcessRequestMessageRequestMessage"/>
+    <variable name="InvokeProcessRequestMessage_process_OutputVariable"
+              messageType="ns7:ProcessRequestMessageResponseMessage"/>
+    <variable name="ReceiveToken_process_InputVariable"
+              messageType="client:ProcessTwitterClientRequestRequestMessage"/>
+    <variable name="InvokeProcessTokenRequest_process_InputVariable"
+              messageType="ns9:ProcessTokenMessageRequestMessage"/>
+    <variable name="InvokeProcessTokenRequest_process_OutputVariable"
+              messageType="ns9:ProcessTokenMessageResponseMessage"/>
+    <variable name="InvokeIncrementConversationNumber_IncrementConversationNumber_InputVariable"
+              messageType="ns12:IncrementConversationNumberInput_msg"/>
+  </variables>
+  <correlationSets>
+    <correlationSet name="Sender_Id_Correlation_Set"
+                    properties="ns11:SenderId ns11:ConversationId"/>
+  </correlationSets>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in ProcessTwitterClientRequest.wsdl) -->
+    <receive name="ReceiveHi" partnerLink="processtwitterclientrequest_client" portType="client:ProcessTwitterClientRequest" operation="process" variable="inputVariable" createInstance="yes">
+      <correlations>
+        <correlation set="Sender_Id_Correlation_Set" initiate="yes"/>
+      </correlations>
+    </receive>
+    <assign name="AssignProcessHiMessage">
+      <copy>
+        <from>$inputVariable.payload/ns2:SenderId</from>
+        <to>$InvokeProcessHiMessage_process_InputVariable.payload/ns6:SenderId</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns2:Text</from>
+        <to>$InvokeProcessHiMessage_process_InputVariable.payload/ns6:Text</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeProcessHiMessage"
+            partnerLink="ProcessHiMessage.processhimessage_client"
+            portType="ns5:ProcessHiMessage" operation="process"
+            inputVariable="InvokeProcessHiMessage_process_InputVariable"
+            outputVariable="InvokeProcessHiMessage_process_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If">
+      <documentation>
+        <![CDATA[Continue]]>
+      </documentation>
+      <condition>$InvokeProcessHiMessage_process_OutputVariable.payload/ns6:Continue = "true"</condition>
+      <sequence name="Sequence1">
+        <receive name="ReceiveRequest" createInstance="no"
+                 partnerLink="processtwitterclientrequest_client"
+                 portType="client:ProcessTwitterClientRequest"
+                 operation="process"
+                 variable="ReceiveRequest_process_InputVariable">
+          <correlations>
+            <correlation set="Sender_Id_Correlation_Set" initiate="no"/>
+          </correlations>
+        </receive>
+        <assign name="AssignProcessRequestMessage">
+          <copy>
+            <from>$ReceiveRequest_process_InputVariable.payload/ns2:Text</from>
+            <to>$InvokeProcessRequestMessage_process_InputVariable.payload/ns8:Text</to>
+          </copy>
+          <copy>
+            <from>$ReceiveRequest_process_InputVariable.payload/ns2:SenderId</from>
+            <to>$InvokeProcessRequestMessage_process_InputVariable.payload/ns8:SenderId</to>
+          </copy>
+        </assign>
+        <invoke name="InvokeProcessRequestMessage"
+                partnerLink="ProcessRequestMessage.processrequestmessage_client"
+                portType="ns7:ProcessRequestMessage" operation="process"
+                inputVariable="InvokeProcessRequestMessage_process_InputVariable"
+                outputVariable="InvokeProcessRequestMessage_process_OutputVariable"
+                bpelx:invokeAsDetail="no"/>
+        <if name="If">
+          <documentation>
+            <![CDATA[Continue]]>
+          </documentation>
+          <condition>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Continue = "true"</condition>
+          <sequence name="Sequence2">
+            <receive name="ReceiveToken" createInstance="no"
+                     partnerLink="processtwitterclientrequest_client"
+                     portType="client:ProcessTwitterClientRequest"
+                     operation="process"
+                     variable="ReceiveToken_process_InputVariable">
+              <correlations>
+                <correlation set="Sender_Id_Correlation_Set" initiate="no"/>
+              </correlations>
+            </receive>
+            <assign name="AssignProcessTokenRequest">
+              <copy>
+                <from>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Client/ns8:Email</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Client/ns10:Email</to>
+              </copy>
+              <copy>
+                <from>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Client/ns8:Id</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Client/ns10:Id</to>
+              </copy>
+              <copy>
+                <from>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Transporter/ns8:Name</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Transporter/ns10:Name</to>
+              </copy>
+              <copy>
+                <from>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Transporter/ns8:Id</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Transporter/ns10:Id</to>
+              </copy>
+              <copy>
+                <from>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Transportation/ns8:Distance</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Transportation/ns10:Distance</to>
+              </copy>
+              <copy>
+                <from>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Transportation/ns8:ParcelWeight</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Transportation/ns10:ParcelWeight</to>
+              </copy>
+              <copy>
+                <from>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Transportation/ns8:Quotation</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Transportation/ns10:Quotation</to>
+              </copy>
+              <copy>
+                <from>$InvokeProcessRequestMessage_process_OutputVariable.payload/ns8:Token</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Token</to>
+              </copy>
+              <copy>
+                <from>$ReceiveToken_process_InputVariable.payload/ns2:SenderId</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:SenderId</to>
+              </copy>
+              <copy>
+                <from>$ReceiveToken_process_InputVariable.payload/ns2:Text</from>
+                <to>$InvokeProcessTokenRequest_process_InputVariable.payload/ns10:Text</to>
+              </copy>
+            </assign>
+            <invoke name="InvokeProcessTokenRequest"
+                    partnerLink="ProcessTokenMessage.processtokenmessage_client"
+                    portType="ns9:ProcessTokenMessage" operation="process"
+                    inputVariable="InvokeProcessTokenRequest_process_InputVariable"
+                    outputVariable="InvokeProcessTokenRequest_process_OutputVariable"
+                    bpelx:invokeAsDetail="no"/>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[No]]>
+            </documentation>
+            <empty name="Empty1"/>
+          </else>
+        </if>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[End]]>
+        </documentation>
+        <empty name="Empty2"/>
+      </else>
+    </if>
+    <assign name="AssignIncrementConversationNumber">
+      <copy>
+        <from>$inputVariable.payload/ns2:SenderId</from>
+        <to>$InvokeIncrementConversationNumber_IncrementConversationNumber_InputVariable.IncrementConversationNumberInput_msg/ns13:SENDER_ID1</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns2:SenderId</from>
+        <to>$InvokeIncrementConversationNumber_IncrementConversationNumber_InputVariable.IncrementConversationNumberInput_msg/ns13:SENDER_ID2</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeIncrementConversationNumber"
+            partnerLink="IncrementConversationNumber"
+            portType="ns12:IncrementConversationNumber_ptt"
+            operation="IncrementConversationNumber"
+            inputVariable="InvokeIncrementConversationNumber_IncrementConversationNumber_InputVariable"
+            bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

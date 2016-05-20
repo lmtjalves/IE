@@ -23,14 +23,14 @@
     <mds-config xmlns="http://xmlns.oracle.com/mds/config">
       <persistence-config>
         <metadata-namespaces>
-          <namespace metadata-store-usage="mstore-usage_1" path="/soa/shared"/>
+          <namespace path="/soa/shared" metadata-store-usage="mstore-usage_1"/>
         </metadata-namespaces>
         <metadata-store-usages>
           <metadata-store-usage id="mstore-usage_1">
             <metadata-store class-name="oracle.mds.persistence.stores.file.FileMetadataStore">
-              <property value="${oracle.home}/integration"
-                        name="metadata-path"/>
-              <property value="seed" name="partition-name"/>
+              <property name="metadata-path"
+                        value="${oracle.home}/integration"/>
+              <property name="partition-name" value="seed"/>
             </metadata-store>
           </metadata-store-usage>
         </metadata-store-usages>

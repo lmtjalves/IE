@@ -1,0 +1,33 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ProcessRequestMessage"
+     targetNamespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"
+     xmlns:ns1="http://www.processrequest.truckhub.org"
+     xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:client="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"
+     xmlns:cor="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage/correlationset"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+    >
+    <plnk:partnerLinkType name="ProcessRequestMessage">
+        <plnk:role name="ProcessRequestMessageProvider" portType="client:ProcessRequestMessage"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://www.processrequest.truckhub.org" schemaLocation="xsd/ProcessRequest.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ProcessRequestMessageRequestMessage">
+        <wsdl:part name="payload" element="ns1:Request"/>
+    </wsdl:message>
+    <wsdl:message name="ProcessRequestMessageResponseMessage">
+        <wsdl:part name="payload" element="ns1:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="ProcessRequestMessage">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:ProcessRequestMessageRequestMessage"/>
+            <wsdl:output message="client:ProcessRequestMessageResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

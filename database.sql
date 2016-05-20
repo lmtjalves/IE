@@ -51,6 +51,15 @@ CREATE TABLE transportation (
 INSERT INTO transporter (id, name) VALUES (seq_transporterId.nextval, 'TransporterA');
 INSERT INTO transporter (id, name) VALUES (seq_transporterId.nextval, 'TransporterZ');
 
+-- Stores counters for the twitter clients conversations
+-- they will be used for the correlation with BPEL processes
+CREATE TABLE twitter_conversations (
+	senderId Number(20) NOT NULL,
+	count Number(10) NOT NULL,
+	PRIMARY KEY(senderId)
+);
+
+
 CREATE OR REPLACE PROCEDURE missingPaymentsFor(transporter_id IN NUMERIC, total OUT NUMERIC, first_id OUT NUMERIC, last_id OUT NUMERIC)
 IS
 BEGIN
