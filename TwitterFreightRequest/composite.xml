@@ -64,16 +64,8 @@
           location="IncrementConversationNumber.wsdl" importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/TwitterMessagesFetchService/TwitterFreightRequest/GetNumberOfConversations"
           location="GetNumberOfConversations.wsdl" importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/RequestQuotation/TwitterFreightRequest/RequestQuotationSync"
-          location="RequestQuotationSync.wsdl" importType="wsdl"/>
-  <import namespace="http://calculatecoordinatesdistanceservice/"
-          location="http://soabpm-vm.site:7001/CalculateCoordinatesDistance-CalculateCoordinatesDistanceService-context-root/ExternalCalculateCoordinatesDistanceServiceSoap12HttpPort?wsdl"
-          importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOffer/ObtainBestOffer"
-          location="http://soabpm-vm.site:7001/soa-infra/services/default/ObtainBestOffer/ObtainBestOffer.wsdl"
-          importType="wsdl"/>
-  <import namespace="http://calculatecoordinatesdistanceservice/"
-          location="CalculateCoordinatesDistanceServiceWrapper.wsdl"
+  <import namespace="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
+          location="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationService/RequestQuotation.wsdl"
           importType="wsdl"/>
   <property name="productVersion" type="xs:string" many="false">11.1.1.7.0</property>
   <component name="FetchDirectMessagesProcess">
@@ -109,12 +101,6 @@
   </component>
   <component name="GetConversationNumberForTwitterUser" version="2.0">
     <implementation.bpel src="GetConversationNumberForTwitterUser.bpel"/>
-    <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
-    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string"
-              many="false">async.persist</property>
-  </component>
-  <component name="RequestQuotationSync" version="2.0">
-    <implementation.bpel src="RequestQuotationSync.bpel"/>
     <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
     <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string"
               many="false">async.persist</property>
@@ -225,21 +211,11 @@
     <property name="jca.retry.maxInterval" type="xs:string" many="false"
               override="may">120</property>
   </reference>
-  <reference name="GetDistance"
-             ui:wsdlLocation="http://soabpm-vm.site:7001/CalculateCoordinatesDistance-CalculateCoordinatesDistanceService-context-root/ExternalCalculateCoordinatesDistanceServiceSoap12HttpPort?wsdl">
-    <interface.wsdl interface="http://calculatecoordinatesdistanceservice/#wsdl.interface(CalculateCoordinatesDistanceService)"/>
-    <binding.ws port="http://calculatecoordinatesdistanceservice/#wsdl.endpoint(CalculateCoordinatesDistanceService/CalculateCoordinatesDistanceServiceSoap12HttpPort)"
-                location="http://soabpm-vm.site:7001/CalculateCoordinatesDistance-CalculateCoordinatesDistanceService-context-root/ExternalCalculateCoordinatesDistanceServiceSoap12HttpPort?wsdl"
-                soapVersion="1.2">
-      <property name="weblogic.wsee.wsat.transaction.flowOption"
-                type="xs:string" many="false">WSDLDriven</property>
-    </binding.ws>
-  </reference>
-  <reference name="GetBestOffer"
-             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/ObtainBestOffer/ObtainBestOffer.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOffer/ObtainBestOffer#wsdl.interface(ObtainBestOffer)"/>
-    <binding.ws port="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOffer/ObtainBestOffer#wsdl.endpoint(obtainbestoffer_client_ep/ObtainBestOffer_pt)"
-                location="http://soabpm-vm:7001//soa-infra/services/default/ObtainBestOffer/obtainbestoffer_client_ep?WSDL"
+  <reference name="RequestQuotation"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationService/RequestQuotation.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotation)"/>
+    <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotation_pt)"
+                location="http://soabpm-vm:7001//soa-infra/services/default/RequestQuotationService/requestquotation_client_ep?WSDL"
                 soapVersion="1.1">
       <property name="weblogic.wsee.wsat.transaction.flowOption"
                 type="xs:string" many="false">WSDLDriven</property>
@@ -326,15 +302,7 @@
     <target.uri>GetNumberOfConversations</target.uri>
   </wire>
   <wire>
-    <source.uri>ProcessRequestMessage/RequestQuotationSync.requestquotationsync_client</source.uri>
-    <target.uri>RequestQuotationSync/requestquotationsync_client</target.uri>
-  </wire>
-  <wire>
-    <source.uri>RequestQuotationSync/GetBestOffer</source.uri>
-    <target.uri>GetBestOffer</target.uri>
-  </wire>
-  <wire>
-    <source.uri>RequestQuotationSync/GetDistance</source.uri>
-    <target.uri>GetDistance</target.uri>
+    <source.uri>ProcessRequestMessage/RequestQuotation</source.uri>
+    <target.uri>RequestQuotation</target.uri>
   </wire>
 </composite>

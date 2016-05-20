@@ -71,7 +71,7 @@
    <value n="GetCurrentSenderConversation_ProcessName" v="GetCurrentSenderConversation"/>
    <value n="GetCurrentSenderConversation_Template" v="BPEL_SYNC_PROCESS"/>
    <value n="GetCurrentSenderConversation_wsdl" v="GetCurrentSenderConversation.wsdl"/>
-   <value n="Namespace" v="http://xmlns.oracle.com/RequestQuotation/TwitterFreightRequest/RequestQuotationSync"/>
+   <value n="Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"/>
    <hash n="oracle.ide.model.ResourcePaths">
       <hash n="resourcesContentSet">
          <list n="url-path"/>
@@ -394,7 +394,7 @@
    <value n="ProcessHiRequest_ProcessName" v="ProcessHiRequest"/>
    <value n="ProcessHiRequest_Template" v="BPEL_SYNC_PROCESS"/>
    <value n="ProcessHiRequest_wsdl" v="ProcessHiRequest.wsdl"/>
-   <value n="ProcessName" v="RequestQuotationSync"/>
+   <value n="ProcessName" v="ProcessRequestMessage"/>
    <url n="ProcessRequestMessage_bpelFileURL" path="ProcessRequestMessage.bpel"/>
    <value n="ProcessRequestMessage_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"/>
    <value n="ProcessRequestMessage_ProcessName" v="ProcessRequestMessage"/>
