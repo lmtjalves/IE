@@ -60,18 +60,8 @@
       <string v="oracle.bpm.fusion.repository.BPMProjectSettings/bpmProjectsProcessesContentSet"/>
       <string v="oracle.toplink.workbench.addin/toplinkContentSet"/>
    </list>
-   <value n="defaultPackage" v="twitterfreightrequest"/>
-   <url n="GetConversationNumberForTwitterUser_bpelFileURL" path="GetConversationNumberForTwitterUser.bpel"/>
-   <value n="GetConversationNumberForTwitterUser_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/GetConversationNumberForTwitterUser"/>
-   <value n="GetConversationNumberForTwitterUser_ProcessName" v="GetConversationNumberForTwitterUser"/>
-   <value n="GetConversationNumberForTwitterUser_Template" v="BPEL_SYNC_PROCESS"/>
-   <value n="GetConversationNumberForTwitterUser_wsdl" v="GetConversationNumberForTwitterUser.wsdl"/>
-   <url n="GetCurrentSenderConversation_bpelFileURL" path="GetCurrentSenderConversation.bpel"/>
-   <value n="GetCurrentSenderConversation_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/GetCurrentSenderConversation"/>
-   <value n="GetCurrentSenderConversation_ProcessName" v="GetCurrentSenderConversation"/>
-   <value n="GetCurrentSenderConversation_Template" v="BPEL_SYNC_PROCESS"/>
-   <value n="GetCurrentSenderConversation_wsdl" v="GetCurrentSenderConversation.wsdl"/>
-   <value n="Namespace" v="http://xmlns.oracle.com/RequestQuotation/TwitterFreightRequest/RequestQuotationSync"/>
+   <value n="defaultPackage" v="requestquotationassync"/>
+   <value n="Namespace" v="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync"/>
    <hash n="oracle.ide.model.ResourcePaths">
       <hash n="resourcesContentSet">
          <list n="url-path"/>
@@ -80,8 +70,6 @@
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
          <string v="SOA"/>
-         <string v="BPM"/>
-         <string v="XML"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.compiler.OjcConfiguration">
@@ -126,7 +114,7 @@
    </hash>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
-         <hash n="TwitterFreightRequest">
+         <hash n="RequestQuotationAssync">
             <hash n="archiveOptions">
                <value n="hasManifest" v="false"/>
             </hash>
@@ -268,21 +256,21 @@
                   </hash>
                </list>
             </hash>
-            <url n="jarURL" path="deploy/sca_TwitterFreightRequest${composite.revision_id}.jar"/>
+            <url n="jarURL" path="deploy/sca_RequestQuotationAssync${composite.revision_id}.jar"/>
             <hash n="libraryDependencies">
                <value n="IncludeLibrariesFromOtherContainers" v="true"/>
             </hash>
             <value n="profileClass" v="oracle.tip.tools.ide.fabric.deploy.sar.SarProfile"/>
-            <value n="profileName" v="TwitterFreightRequest"/>
+            <value n="profileName" v="RequestQuotationAssync"/>
          </hash>
       </hash>
       <list n="profileList">
-         <string v="TwitterFreightRequest"/>
+         <string v="RequestQuotationAssync"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
-      <value n="j2eeWebAppName" v="SendInvoice-TwitterFreightRequest-webapp"/>
-      <value n="j2eeWebContextRoot" v="SendInvoice-TwitterFreightRequest-context-root"/>
+      <value n="j2eeWebAppName" v="RequestQuotationAssync-RequestQuotationAssync-webapp"/>
+      <value n="j2eeWebContextRoot" v="RequestQuotationAssync-RequestQuotationAssync-context-root"/>
    </hash>
    <hash n="oracle.jdeveloper.model.PathsConfiguration">
       <hash n="javaContentSet">
@@ -380,50 +368,11 @@
          </list>
       </hash>
    </hash>
-   <value n="ProcessClientRequest_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessClientRequest"/>
-   <value n="ProcessClientRequest_ProcessName" v="ProcessClientRequest"/>
-   <value n="ProcessClientRequest_Template" v="BPEL_ONE_WAY_PROCESS"/>
-   <value n="ProcessClientRequest_wsdl" v="ProcessClientRequest.wsdl"/>
-   <url n="ProcessHiMessage_bpelFileURL" path="ProcessHiMessage.bpel"/>
-   <value n="ProcessHiMessage_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessHiMessage"/>
-   <value n="ProcessHiMessage_ProcessName" v="ProcessHiMessage"/>
-   <value n="ProcessHiMessage_Template" v="BPEL_SYNC_PROCESS"/>
-   <value n="ProcessHiMessage_wsdl" v="ProcessHiMessage.wsdl"/>
-   <url n="ProcessHiRequest_bpelFileURL" path="ProcessHiRequest.bpel"/>
-   <value n="ProcessHiRequest_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessHiRequest"/>
-   <value n="ProcessHiRequest_ProcessName" v="ProcessHiRequest"/>
-   <value n="ProcessHiRequest_Template" v="BPEL_SYNC_PROCESS"/>
-   <value n="ProcessHiRequest_wsdl" v="ProcessHiRequest.wsdl"/>
-   <value n="ProcessName" v="RequestQuotationSync"/>
-   <url n="ProcessRequestMessage_bpelFileURL" path="ProcessRequestMessage.bpel"/>
-   <value n="ProcessRequestMessage_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"/>
-   <value n="ProcessRequestMessage_ProcessName" v="ProcessRequestMessage"/>
-   <value n="ProcessRequestMessage_Template" v="BPEL_SYNC_PROCESS"/>
-   <value n="ProcessRequestMessage_wsdl" v="ProcessRequestMessage.wsdl"/>
-   <url n="ProcessTokenMessage_bpelFileURL" path="ProcessTokenMessage.bpel"/>
-   <value n="ProcessTokenMessage_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTokenMessage"/>
-   <value n="ProcessTokenMessage_ProcessName" v="ProcessTokenMessage"/>
-   <value n="ProcessTokenMessage_Template" v="BPEL_SYNC_PROCESS"/>
-   <value n="ProcessTokenMessage_wsdl" v="ProcessTokenMessage.wsdl"/>
-   <url n="ProcessTwitterClientRequest_bpelFileURL" path="ProcessTwitterClientRequest.bpel"/>
-   <value n="ProcessTwitterClientRequest_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest"/>
-   <value n="ProcessTwitterClientRequest_ProcessName" v="ProcessTwitterClientRequest"/>
-   <value n="ProcessTwitterClientRequest_Template" v="BPEL_ONE_WAY_PROCESS"/>
-   <value n="ProcessTwitterClientRequest_wsdl" v="ProcessTwitterClientRequest.wsdl"/>
-   <url n="RequestQuotationSync_bpelFileURL" path="RequestQuotationSync.bpel"/>
-   <value n="RequestQuotationSync_Namespace" v="http://xmlns.oracle.com/RequestQuotation/TwitterFreightRequest/RequestQuotationSync"/>
-   <value n="RequestQuotationSync_ProcessName" v="RequestQuotationSync"/>
-   <value n="RequestQuotationSync_Template" v="BPEL_SYNC_PROCESS"/>
-   <value n="RequestQuotationSync_wsdl" v="RequestQuotationSync.wsdl"/>
-   <url n="SendCancelMessage_bpelFileURL" path="SendCancelMessage.bpel"/>
-   <value n="SendCancelMessage_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessage"/>
-   <value n="SendCancelMessage_ProcessName" v="SendCancelMessage"/>
-   <value n="SendCancelMessage_Template" v="BPEL_ONE_WAY_PROCESS"/>
-   <value n="SendCancelMessage_wsdl" v="SendCancelMessage.wsdl"/>
-   <url n="SendCancelMessageService_bpelFileURL" path="SendCancelMessageService.bpel"/>
-   <value n="SendCancelMessageService_Namespace" v="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessageService"/>
-   <value n="SendCancelMessageService_ProcessName" v="SendCancelMessageService"/>
-   <value n="SendCancelMessageService_Template" v="BPEL_ONE_WAY_PROCESS"/>
-   <value n="SendCancelMessageService_wsdl" v="SendCancelMessageService.wsdl"/>
-   <value n="Template" v="BPEL_SYNC_PROCESS"/>
+   <value n="ProcessName" v="RequestQuotationAssync"/>
+   <url n="RequestQuotationAssync_bpelFileURL" path="RequestQuotationAssync.bpel"/>
+   <value n="RequestQuotationAssync_Namespace" v="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync"/>
+   <value n="RequestQuotationAssync_ProcessName" v="RequestQuotationAssync"/>
+   <value n="RequestQuotationAssync_Template" v="BPEL_ASYNC_PROCESS"/>
+   <value n="RequestQuotationAssync_wsdl" v="RequestQuotationAssync.wsdl"/>
+   <value n="Template" v="BPEL_ASYNC_PROCESS"/>
 </jpr:project>

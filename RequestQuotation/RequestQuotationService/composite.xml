@@ -10,32 +10,26 @@
            xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
            xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
            xmlns:ui="http://xmlns.oracle.com/soa/designer/">
-  <import namespace="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
-          location="RequestQuotation.wsdl" importType="wsdl"/>
   <import namespace="http://calculatecoordinatesdistanceservice/"
           location="http://soabpm-vm.site:7001/CalculateCoordinatesDistance-CalculateCoordinatesDistanceService-context-root/ExternalCalculateCoordinatesDistanceServiceSoap12HttpPort?wsdl"
-          importType="wsdl"/>
-  <import namespace="http://calculatecoordinatesdistanceservice/"
-          location="CalculateCoordinatesDistanceServiceWrapper.wsdl"
           importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/ObtainBestOffer/ObtainBestOffer/ObtainBestOffer"
           location="http://soabpm-vm.site:7001/soa-infra/services/default/ObtainBestOffer/ObtainBestOffer.wsdl"
           importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
+          location="RequestQuotation.wsdl" importType="wsdl"/>
+  <import namespace="http://calculatecoordinatesdistanceservice/"
+          location="CalculateCoordinatesDistanceServiceWrapper.wsdl"
+          importType="wsdl"/>
   <service name="requestquotation_client_ep"
            ui:wsdlLocation="RequestQuotation.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotation)"
-                    callbackInterface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotationCallback)"/>
-    <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotation_pt)">
-      <property name="weblogic.wsee.wsat.transaction.flowOption"
-                type="xs:string" many="false">NEVER</property>
-    </binding.ws>
-    <callback>
-      <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotationCallback_pt)"/>
-    </callback>
+    <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotation)"/>
+    <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotation_pt)"/>
   </service>
   <property name="productVersion" type="xs:string" many="false">11.1.1.7.0</property>
   <component name="RequestQuotation" version="2.0">
     <implementation.bpel src="RequestQuotation.bpel"/>
+    <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
     <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string"
               many="false">async.persist</property>
   </component>
@@ -64,11 +58,11 @@
     <target.uri>RequestQuotation/requestquotation_client</target.uri>
   </wire>
   <wire>
-    <source.uri>RequestQuotation/GetDistance</source.uri>
-    <target.uri>GetDistance</target.uri>
-  </wire>
-  <wire>
     <source.uri>RequestQuotation/GetBestOffer</source.uri>
     <target.uri>GetBestOffer</target.uri>
+  </wire>
+  <wire>
+    <source.uri>RequestQuotation/GetDistance</source.uri>
+    <target.uri>GetDistance</target.uri>
   </wire>
 </composite>

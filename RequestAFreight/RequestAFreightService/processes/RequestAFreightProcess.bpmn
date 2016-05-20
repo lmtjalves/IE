@@ -25,9 +25,6 @@
                     <ns5:Conversation id="CONVERSATION160281227119" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.RegisterClient"/>
                     </ns5:Conversation>
-                    <ns5:Conversation id="CONVERSATION160305400651" type="service_call">
-                        <ns5:ServiceCallConversationDefinition service="Services.Externals.RequestQuotation"/>
-                    </ns5:Conversation>
                     <ns5:Conversation id="CONVERSATION160309584656" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.StoreTransportation"/>
                     </ns5:Conversation>
@@ -36,6 +33,9 @@
                     </ns5:Conversation>
                     <ns5:Conversation id="CONVERSATION160331560829" type="service_call">
                         <ns5:ServiceCallConversationDefinition service="Services.Externals.GetClientIdService"/>
+                    </ns5:Conversation>
+                    <ns5:Conversation id="CONVERSATION162187189806" type="service_call">
+                        <ns5:ServiceCallConversationDefinition service="Services.Externals.RequestQuotationAssync"/>
                     </ns5:Conversation>
                 </ns5:Conversations>
                 <ns5:ApplicationInfo>
@@ -307,7 +307,7 @@
                 </assignment>
             </dataOutputAssociation>
         </serviceTask>
-        <sendTask messageRef="Services.Externals.RequestQuotation" operationRef="process" isForCompensation="false" name="Request Best Offer" id="ACT1602463784794">
+        <sendTask messageRef="Services.Externals.RequestQuotationAssync" operationRef="process" isForCompensation="false" name="Request Best Offer" id="ACT1602463784794">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
@@ -320,7 +320,7 @@
                         <ns5:StringFeature value="Begin Level" name="level"/>
                         <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
                     </ns5:FeatureSet>
-                    <ns5:Conversational conversation="CONVERSATION160305400651">
+                    <ns5:Conversational conversation="CONVERSATION162187189806">
                         <ns5:ServiceCallConversationalDefinition operation="process"/>
                     </ns5:Conversational>
                     <ns5:LogHandlers/>
@@ -451,7 +451,7 @@
                 </assignment>
             </dataInputAssociation>
         </sendTask>
-        <receiveTask instantiate="false" messageRef="Services.Externals.RequestQuotation.Callback" operationRef="processResponse" isForCompensation="false" name="Receive Best Offer" id="ACT16024646512658">
+        <receiveTask instantiate="false" messageRef="Services.Externals.RequestQuotationAssync.Callback" operationRef="processResponse" isForCompensation="false" name="Receive Best Offer" id="ACT16024646512658">
             <extensionElements>
                 <ns5:OracleExtensions>
                     <ns5:GraphicsAttributes>
@@ -464,7 +464,7 @@
                         <ns5:StringFeature value="Begin Level" name="level"/>
                         <ns5:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
                     </ns5:FeatureSet>
-                    <ns5:Conversational conversation="CONVERSATION160305400651">
+                    <ns5:Conversational conversation="CONVERSATION162187189806">
                         <ns5:ServiceCallConversationalDefinition operation="processResponse"/>
                     </ns5:Conversational>
                     <ns5:LogHandlers/>

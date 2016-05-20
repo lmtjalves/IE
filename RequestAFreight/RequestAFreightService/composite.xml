@@ -27,8 +27,8 @@
   <import namespace="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService"
           location="http://soabpm-vm.site:7001/soa-infra/services/default/GetClientIDService/GetClientIdService.wsdl"
           importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
-          location="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationService/RequestQuotation.wsdl"
+  <import namespace="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync"
+          location="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationAssync/RequestQuotationAssync.wsdl"
           importType="wsdl"/>
   <service name="RequestAFreightProcess.service"
            ui:wsdlLocation="RequestAFreightProcess.wsdl">
@@ -86,18 +86,18 @@
                 type="xs:string" many="false">WSDLDriven</property>
     </binding.ws>
   </reference>
-  <reference name="RequestQuotation"
-             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationService/RequestQuotation.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotation)"
-                    callbackInterface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotationCallback)"/>
-    <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotation_pt)"
-                location="http://soabpm-vm:7001//soa-infra/services/default/RequestQuotationService/requestquotation_client_ep?WSDL"
+  <reference name="RequestQuotationAssync"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationAssync/RequestQuotationAssync.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync#wsdl.interface(RequestQuotationAssync)"
+                    callbackInterface="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync#wsdl.interface(RequestQuotationAssyncCallback)"/>
+    <binding.ws port="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync#wsdl.endpoint(requestquotationassync_client_ep/RequestQuotationAssync_pt)"
+                location="http://soabpm-vm:7001//soa-infra/services/default/RequestQuotationAssync/requestquotationassync_client_ep?WSDL"
                 soapVersion="1.1">
       <property name="weblogic.wsee.wsat.transaction.flowOption"
                 type="xs:string" many="false">WSDLDriven</property>
     </binding.ws>
     <callback>
-      <binding.ws port="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.endpoint(requestquotation_client_ep/RequestQuotationCallback_pt)"/>
+      <binding.ws port="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync#wsdl.endpoint(requestquotationassync_client_ep/RequestQuotationAssyncCallback_pt)"/>
     </callback>
   </reference>
   <wire>
@@ -121,8 +121,8 @@
     <target.uri>GetClientIdService</target.uri>
   </wire>
   <wire>
-    <source.uri>RequestAFreightProcess/Services.Externals.RequestQuotation.reference</source.uri>
-    <target.uri>RequestQuotation</target.uri>
+    <source.uri>RequestAFreightProcess/Services.Externals.RequestQuotationAssync.reference</source.uri>
+    <target.uri>RequestQuotationAssync</target.uri>
   </wire>
   <wire>
     <source.uri>RequestAFreightProcess.service</source.uri>

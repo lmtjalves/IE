@@ -372,7 +372,7 @@
    <url n="RequestQuotation_bpelFileURL" path="RequestQuotation.bpel"/>
    <value n="RequestQuotation_Namespace" v="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"/>
    <value n="RequestQuotation_ProcessName" v="RequestQuotation"/>
-   <value n="RequestQuotation_Template" v="BPEL_ASYNC_PROCESS"/>
+   <value n="RequestQuotation_Template" v="BPEL_SYNC_PROCESS"/>
    <value n="RequestQuotation_wsdl" v="RequestQuotation.wsdl"/>
-   <value n="Template" v="BPEL_ASYNC_PROCESS"/>
+   <value n="Template" v="BPEL_SYNC_PROCESS"/>
 </jpr:project>

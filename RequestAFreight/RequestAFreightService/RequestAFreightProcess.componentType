@@ -32,9 +32,9 @@
              ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/GetClientIDService/GetClientIdService.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService#wsdl.interface(GetClientIdService)"/>
   </reference>
-  <reference name="Services.Externals.RequestQuotation.reference"
-             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationService/RequestQuotation.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotation)"
-                    callbackInterface="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation#wsdl.interface(RequestQuotationCallback)"/>
+  <reference name="Services.Externals.RequestQuotationAssync.reference"
+             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/RequestQuotationAssync/RequestQuotationAssync.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync#wsdl.interface(RequestQuotationAssync)"
+                    callbackInterface="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync#wsdl.interface(RequestQuotationAssyncCallback)"/>
   </reference>
 </componentType>

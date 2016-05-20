@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri May 20 14:18:49 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="RequestQuotationAssync"
+         targetNamespace="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
+         xmlns:ns2="http://quotation.truckhub.org">
+
+    <import namespace="http://xmlns.oracle.com/RequestQuotationAssync/RequestQuotationAssync/RequestQuotationAssync" location="RequestQuotationAssync.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="requestquotationassync_client" partnerLinkType="client:RequestQuotationAssync" myRole="RequestQuotationAssyncProvider" partnerRole="RequestQuotationAssyncRequester"/>
+        <partnerLink name="RequestQuotation"
+                     partnerLinkType="ns1:RequestQuotation"
+                     partnerRole="RequestQuotationProvider"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="client:RequestQuotationAssyncRequestMessage"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="outputVariable" messageType="client:RequestQuotationAssyncResponseMessage"/>
+        <variable name="InvokeRequestQuotation_process_InputVariable"
+                  messageType="ns1:RequestQuotationRequestMessage"/>
+        <variable name="InvokeRequestQuotation_process_OutputVariable"
+                  messageType="ns1:RequestQuotationResponseMessage"/>
+    </variables>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in RequestQuotationAssync.wsdl) -->
+        <receive name="receiveInput" partnerLink="requestquotationassync_client" portType="client:RequestQuotationAssync" operation="process" variable="inputVariable" createInstance="yes"/>
+        <assign name="AssignRequestQuotation">
+            <copy>
+                <from>$inputVariable.payload/ns2:origin/ns2:latitude</from>
+                <to>$InvokeRequestQuotation_process_InputVariable.payload/ns2:origin/ns2:latitude</to>
+            </copy>
+            <copy>
+                <from>$inputVariable.payload/ns2:origin/ns2:longitude</from>
+                <to>$InvokeRequestQuotation_process_InputVariable.payload/ns2:origin/ns2:longitude</to>
+            </copy>
+            <copy>
+                <from>$inputVariable.payload/ns2:destination/ns2:latitude</from>
+                <to>$InvokeRequestQuotation_process_InputVariable.payload/ns2:destination/ns2:latitude</to>
+            </copy>
+            <copy>
+                <from>$inputVariable.payload/ns2:destination/ns2:longitude</from>
+                <to>$InvokeRequestQuotation_process_InputVariable.payload/ns2:destination/ns2:longitude</to>
+            </copy>
+            <copy>
+                <from>$inputVariable.payload/ns2:parcelWeight</from>
+                <to>$InvokeRequestQuotation_process_InputVariable.payload/ns2:parcelWeight</to>
+            </copy>
+        </assign>
+        <invoke name="InvokeRequestQuotation"
+                partnerLink="RequestQuotation" portType="ns1:RequestQuotation"
+                operation="process"
+                inputVariable="InvokeRequestQuotation_process_InputVariable"
+                outputVariable="InvokeRequestQuotation_process_OutputVariable"
+                bpelx:invokeAsDetail="no"/>
+        <assign name="AssignOutput">
+            <copy>
+                <from>$InvokeRequestQuotation_process_OutputVariable.payload/ns2:offer</from>
+                <to>$outputVariable.payload/ns2:offer</to>
+            </copy>
+            <copy>
+                <from>$InvokeRequestQuotation_process_OutputVariable.payload/ns2:distance</from>
+                <to>$outputVariable.payload/ns2:distance</to>
+            </copy>
+            <copy>
+                <from>$InvokeRequestQuotation_process_OutputVariable.payload/ns2:transporterName</from>
+                <to>$outputVariable.payload/ns2:transporterName</to>
+            </copy>
+            <copy>
+                <from>$InvokeRequestQuotation_process_OutputVariable.payload/ns2:transporterId</from>
+                <to>$outputVariable.payload/ns2:transporterId</to>
+            </copy>
+            <copy>
+                <from>$InvokeRequestQuotation_process_OutputVariable.payload/ns2:status</from>
+                <to>$outputVariable.payload/ns2:status</to>
+            </copy>
+            <copy>
+                <from>$InvokeRequestQuotation_process_OutputVariable.payload/ns2:cause</from>
+                <to>$outputVariable.payload/ns2:cause</to>
+            </copy>
+        </assign>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="requestquotationassync_client" portType="client:RequestQuotationAssyncCallback" operation="processResponse" inputVariable="outputVariable"/>
+    </sequence>
+</process>

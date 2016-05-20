@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<xsd:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://quotation.truckhub.org"
+        xmlns:tns="http://quotation.truckhub.org"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:simpleType name="StatusType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="OK" />
+        <xsd:enumeration value="Error" />
+    </xsd:restriction>
+  </xsd:simpleType>
+ <xsd:complexType name="requestType">
+  <xsd:sequence>
+   <xsd:element name="origin" type="tns:coordinatesType"/>
+   <xsd:element name="destination" type="tns:coordinatesType"/>
+   <xsd:element name="parcelWeight" type="xsd:double"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="responseType">
+  <xsd:sequence>
+   <xsd:element name="offer" type="xsd:double"/>
+   <xsd:element name="distance" type="xsd:double"/>
+   <xsd:element name="transporterName" type="xsd:string"/>
+   <xsd:element name="transporterId" type="xsd:long"/>
+   <xsd:element name="status" type="tns:StatusType"/>
+   <xsd:element name="cause" type="xsd:string" minOccurs="0"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="coordinatesType">
+  <xsd:sequence>
+   <xsd:element name="latitude" type="xsd:double"/>
+   <xsd:element name="longitude" type="xsd:double"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:element name="request" type="tns:requestType"/>
+ <xsd:element name="response" type="tns:responseType"/>
+</xsd:schema>
