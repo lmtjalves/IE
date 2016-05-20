@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetAllTransporters" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetAllTransporters" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="TransporterCollection" type="TransporterCollection"/>
+   <xs:complexType name="TransporterCollection">
+      <xs:sequence>
+         <xs:element name="Transporter" type="Transporter" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Transporter">
+      <xs:sequence>
+         <xs:element name="id" type="xs:long"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="GetAllTransportersSelectInputParameters" type="GetAllTransportersSelect"/>
+   <xs:complexType name="GetAllTransportersSelect">
+      <xs:sequence/>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,25 @@
+<?binding.jca GetAllTransporters_db.jca?>
+<wsdl:definitions name="GetAllTransporters" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PaymentsToTransportationCompanies/PaymentsToTransportationCompanies/GetAllTransporters" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PaymentsToTransportationCompanies/PaymentsToTransportationCompanies/GetAllTransporters" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetAllTransporters">
+    <plt:partnerLinkType name="GetAllTransporters_plt">
+        <plt:role name="GetAllTransporters_role">
+            <plt:portType name="tns:GetAllTransporters_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetAllTransporters" schemaLocation="xsd/GetAllTransporters_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="GetAllTransportersSelect_inputParameters">
+        <wsdl:part name="GetAllTransportersSelect_inputParameters" element="top:GetAllTransportersSelectInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="TransporterCollection_msg">
+        <wsdl:part name="TransporterCollection" element="top:TransporterCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="GetAllTransporters_ptt">
+        <wsdl:operation name="GetAllTransportersSelect">
+            <wsdl:input message="tns:GetAllTransportersSelect_inputParameters"/>
+            <wsdl:output message="tns:TransporterCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -10,9 +10,6 @@
            xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
            xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
            xmlns:ui="http://xmlns.oracle.com/soa/designer/">
-  <import namespace="http://xmlns.oracle.com/GetNextTranporter/GetNextTransporter/GetNextTransporterProcess"
-          location="http://soabpm-vm.site:7001/soa-infra/services/default/GetNextTransporter/GetNextTransporterProcess.wsdl"
-          importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/CalculatePayment/CalculatePayment/CalculatePayment"
           location="http://soabpm-vm.site:7001/soa-infra/services/default/CalculatePayment/CalculatePayment.wsdl"
           importType="wsdl"/>
@@ -30,6 +27,8 @@
   <import namespace="http://xmlns.oracle.com/bpel/workflow/taskService"
           location="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl"
           importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/PaymentsToTransportationCompanies/PaymentsToTransportationCompanies/GetAllTransporters"
+          location="GetAllTransporters.wsdl" importType="wsdl"/>
   <property name="productVersion" type="xs:string" many="false">11.1.1.7.0</property>
   <component name="PaymentsToTransportationCompaniesProcesss">
     <implementation.bpmn src="processes/PaymentsToTransportationCompaniesProcesss.bpmn"/>
@@ -40,16 +39,6 @@
   <component name="ReviewPayment">
     <implementation.workflow src="ReviewPayment.task"/>
   </component>
-  <reference name="GetNextTransporter"
-             ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/GetNextTransporter/GetNextTransporterProcess.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/GetNextTranporter/GetNextTransporter/GetNextTransporterProcess#wsdl.interface(GetNextTransporterProcess)"/>
-    <binding.ws port="http://xmlns.oracle.com/GetNextTranporter/GetNextTransporter/GetNextTransporterProcess#wsdl.endpoint(getnexttransporterprocess_client_ep/GetNextTransporterProcess_pt)"
-                location="http://soabpm-vm:7001//soa-infra/services/default/GetNextTransporter/getnexttransporterprocess_client_ep?WSDL"
-                soapVersion="1.1">
-      <property name="weblogic.wsee.wsat.transaction.flowOption"
-                type="xs:string" many="false">WSDLDriven</property>
-    </binding.ws>
-  </reference>
   <reference name="CalculatePayment"
              ui:wsdlLocation="http://soabpm-vm.site:7001/soa-infra/services/default/CalculatePayment/CalculatePayment.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/CalculatePayment/CalculatePayment/CalculatePayment#wsdl.interface(CalculatePayment)"/>
@@ -90,10 +79,18 @@
                 type="xs:string" many="false">WSDLDriven</property>
     </binding.ws>
   </reference>
-  <wire>
-    <source.uri>PaymentsToTransportationCompaniesProcesss/Services.Externals.GetNextTransporter.reference</source.uri>
-    <target.uri>GetNextTransporter</target.uri>
-  </wire>
+  <reference name="GetAllTransporters"
+             ui:wsdlLocation="GetAllTransporters.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/PaymentsToTransportationCompanies/PaymentsToTransportationCompanies/GetAllTransporters#wsdl.interface(GetAllTransporters_ptt)"/>
+    <binding.jca config="GetAllTransporters_db.jca"/>
+    <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+    <property name="jca.retry.interval" type="xs:int" many="false"
+              override="may">1</property>
+    <property name="jca.retry.backoff" type="xs:int" many="false"
+              override="may">2</property>
+    <property name="jca.retry.maxInterval" type="xs:string" many="false"
+              override="may">120</property>
+  </reference>
   <wire>
     <source.uri>PaymentsToTransportationCompaniesProcesss/Services.Externals.CancelWaitingPayments.reference</source.uri>
     <target.uri>CancelWaitingPayments</target.uri>
@@ -117,5 +114,9 @@
   <wire>
     <source.uri>PaymentsToTransportationCompaniesProcesss/HumanTasks.ReviewPayment.reference</source.uri>
     <target.uri>ReviewPayment/TaskService</target.uri>
+  </wire>
+  <wire>
+    <source.uri>PaymentsToTransportationCompaniesProcesss/Services.Externals.GetAllTransporters.reference</source.uri>
+    <target.uri>GetAllTransporters</target.uri>
   </wire>
 </composite>
