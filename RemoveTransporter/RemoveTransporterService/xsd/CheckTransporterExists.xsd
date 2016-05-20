@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/CheckTransporterExists" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/CheckTransporterExists" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="CheckTransporterExistsInput" type="CheckTransporterExistsInput"/>
+   <xs:complexType name="CheckTransporterExistsInput">
+      <xs:sequence>
+         <xs:element name="name" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="CheckTransporterExistsOutputCollection" type="CheckTransporterExistsOutputCollection"/>
+   <xs:complexType name="CheckTransporterExistsOutputCollection">
+      <xs:sequence>
+         <xs:element name="CheckTransporterExistsOutput" type="CheckTransporterExistsOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="CheckTransporterExistsOutput">
+      <xs:sequence>
+         <xs:element name="name" type="xs:string" nillable="true"/>
+         <xs:element name="removed" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

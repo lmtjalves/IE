@@ -1,0 +1,160 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri May 20 16:03:37 WEST 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="RemoveTransporterProcess"
+               targetNamespace="http://xmlns.oracle.com/RemoveTransporter/RemoveTransporterService/RemoveTransporterProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/RemoveTransporter/RemoveTransporterService/RemoveTransporterProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/RemoveTransporter/RemoveTransporterService/DeleteTransporter"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/RemoveTransporter/RemoveTransporterService/CheckTransporterExists"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/CheckTransporterExists"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns3="http://remove.truckhub.org"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteTransporter"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+    <import namespace="http://xmlns.oracle.com/RemoveTransporter/RemoveTransporterService/RemoveTransporterProcess" location="RemoveTransporterProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="removetransporterprocess_client" partnerLinkType="client:RemoveTransporterProcess" myRole="RemoveTransporterProcessProvider"/>
+    <partnerLink name="DeleteTransporter"
+                 partnerLinkType="ns1:DeleteTransporter_plt"
+                 partnerRole="DeleteTransporter_role"/>
+    <partnerLink name="CheckTransporterExists"
+                 partnerLinkType="ns2:CheckTransporterExists_plt"
+                 partnerRole="CheckTransporterExists_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:RemoveTransporterProcessRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:RemoveTransporterProcessResponseMessage"/>
+    <variable name="Invoke1_CheckTransporterExists_InputVariable"
+              messageType="ns2:CheckTransporterExistsInput_msg"/>
+    <variable name="Invoke1_CheckTransporterExists_OutputVariable"
+              messageType="ns2:CheckTransporterExistsOutputCollection_msg"/>
+    <variable name="Invoke2_DeleteTransporter_InputVariable"
+              messageType="ns1:DeleteTransporterInput_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in RemoveTransporterProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="removetransporterprocess_client" portType="client:RemoveTransporterProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignInvokesInput">
+      <copy>
+        <from>$inputVariable.payload/ns3:Name</from>
+        <to>$Invoke1_CheckTransporterExists_InputVariable.CheckTransporterExistsInput_msg/ns4:name</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns3:Name</from>
+        <to>$Invoke2_DeleteTransporter_InputVariable.DeleteTransporterInput_msg/ns5:name</to>
+      </copy>
+    </assign>
+    <invoke name="invokeCheckTransporter"
+            partnerLink="CheckTransporterExists"
+            portType="ns2:CheckTransporterExists_ptt"
+            operation="CheckTransporterExists"
+            inputVariable="Invoke1_CheckTransporterExists_InputVariable"
+            outputVariable="Invoke1_CheckTransporterExists_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <if name="if">
+      <documentation>
+        <![CDATA[Not removed]]>
+      </documentation>
+      <condition>count($Invoke1_CheckTransporterExists_OutputVariable.CheckTransporterExistsOutputCollection/ns4:CheckTransporterExistsOutput) != 0 and $Invoke1_CheckTransporterExists_OutputVariable.CheckTransporterExistsOutputCollection/ns4:CheckTransporterExistsOutput/ns4:removed = "N"</condition>
+      <sequence name="Sequence1">
+        <invoke name="InvokesDeleteTransporter"
+                partnerLink="DeleteTransporter"
+                portType="ns1:DeleteTransporter_ptt"
+                operation="DeleteTransporter"
+                inputVariable="Invoke2_DeleteTransporter_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+        <assign name="AssignSuccess">
+          <copy>
+            <from>"OK"</from>
+            <to>$outputVariable.payload/ns3:Status</to>
+          </copy>
+        </assign>
+      </sequence>
+      <elseif>
+        <documentation>
+          <![CDATA[Already removed]]>
+        </documentation>
+        <condition>count($Invoke1_CheckTransporterExists_OutputVariable.CheckTransporterExistsOutputCollection/ns4:CheckTransporterExistsOutput) != 0 and $Invoke1_CheckTransporterExists_OutputVariable.CheckTransporterExistsOutputCollection/ns4:CheckTransporterExistsOutput/ns4:removed != "N"</condition>
+        <assign name="AssignAlreadyRemoved">
+          <copy>
+            <from>"Error"</from>
+            <to>$outputVariable.payload/ns3:Status</to>
+          </copy>
+          <copy>
+            <from>"Transporter already removed"</from>
+            <to>$outputVariable.payload/ns3:Cause</to>
+          </copy>
+        </assign>
+      </elseif>
+      <else>
+        <documentation>
+          <![CDATA[Not exists]]>
+        </documentation>
+        <assign name="AssignNotExists">
+          <copy>
+            <from>"Error"</from>
+            <to>$outputVariable.payload/ns3:Status</to>
+          </copy>
+          <copy>
+            <from>"Transporter does not exist"</from>
+            <to>$outputVariable.payload/ns3:Cause</to>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="removetransporterprocess_client" portType="client:RemoveTransporterProcess" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

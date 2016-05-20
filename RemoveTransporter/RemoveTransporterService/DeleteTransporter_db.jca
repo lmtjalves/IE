@@ -1,0 +1,12 @@
+<adapter-config name="DeleteTransporter" adapter="Database Adapter" wsdlLocation="DeleteTransporter.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/db/truckhubdb" UIConnectionName="ConnectionDB" adapterRef=""/>
+  <endpoint-interaction portType="DeleteTransporter_ptt" operation="DeleteTransporter">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="update transporter set removed = 'Y' where name = #name"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+  </endpoint-interaction>
+
+</adapter-config>

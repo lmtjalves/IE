@@ -1,0 +1,13 @@
+<adapter-config name="CheckTransporterExists" adapter="Database Adapter" wsdlLocation="CheckTransporterExists.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/db/truckhubdb" UIConnectionName="ConnectionDB" adapterRef=""/>
+  <endpoint-interaction portType="CheckTransporterExists_ptt" operation="CheckTransporterExists">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="select name, removed from transporter where name = #name"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>
