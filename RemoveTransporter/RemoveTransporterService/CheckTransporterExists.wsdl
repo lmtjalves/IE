@@ -1,0 +1,25 @@
+<?binding.jca CheckTransporterExists_db.jca?>
+<wsdl:definitions name="CheckTransporterExists" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/RemoveTransporter/RemoveTransporterService/CheckTransporterExists" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/CheckTransporterExists" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/RemoveTransporter/RemoveTransporterService/CheckTransporterExists" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="CheckTransporterExists_plt">
+        <plt:role name="CheckTransporterExists_role">
+            <plt:portType name="tns:CheckTransporterExists_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/CheckTransporterExists" schemaLocation="xsd/CheckTransporterExists.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="CheckTransporterExistsInput_msg">
+        <wsdl:part name="CheckTransporterExistsInput_msg" element="db:CheckTransporterExistsInput"/>
+    </wsdl:message>
+    <wsdl:message name="CheckTransporterExistsOutputCollection_msg">
+        <wsdl:part name="CheckTransporterExistsOutputCollection" element="db:CheckTransporterExistsOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="CheckTransporterExists_ptt">
+        <wsdl:operation name="CheckTransporterExists">
+            <wsdl:input message="tns:CheckTransporterExistsInput_msg"/>
+            <wsdl:output message="tns:CheckTransporterExistsOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

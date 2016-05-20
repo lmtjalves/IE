@@ -24,6 +24,7 @@ CREATE TABLE transporter (
 	id NUMBER(10),
 	name VARCHAR(255) NOT NULL,
         url VARCHAR(500) NOt NULL,
+        removed VARCHAR(1) DEFAULT 'N' NOT NULL,
 	PRIMARY KEY(id),
 	CONSTRAINT name_unique UNIQUE (name)
 );
@@ -48,8 +49,8 @@ CREATE TABLE transportation (
 		REFERENCES client(id)
 );
 
-INSERT INTO transporter (id, name) VALUES (seq_transporterId.nextval, 'TransporterA');
-INSERT INTO transporter (id, name) VALUES (seq_transporterId.nextval, 'TransporterZ');
+INSERT INTO transporter (id, name, url) VALUES (seq_transporterId.nextval, 'TransporterA', 'http://soabpm-vm.site:7001/RequestQuotationTransporterA-RequestQuotationTransporterAWS-context-root/RequestQuotationTransporterAServiceSoap12HttpPort?wsdl');
+INSERT INTO transporter (id, name, url) VALUES (seq_transporterId.nextval, 'TransporterZ', 'http://soabpm-vm.site:7001/RequestQuotationTransporterZ-RequestQuotationTransporterZWS-context-root/RequestQuotationTransporterZServiceSoap12HttpPort?wsdl');
 
 -- Stores counters for the twitter clients conversations
 -- they will be used for the correlation with BPEL processes
