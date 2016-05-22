@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="SendEmailService"
+     targetNamespace="http://sendemailservice/"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://sendemailservice/"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    >
+    <plnk:partnerLinkType name="SendEmail">
+        <plnk:role name="SendEmailService" portType="tns:SendEmailService"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://sendemailservice/" location="http://soabpm-vm.site:7001/EmailSender-SendEmailService-context-root/SendEmailServiceSoap12HttpPort?wsdl"/>
+</wsdl:definitions>

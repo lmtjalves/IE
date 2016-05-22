@@ -1,0 +1,39 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ProcessTwitterClientRequest"
+     targetNamespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest"
+     xmlns:ns1="http://www.message.truckhub.org"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:cor="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest/correlationset"
+     xmlns:client="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+    >
+    <plnk:partnerLinkType name="ProcessTwitterClientRequest">
+        <plnk:role name="ProcessTwitterClientRequestProvider" portType="client:ProcessTwitterClientRequest"/>
+    </plnk:partnerLinkType>
+    <vprop:propertyAlias propertyName="cor:SenderId" messageType="client:ProcessTwitterClientRequestRequestMessage"
+         part="payload">
+        <vprop:query>/ns1:Message/ns1:SenderId</vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="cor:ConversationId" messageType="client:ProcessTwitterClientRequestRequestMessage"
+         part="payload">
+        <vprop:query>/ns1:Message/ns1:ConversationId</vprop:query>
+    </vprop:propertyAlias>
+    <wsdl:import namespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessTwitterClientRequest/correlationset"
+         location="ProcessTwitterClientRequest_properties.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://www.message.truckhub.org" schemaLocation="xsd/Message.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ProcessTwitterClientRequestRequestMessage">
+        <wsdl:part name="payload" element="ns1:Message"/>
+    </wsdl:message>
+    <wsdl:portType name="ProcessTwitterClientRequest">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:ProcessTwitterClientRequestRequestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

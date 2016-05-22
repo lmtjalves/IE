@@ -1,0 +1,25 @@
+<?binding.jca GetNumberOfConversations_db.jca?>
+<wsdl:definitions name="GetNumberOfConversations" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/TwitterMessagesFetchService/TwitterFreightRequest/GetNumberOfConversations" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/TwitterMessagesFetchService/TwitterFreightRequest/GetNumberOfConversations" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetNumberOfConversations">
+    <plt:partnerLinkType name="GetNumberOfConversations_plt">
+        <plt:role name="GetNumberOfConversations_role">
+            <plt:portType name="tns:GetNumberOfConversations_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetNumberOfConversations" schemaLocation="xsd/GetNumberOfConversations_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="selectByPrimaryKey_inputParameters">
+        <wsdl:part name="selectByPrimaryKey_inputParameters" element="top:TwitterConversationsPrimaryKey"/>
+    </wsdl:message>
+    <wsdl:message name="TwitterConversationsCollection_msg">
+        <wsdl:part name="TwitterConversationsCollection" element="top:TwitterConversationsCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="GetNumberOfConversations_ptt">
+        <wsdl:operation name="selectByPrimaryKey">
+            <wsdl:input message="tns:selectByPrimaryKey_inputParameters"/>
+            <wsdl:output message="tns:TwitterConversationsCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

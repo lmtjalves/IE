@@ -1,0 +1,414 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed May 18 15:02:28 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ProcessRequestMessage"
+               targetNamespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessageService"
+         xmlns:ns2="http://twittersendmessage/"
+         xmlns:ns3="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessage"
+         xmlns:ns4="http://twitterparsefreightrequest/"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ns5="http://www.processrequest.truckhub.org"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns6="http://www.cancelmessageservice.org"
+         xmlns:ns7="http://xmlns.oracle.com/GetClientID/GetClientIDService/GetClientIdService"
+         xmlns:ns8="http://www.getclientid.truckhub.org"
+         xmlns:ns9="http://xmlns.oracle.com/RequestQuotation/RequestQuotationService/RequestQuotation"
+         xmlns:ns10="http://quotation.truckhub.org"
+         xmlns:ns11="http://sendemailservice/"
+         xmlns:ns12="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage/correlationset"
+         xmlns:ns13="http://xmlns.oracle.com/RequestQuotation/TwitterFreightRequest/RequestQuotationSync"
+         xmlns:ns14="http://www.requestquotationsync.truckhub.org">
+
+    <import namespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessRequestMessage" location="ProcessRequestMessage.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="processrequestmessage_client" partnerLinkType="client:ProcessRequestMessage" myRole="ProcessRequestMessageProvider"/>
+    <partnerLink name="SendDirectMessage"
+                 partnerLinkType="ns2:SendDirectMessage"
+                 partnerRole="TwitterSendMessage"/>
+    <partnerLink name="SendCancelMessage.sendcancelmessage_client"
+                 partnerLinkType="ns3:SendCancelMessage"
+                 partnerRole="SendCancelMessageProvider"/>
+    <partnerLink name="ParseRequest" partnerLinkType="ns4:ParseRequest"
+                 partnerRole="FreightRequestParser"/>
+    <partnerLink name="GetClientId" partnerLinkType="ns7:GetClientIdService"
+                 partnerRole="GetClientIdServiceProvider"/>
+    <partnerLink name="SendEmail" partnerLinkType="ns11:SendEmail"
+                 partnerRole="SendEmailService"/>
+    <partnerLink name="RequestQuotation" partnerLinkType="ns9:RequestQuotation"
+                 partnerRole="RequestQuotationProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:ProcessRequestMessageRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:ProcessRequestMessageResponseMessage"/>
+    <variable name="SendCancelMessage_process_InputVariable"
+              messageType="ns3:SendCancelMessageRequestMessage"/>
+    <variable name="ParseRequest_parse_InputVariable" messageType="ns4:parse"/>
+    <variable name="ParseRequest_parse_OutputVariable"
+              messageType="ns4:parseResponse"/>
+    <variable name="SendInvalidRequestMessage_sendMessage_InputVariable"
+              messageType="ns2:sendMessage"/>
+    <variable name="GetClientId_process_InputVariable"
+              messageType="ns7:GetClientIdServiceRequestMessage"/>
+    <variable name="GetClientId_process_OutputVariable"
+              messageType="ns7:GetClientIdServiceResponseMessage"/>
+    <variable name="SendNoOfferMessage_sendMessage_InputVariable"
+              messageType="ns2:sendMessage"/>
+    <variable name="SendTokenEmail_sendEmail_InputVariable"
+              messageType="ns11:sendEmail"/>
+    <variable name="AskTokenMessage_sendMessage_InputVariable"
+              messageType="ns2:sendMessage"/>
+    <variable name="SendInvalidUserMessage_sendMessage_InputVariable"
+              messageType="ns2:sendMessage"/>
+    <variable name="SendInvalidRequestMessage_sendMessage_OutputVariable"
+              messageType="ns2:sendMessageResponse"/>
+    <variable name="SendInvalidUserMessage_sendMessage_OutputVariable"
+              messageType="ns2:sendMessageResponse"/>
+    <variable name="SendNoOfferMessage_sendMessage_OutputVariable"
+              messageType="ns2:sendMessageResponse"/>
+    <variable name="AskTokenMessage_sendMessage_OutputVariable"
+              messageType="ns2:sendMessageResponse"/>
+    <variable name="SendTokenEmail_sendEmail_OutputVariable"
+              messageType="ns11:sendEmailResponse"/>
+    <variable name="RequestQuotation_process_InputVariable"
+              messageType="ns9:RequestQuotationRequestMessage"/>
+    <variable name="RequestQuotation_process_OutputVariable"
+              messageType="ns9:RequestQuotationResponseMessage"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in ProcessRequestMessage.wsdl) -->
+    <receive name="receiveInput" partnerLink="processrequestmessage_client" portType="client:ProcessRequestMessage" operation="process" variable="inputVariable" createInstance="yes"/>
+    <if name="If">
+      <documentation>
+        <![CDATA[Is Cancel Message]]>
+      </documentation>
+      <condition>oraext:compare-ignore-case(string($inputVariable.payload/ns5:Text), "cancel") = 0</condition>
+      <sequence>
+        <assign name="AssignCancelMessage">
+          <copy>
+            <from>$inputVariable.payload/ns5:SenderId</from>
+            <to>$SendCancelMessage_process_InputVariable.payload</to>
+          </copy>
+        </assign>
+        <invoke name="SendCancelMessage"
+                partnerLink="SendCancelMessage.sendcancelmessage_client"
+                portType="ns3:SendCancelMessage" operation="process"
+                inputVariable="SendCancelMessage_process_InputVariable"
+                bpelx:invokeAsDetail="no"/>
+        <assign name="AssignOutputDontContinue">
+          <copy>
+            <from>false()</from>
+            <to>$outputVariable.payload/ns5:Continue</to>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[No]]>
+        </documentation>
+        <sequence>
+          <assign name="AssignParseRequest">
+            <copy>
+              <from>$inputVariable.payload/ns5:Text</from>
+              <to>$ParseRequest_parse_InputVariable.parameters/requestString</to>
+            </copy>
+          </assign>
+          <invoke name="ParseRequest"
+                  partnerLink="ParseRequest"
+                  portType="ns4:FreightRequestParser" operation="parse"
+                  inputVariable="ParseRequest_parse_InputVariable"
+                  outputVariable="ParseRequest_parse_OutputVariable"
+                  bpelx:invokeAsDetail="no"/>
+          <if name="If">
+            <documentation>
+              <![CDATA[Valid Request]]>
+            </documentation>
+            <condition>$ParseRequest_parse_OutputVariable.parameters/return/valid = "true"</condition>
+            <sequence name="Sequence3">
+              <assign name="AssignGetClientId">
+                <copy>
+                  <from>$ParseRequest_parse_OutputVariable.parameters/return/email</from>
+                  <to>$GetClientId_process_InputVariable.payload/ns8:ClientEmail</to>
+                </copy>
+              </assign>
+              <invoke name="GetClientId"
+                      partnerLink="GetClientId"
+                      portType="ns7:GetClientIdService" operation="process"
+                      inputVariable="GetClientId_process_InputVariable"
+                      outputVariable="GetClientId_process_OutputVariable"
+                      bpelx:invokeAsDetail="no"/>
+              <if name="If">
+                <documentation>
+                  <![CDATA[Client Exists]]>
+                </documentation>
+                <condition>$GetClientId_process_OutputVariable.payload/ns8:Status = "OK"</condition>
+                <sequence name="Sequence4">
+                  <assign name="AssignRequestQuotation">
+                    <copy>
+                      <from>$ParseRequest_parse_OutputVariable.parameters/return/destinationLatitude</from>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns10:destination/ns10:latitude</to>
+                    </copy>
+                    <copy>
+                      <from>$ParseRequest_parse_OutputVariable.parameters/return/destinationLongitude</from>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns10:destination/ns10:longitude</to>
+                    </copy>
+                    <copy>
+                      <from>$ParseRequest_parse_OutputVariable.parameters/return/originLatitude</from>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns10:origin/ns10:latitude</to>
+                    </copy>
+                    <copy>
+                      <from>$ParseRequest_parse_OutputVariable.parameters/return/originLongitude</from>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns10:origin/ns10:longitude</to>
+                    </copy>
+                    <copy>
+                      <from>$ParseRequest_parse_OutputVariable.parameters/return/parcelWeight</from>
+                      <to>$RequestQuotation_process_InputVariable.payload/ns10:parcelWeight</to>
+                    </copy>
+                  </assign>
+                  <invoke name="RequestQuotation"
+                          partnerLink="RequestQuotation"
+                          portType="ns9:RequestQuotation" operation="process"
+                          inputVariable="RequestQuotation_process_InputVariable"
+                          outputVariable="RequestQuotation_process_OutputVariable"
+                          bpelx:invokeAsDetail="no"/>
+                  <if name="If">
+                    <documentation>
+                      <![CDATA[Got Offer]]>
+                    </documentation>
+                    <condition>$RequestQuotation_process_OutputVariable.payload/ns10:status = "OK"</condition>
+                    <sequence>
+                      <assign name="AssignOutputToken">
+                        <copy>
+                          <from>oraext:generate-guid()</from>
+                          <to>$outputVariable.payload/ns5:Token</to>
+                        </copy>
+                      </assign>
+                      <assign name="AssignSendTokenEmail">
+                        <copy>
+                          <from>$ParseRequest_parse_OutputVariable.parameters/return/email</from>
+                          <to>$SendTokenEmail_sendEmail_InputVariable.parameters/to</to>
+                        </copy>
+                        <copy>
+                          <from>"TruckHub Twitter Request Security Token"</from>
+                          <to>$SendTokenEmail_sendEmail_InputVariable.parameters/subject</to>
+                        </copy>
+                        <copy>
+                          <from>concat("Your security token: ", $outputVariable.payload/ns5:Token)</from>
+                          <to>$SendTokenEmail_sendEmail_InputVariable.parameters/message</to>
+                        </copy>
+                      </assign>
+                      <invoke name="SendTokenEmail"
+                              partnerLink="SendEmail"
+                              portType="ns11:SendEmailService"
+                              operation="sendEmail"
+                              inputVariable="SendTokenEmail_sendEmail_InputVariable"
+                              outputVariable="SendTokenEmail_sendEmail_OutputVariable"
+                              bpelx:invokeAsDetail="no"/>
+                      <assign name="AssignAskTokenMessage">
+                        <copy>
+                          <from>$inputVariable.payload/ns5:SenderId</from>
+                          <to>$AskTokenMessage_sendMessage_InputVariable.parameters/recepientId</to>
+                        </copy>
+                        <copy>
+                          <from>concat("You got an offer from ", $RequestQuotation_process_OutputVariable.payload/ns10:transporterName , " of " ,$RequestQuotation_process_OutputVariable.payload/ns10:offer ,  "€. We sent  a security token to your email. Insert it here to accept the offer, or type 'Cancel' to cancel the request.")</from>
+                          <to>$AskTokenMessage_sendMessage_InputVariable.parameters/text</to>
+                        </copy>
+                      </assign>
+                      <invoke name="AskTokenMessage"
+                              partnerLink="SendDirectMessage"
+                              portType="ns2:TwitterSendMessage"
+                              operation="sendMessage"
+                              inputVariable="AskTokenMessage_sendMessage_InputVariable"
+                              outputVariable="AskTokenMessage_sendMessage_OutputVariable"
+                              bpelx:invokeAsDetail="no"/>
+                      <assign name="AssignOutputContinue">
+                        <copy>
+                          <from> true()</from>
+                          <to>$outputVariable.payload/ns5:Continue</to>
+                        </copy>
+                        <copy>
+                          <from>$outputVariable.payload/ns5:Token</from>
+                          <to>$outputVariable.payload/ns5:Token</to>
+                        </copy>
+                        <copy>
+                          <from>$ParseRequest_parse_OutputVariable.parameters/return/email</from>
+                          <to>$outputVariable.payload/ns5:Client/ns5:Email</to>
+                        </copy>
+                        <copy>
+                          <from>$GetClientId_process_OutputVariable.payload/ns8:ClientId</from>
+                          <to>$outputVariable.payload/ns5:Client/ns5:Id</to>
+                        </copy>
+                        <copy>
+                          <from>$RequestQuotation_process_OutputVariable.payload/ns10:offer</from>
+                          <to>$outputVariable.payload/ns5:Transportation/ns5:Quotation</to>
+                        </copy>
+                        <copy>
+                          <from>$RequestQuotation_process_OutputVariable.payload/ns10:distance</from>
+                          <to>$outputVariable.payload/ns5:Transportation/ns5:Distance</to>
+                        </copy>
+                        <copy>
+                          <from>$RequestQuotation_process_OutputVariable.payload/ns10:transporterName</from>
+                          <to>$outputVariable.payload/ns5:Transporter/ns5:Name</to>
+                        </copy>
+                        <copy>
+                          <from>$RequestQuotation_process_OutputVariable.payload/ns10:transporterId</from>
+                          <to>$outputVariable.payload/ns5:Transporter/ns5:Id</to>
+                        </copy>
+                        <copy>
+                          <from>$ParseRequest_parse_OutputVariable.parameters/return/parcelWeight</from>
+                          <to>$outputVariable.payload/ns5:Transportation/ns5:ParcelWeight</to>
+                        </copy>
+                      </assign>
+                    </sequence>
+                    <else>
+                      <documentation>
+                        <![CDATA[No Offer]]>
+                      </documentation>
+                      <sequence name="Sequence8">
+                        <assign name="AssignSendNoOfferMessage">
+                          <copy>
+                            <from>$inputVariable.payload/ns5:SenderId</from>
+                            <to>$SendNoOfferMessage_sendMessage_InputVariable.parameters/recepientId</to>
+                          </copy>
+                          <copy>
+                            <from>"No offer available for that request, please try again later"</from>
+                            <to>$SendNoOfferMessage_sendMessage_InputVariable.parameters/text</to>
+                          </copy>
+                        </assign>
+                        <invoke name="SendNoOfferMessage"
+                                partnerLink="SendDirectMessage"
+                                portType="ns2:TwitterSendMessage"
+                                operation="sendMessage"
+                                inputVariable="SendNoOfferMessage_sendMessage_InputVariable"
+                                outputVariable="SendNoOfferMessage_sendMessage_OutputVariable"
+                                bpelx:invokeAsDetail="no"/>
+                        <assign name="AssignOutputDontContinue">
+                          <copy>
+                            <from>false()</from>
+                            <to>$outputVariable.payload/ns5:Continue</to>
+                          </copy>
+                        </assign>
+                      </sequence>
+                    </else>
+                  </if>
+                </sequence>
+                <else>
+                  <documentation>
+                    <![CDATA[Unknown Client]]>
+                  </documentation>
+                  <sequence name="Sequence5">
+                    <assign name="AssignSendInvalidUserMessage">
+                      <copy>
+                        <from>$inputVariable.payload/ns5:SenderId</from>
+                        <to>$SendInvalidUserMessage_sendMessage_InputVariable.parameters/recepientId</to>
+                      </copy>
+                      <copy>
+                        <from>"Unknown user email. Request canceled."</from>
+                        <to>$SendInvalidUserMessage_sendMessage_InputVariable.parameters/text</to>
+                      </copy>
+                    </assign>
+                    <invoke name="SendInvalidUserMessage"
+                            partnerLink="SendDirectMessage"
+                            portType="ns2:TwitterSendMessage"
+                            operation="sendMessage"
+                            inputVariable="SendInvalidUserMessage_sendMessage_InputVariable"
+                            bpelx:invokeAsDetail="no"
+                            outputVariable="SendInvalidUserMessage_sendMessage_OutputVariable"/>
+                    <assign name="AssignOutputDontContinue">
+                      <copy>
+                        <from>false()</from>
+                        <to>$outputVariable.payload/ns5:Continue</to>
+                      </copy>
+                    </assign>
+                  </sequence>
+                </else>
+              </if>
+            </sequence>
+            <else>
+              <documentation>
+                <![CDATA[Invalid Request]]>
+              </documentation>
+              <sequence name="Sequence6">
+                <assign name="AssignInvalidRequest">
+                  <copy>
+                    <from>$inputVariable.payload/ns5:SenderId</from>
+                    <to>$SendInvalidRequestMessage_sendMessage_InputVariable.parameters/recepientId</to>
+                  </copy>
+                  <copy>
+                    <from>concat("Invalid request (reason: " ,$ParseRequest_parse_OutputVariable.parameters/return/cause, ")")</from>
+                    <to>$SendInvalidRequestMessage_sendMessage_InputVariable.parameters/text</to>
+                  </copy>
+                </assign>
+                <invoke name="SendInvalidRequestMessage"
+                        partnerLink="SendDirectMessage"
+                        portType="ns2:TwitterSendMessage"
+                        operation="sendMessage"
+                        inputVariable="SendInvalidRequestMessage_sendMessage_InputVariable"
+                        outputVariable="SendInvalidRequestMessage_sendMessage_OutputVariable"
+                        bpelx:invokeAsDetail="no"/>
+                <assign name="AssingOutputDontContinue">
+                  <copy>
+                    <from>false()</from>
+                    <to>$outputVariable.payload/ns5:Continue</to>
+                  </copy>
+                </assign>
+              </sequence>
+            </else>
+          </if>
+        </sequence>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="processrequestmessage_client" portType="client:ProcessRequestMessage" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

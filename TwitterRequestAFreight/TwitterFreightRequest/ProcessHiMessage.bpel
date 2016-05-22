@@ -1,0 +1,147 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed May 18 14:46:33 PDT 2016
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ProcessHiMessage"
+               targetNamespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessHiMessage"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessHiMessage"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/SendCancelMessageService"
+         xmlns:ns2="http://twittersendmessage/"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ns3="http://www.processhi.truckhub.org"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+    <import namespace="http://xmlns.oracle.com/SendInvoice/TwitterFreightRequest/ProcessHiMessage" location="ProcessHiMessage.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="processhimessage_client" partnerLinkType="client:ProcessHiMessage" myRole="ProcessHiMessageProvider"/>
+    <partnerLink name="SendDirectMessage"
+                 partnerLinkType="ns2:SendDirectMessage"
+                 partnerRole="TwitterSendMessage"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:ProcessHiMessageRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:ProcessHiMessageResponseMessage"/>
+    <variable name="AskForRequest_sendMessage_InputVariable"
+              messageType="ns2:sendMessage"/>
+    <variable name="SendHelpMessage_sendMessage_InputVariable"
+              messageType="ns2:sendMessage"/>
+    <variable name="AskForRequest_sendMessage_OutputVariable"
+              messageType="ns2:sendMessageResponse"/>
+    <variable name="SendHelpMessage_sendMessage_OutputVariable"
+              messageType="ns2:sendMessageResponse"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in ProcessHiMessage.wsdl) -->
+    <receive name="receiveInput" partnerLink="processhimessage_client" portType="client:ProcessHiMessage" operation="process" variable="inputVariable" createInstance="yes"/>
+    <if name="If">
+      <documentation>
+        <![CDATA[Is Hi Message]]>
+      </documentation>
+      <condition>oraext:compare-ignore-case(string($inputVariable.payload/ns3:Text), "Hi") = 0</condition>
+      <sequence name="Sequence1">
+        <assign name="AssignAskForRequest">
+          <copy>
+            <from>$inputVariable.payload/ns3:SenderId</from>
+            <to>$AskForRequest_sendMessage_InputVariable.parameters/recepientId</to>
+          </copy>
+          <copy>
+            <from>"Hi! Please enter your request with the following format: email;origin-latitude;origin-longitude;destination-latitude;destination-longitude;parcel-weight. Type 'Cancel' to cancel the request"</from>
+            <to>$AskForRequest_sendMessage_InputVariable.parameters/text</to>
+          </copy>
+        </assign>
+        <invoke name="AskForRequest"
+                partnerLink="SendDirectMessage"
+                portType="ns2:TwitterSendMessage" operation="sendMessage"
+                inputVariable="AskForRequest_sendMessage_InputVariable"
+                outputVariable="AskForRequest_sendMessage_OutputVariable"
+                bpelx:invokeAsDetail="no"/>
+        <assign name="AssignOutputContinue">
+          <copy>
+            <from>true()</from>
+            <to>$outputVariable.payload/ns3:Continue</to>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[No]]>
+        </documentation>
+        <sequence name="Sequence2">
+          <assign name="AssignHelpMessage">
+            <copy>
+              <from>$inputVariable.payload/ns3:SenderId</from>
+              <to>$SendHelpMessage_sendMessage_InputVariable.parameters/recepientId</to>
+            </copy>
+            <copy>
+              <from>"Hello there! Please say 'Hi' if you want to perform a request for a transportation"</from>
+              <to>$SendHelpMessage_sendMessage_InputVariable.parameters/text</to>
+            </copy>
+          </assign>
+          <invoke name="SendHelpMessage"
+                  partnerLink="SendDirectMessage"
+                  portType="ns2:TwitterSendMessage" operation="sendMessage"
+                  inputVariable="SendHelpMessage_sendMessage_InputVariable"
+                  outputVariable="SendHelpMessage_sendMessage_OutputVariable"
+                  bpelx:invokeAsDetail="no"/>
+          <assign name="AssignOutputDontContinue">
+            <copy>
+              <from>false()</from>
+              <to>$outputVariable.payload/ns3:Continue</to>
+            </copy>
+          </assign>
+        </sequence>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="processhimessage_client" portType="client:ProcessHiMessage" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>
